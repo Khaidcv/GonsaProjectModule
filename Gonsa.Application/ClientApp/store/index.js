@@ -12,7 +12,7 @@ const state = {
   show_loading: true,
   show_modal_customerlist: false,
   user: {
-    clnType : 'ETC'
+    clnType : 'OTC'
   }
 }
 

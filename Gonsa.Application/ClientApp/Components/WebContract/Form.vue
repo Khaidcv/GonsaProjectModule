@@ -101,7 +101,7 @@
                     <div class="col-sm-9">
                       <input type="text" name="psCsName" v-validate="'required'"
                              class="form-control" v-model="webContract.psCsName" placeholder="Tên khách hàng">
-                      <p class="text-danger" v-validate="'required'" v-if="issubmited_customer && errors.has('form-step-customer.psCsName')">{{errors.first('form-step-customer.psCsName')}}</p>
+                      <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.psCsName')">{{errors.first('form-step-customer.psCsName')}}</p>
                     </div>
                   </div>
 
@@ -111,7 +111,7 @@
                     <div class="col-sm-9">
                       <input type="text" name="psCsTel" v-validate="'required|numeric|min:8|max:12'"
                              class="form-control" v-model="webContract.psCsTel" placeholder="Điện thoại">
-                      <p class="text-danger" v-validate="'required'" v-if="issubmited_customer && errors.has('form-step-customer.psCsTel')">{{errors.first('form-step-customer.psCsTel')}}</p>
+                      <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.psCsTel')">{{errors.first('form-step-customer.psCsTel')}}</p>
                     </div>
                   </div>
 
@@ -121,7 +121,7 @@
                     <div class="col-sm-9">
                       <input type="text" name="psCsInfo" v-validate="'required'"
                              class="form-control" v-model="webContract.psCsInfo" placeholder="Địa chỉ">
-                      <p class="text-danger" v-validate="'required'" v-if="issubmited_customer && errors.has('form-step-customer.psCsInfo')">{{errors.first('form-step-customer.psCsInfo')}}</p>
+                      <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.psCsInfo')">{{errors.first('form-step-customer.psCsInfo')}}</p>
                     </div>
                   </div>
 
@@ -131,7 +131,7 @@
                     <div class="col-sm-9">
                       <input type="text" name="psCsAddr" v-validate="'required'"
                              class="form-control" v-model="webContract.psCsAddr" placeholder="Mã khu vực">
-                      <p class="text-danger" v-validate="'required'" v-if="issubmited_customer && errors.has('form-step-customer.psCsAddr')">{{errors.first('form-step-customer.psCsAddr')}}</p>
+                      <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.psCsAddr')">{{errors.first('form-step-customer.psCsAddr')}}</p>
                     </div>
                   </div>
                 </div>
@@ -221,7 +221,7 @@
       </div>
       <!-- Đơn vị nhận hàng-->
       <!-- Giỏ hàng -->
-      <div class="box box-primary" v-if="step_active == 'step-product'">
+      <div class="box box-primary" v-if="step_active == 'step-product' || true">
         <div class="box-header with-border">
           <h3 class="box-title">
             <img src="/dist/img/shopping-bags.png" width="30" alt="Sản phẩm" />
@@ -239,66 +239,82 @@
           <div class="row">
             <div class="col-md-12">
               <div class="wrap-table">
+                <form data-vv-scope="form-step-product">
 
-                <table class="table table-bordered" width="1200">
-                  <thead>
-                    <tr>
-                      <th>.No</th>
-                      <th>Mã kho</th>
-                      <th>Tên sản phẩm</th>
-                      <td class="hidden">Mã đơn vị tính</td>
-                      <th>Tên đơn vị tính</th>
-                      <th>Mã lô</th>
-                      <th>Qui cách bán</th>
-                      <th>Số lượng tồn thầu DVI</th>
-                      <th>Số lượng bán DVI</th>
-                      <th>Số lượng bán hộp</th>
-                      <th>Giá bán</th>
-                      <th>Tiền hàng</th>
-                      <th>Tên chương trình khuyến mại</th>
-                      <th>% GG.KM</th>
-                      <th>Tiền GG.KM</th>
-                      <th>% G.Thẻ</th>
-                      <th>Tiền G.Thẻ</th>
-                      <th>Thành tiền hàng</th>
-                      <th>#</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(contractDetail,index) in web_contract_details" :key="contractDetail.itemID">
-                      <td>{{(index+1)}}</td>
-                      <td>{{contractDetail.storeID}}</td>
-                      <td class="hidden">{{contractDetail.itemID}}</td>
-                      <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
-                      <td class="hidden">{{contractDetail.itemUnit}}</td>
-                      <td>{{contractDetail.itemUnitName}}</td>
-                      <td>{{contractDetail.bchCode}}</td>
-                      <td>{{contractDetail.boxID}}</td>
-                      <td>{{contractDetail.remnRfQt}}</td>
-                      <td>
-                        <input type="number" @change="storeQtty_OnChange(contractDetail)" min="1" style="width:50%" v-model="contractDetail.storeQtty" name="name" value="" />
-                      </td>
-                      <td>
-                        <input type="number" style="width:50%" v-model="contractDetail.itemQtty" name="name" value="" />
-                      </td>
-                      <td>{{contractDetail.itemPrice | formatVnd}}</td>
-                      <td>{{contractDetail.prdcAmnt | formatVnd}}</td>
-                      <td>
-                        {{contractDetail.prmtListItem}}
-                        <button class="btn btn-xs btn-success">Chọn CTKM</button>
-                      </td>
-                      <td class="hidden">{{contractDetail.prmtID}}</td>
-                      <td>{{contractDetail.dscnRate}}</td>
-                      <td>{{contractDetail.dscnAmnt | formatVnd}}</td>
-                      <td>{{contractDetail.dscnMbRt}}</td>
-                      <td>{{contractDetail.dscnMbAm | formatVnd}}</td>
-                      <td>{{contractDetail.smPdAmnt | formatVnd}}</td>
-                      <td>
-                        <button @click="remove_webcontractdetails(contractDetail)" class="btn btn-xs btn-danger"> Xóa </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <table class="table table-bordered" width="1200">
+                    <thead>
+                      <tr>
+                        <th>.No</th>
+                        <th>Mã kho</th>
+                        <th>Tên sản phẩm</th>
+                        <td class="hidden">Mã đơn vị tính</td>
+                        <th>Tên đơn vị tính</th>
+                        <th>Mã lô</th>
+                        <th>Qui cách bán</th>
+                        <th>Số lượng tồn thầu DVI</th>
+                        <th>Số lượng bán DVI</th>
+                        <th>Số lượng bán hộp</th>
+                        <th>Giá bán</th>
+                        <th>Tiền hàng</th>
+                        <th>Tên chương trình khuyến mại</th>
+                        <th>% GG.KM</th>
+                        <th>Tiền GG.KM</th>
+                        <th>% G.Thẻ</th>
+                        <th>Tiền G.Thẻ</th>
+                        <th>Thành tiền hàng</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(contractDetail,index) in web_contract_details" :key="contractDetail.itemID">
+                        <td>{{(index+1)}}</td>
+                        <td>{{contractDetail.storeID}}</td>
+                        <td class="hidden">{{contractDetail.itemID}}</td>
+                        <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
+                        <td class="hidden">{{contractDetail.itemUnit}}</td>
+                        <td>{{contractDetail.itemUnitName}}</td>
+                        <td>{{contractDetail.bchCode}}</td>
+                        <td>{{contractDetail.boxID}}</td>
+                        <td>{{contractDetail.remnRfQt}}</td>
+                        <td>
+                          <input type="text" :key="'storeQtty'+index"
+                                 v-validate="'required|decimal|min:0|max:50'" data-vv-as="Số lượng đơn vị"
+                                 @change="store_quantity_change(contractDetail)"
+                                 style="width:100%"
+                                 v-on:keydown.enter.prevent=''
+                                 v-model="contractDetail.storeQtty"
+                                 :name="'storeQtty'+index" />
+                          <p class="text-danger" v-if="errors.has('form-step-product.storeQtty'+index)">{{errors.first('form-step-product.storeQtty'+index)}}</p>
+                        </td>
+                        <td>
+                          <input type="text" :key="'itemQtty'+index"
+                                 v-validate="'required|decimal|min:0|max:50'" data-vv-as="Số lượng"
+                                 @change="item_quantity_change(contractDetail)"
+                                 style="width:100%"
+                                 v-on:keydown.enter.prevent=''
+                                 v-model="contractDetail.itemQtty"
+                                 :name="'itemQtty'+index" />
+                          <p class="text-danger" v-if="errors.has('form-step-product.itemQtty'+index)">{{errors.first('form-step-product.itemQtty'+index)}}</p>
+                        </td>
+                        <td>{{contractDetail.itemPrice | formatVnd}}</td>
+                        <td>{{contractDetail.prdcAmnt | formatVnd}}</td>
+                        <td>
+                          {{contractDetail.prmtListItem}}
+                          <button class="btn btn-xs btn-success">Chọn CTKM</button>
+                        </td>
+                        <td class="hidden">{{contractDetail.prmtID}}</td>
+                        <td>{{contractDetail.dscnRate}}</td>
+                        <td>{{contractDetail.dscnAmnt | formatVnd}}</td>
+                        <td>{{contractDetail.dscnMbRt}}</td>
+                        <td>{{contractDetail.dscnMbAm | formatVnd}}</td>
+                        <td>{{contractDetail.smPdAmnt | formatVnd}}</td>
+                        <td>
+                          <button @click="remove_webcontractdetails(contractDetail)" class="btn btn-xs btn-danger"> Xóa </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
               </div>
               <!--wrap table-->
             </div>
@@ -609,7 +625,8 @@
       }, // Cấu hình selec2 cho customer
       get_customer_template_selection(obj) {
         if (obj.customerID != null && obj.customerID.length > 0)
-          return $('<div class="selected"><strong>' + obj.psCsName + '</strong></div>');
+          return obj.psCsName;
+          //return $('<div class="selected"><strong>' + obj.psCsName + '</strong></div>');
         return obj.text;
       },
       get_customer_matcher(params, data) {
@@ -656,7 +673,8 @@
       }, // Cấu hình selec2 cho delivery customer
       get_deliverycustomer_template_selection(obj) {
         if (obj.deliverEm != null && obj.deliverEm.length > 0)
-          return $('<div class="selected"><strong>' + obj.dlCsName + '</strong></div>');
+          return obj.dlCsName;
+          //return $('<div class="selected"><strong>' + obj.dlCsName + '</strong></div>');
         return obj.text;
       },
       get_deliverycustomer_matcher(params, data) {
@@ -709,10 +727,6 @@
         // check dữ liệu
         // chuyển sáng review
         this.step_active = "step-review";
-      },
-      storeQtty_OnChange(contractDetail) {
-        var prdcAmnt = contractDetail.storeQtty * contractDetail.itemPrice;
-        contractDetail.prdcAmnt = prdcAmnt;
       }
     },
     async mounted() {
@@ -773,6 +787,9 @@
   {
     color: darkcyan;
   }
+  }
+  .wrap-table th{
+    white-space:nowrap;
   }
 </style>
 

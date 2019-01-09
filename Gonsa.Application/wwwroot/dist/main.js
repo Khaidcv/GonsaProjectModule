@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8455ce199c93872d61a1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d1c0d128b5b3fbda2807"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -13404,7 +13404,7 @@ exports = module.exports = __webpack_require__(16)();
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"] {\n  height: 20px;\n  width: 20px;\n  cursor: pointer;\n}\ntable td {\n  white-space: nowrap;\n}\n.add-product-modal .modal-body {\n  min-height: 300px;\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/AddProductModal.vue"],"names":[],"mappings":";AAAA;EACE,aAAa;EACb,YAAY;EACZ,gBAAgB;CAAE;AAEpB;EACE,oBAAoB;CAAE;AAExB;EACE,kBAAkB;CAAE","file":"AddProductModal.vue","sourcesContent":["input[type=\"checkbox\"] {\n  height: 20px;\n  width: 20px;\n  cursor: pointer; }\n\ntable td {\n  white-space: nowrap; }\n\n.add-product-modal .modal-body {\n  min-height: 300px; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\ninput[type=\"checkbox\"] {\n  height: 20px;\n  width: 20px;\n  cursor: pointer;\n}\ntable td {\n  white-space: nowrap;\n}\n.wrap-table {\n  min-height: 450px;\n}\n.add-product-modal .modal-body {\n  min-height: 300px;\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/AddProductModal.vue"],"names":[],"mappings":";AAAA;EACE,aAAa;EACb,YAAY;EACZ,gBAAgB;CAAE;AAEpB;EACE,oBAAoB;CAAE;AAExB;EACE,kBAAkB;CAAE;AAEtB;EACE,kBAAkB;CAAE","file":"AddProductModal.vue","sourcesContent":["input[type=\"checkbox\"] {\n  height: 20px;\n  width: 20px;\n  cursor: pointer; }\n\ntable td {\n  white-space: nowrap; }\n\n.wrap-table {\n  min-height: 450px; }\n\n.add-product-modal .modal-body {\n  min-height: 300px; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -13418,7 +13418,7 @@ exports = module.exports = __webpack_require__(16)();
 
 
 // module
-exports.push([module.i, "/*modal customer list*/\n.modal-customer-list .wrap-table {\n  max-height: 400px;\n  overflow-y: scroll;\n  /*border: 1px solid #999;*/\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/CustomerListModal.vue"],"names":[],"mappings":"AAAA,uBAAuB;AACvB;EACE,kBAAkB;EAClB,mBAAmB;EACnB,2BAA2B;CAAE","file":"CustomerListModal.vue","sourcesContent":["/*modal customer list*/\n.modal-customer-list .wrap-table {\n  max-height: 400px;\n  overflow-y: scroll;\n  /*border: 1px solid #999;*/ }\n"],"sourceRoot":""}]);
+exports.push([module.i, "/*modal customer list*/\n.modal-customer-list .wrap-table {\n  max-height: 600px;\n  overflow-y: scroll;\n  /*border: 1px solid #999;*/\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/CustomerListModal.vue"],"names":[],"mappings":"AAAA,uBAAuB;AACvB;EACE,kBAAkB;EAClB,mBAAmB;EACnB,2BAA2B;CAAE","file":"CustomerListModal.vue","sourcesContent":["/*modal customer list*/\n.modal-customer-list .wrap-table {\n  max-height: 600px;\n  overflow-y: scroll;\n  /*border: 1px solid #999;*/ }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -13432,7 +13432,7 @@ exports = module.exports = __webpack_require__(16)();
 
 
 // module
-exports.push([module.i, "\n.select2-selection .selected {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.select2-template-result {\n  margin: 0;\n  position: relative;\n}\n.select2-template-result .title {\n  color: darkcyan;\n  font-weight: bold;\n}\n.select2-container--default .select2-results > .select2-results__options {\n  max-height: 350px;\n  overflow-y: auto;\n}\n\n/* hover qua cac cai */\n.select2-results__option.select2-results__option--highlighted .title {\n  color: #fff;\n}\n\n/* khi selected hover vao*/\n.select2-results__option[aria-selected=true] .title {\n  color: darkcyan;\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/Form.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;EACjB,wBAAwB;EACxB,oBAAoB;CAAE;AAExB;EACE,UAAU;EACV,mBAAmB;CAAE;AAEvB;EACE,gBAAgB;EAChB,kBAAkB;CAAE;AAEtB;EACE,kBAAkB;EAClB,iBAAiB;CAAE;;AAErB,uBAAuB;AACvB;EACE,YAAY;CAAE;;AAEhB,2BAA2B;AAC3B;EACE,gBAAgB;CAAE","file":"Form.vue","sourcesContent":[".select2-selection .selected {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.select2-template-result {\n  margin: 0;\n  position: relative; }\n\n.select2-template-result .title {\n  color: darkcyan;\n  font-weight: bold; }\n\n.select2-container--default .select2-results > .select2-results__options {\n  max-height: 350px;\n  overflow-y: auto; }\n\n/* hover qua cac cai */\n.select2-results__option.select2-results__option--highlighted .title {\n  color: #fff; }\n\n/* khi selected hover vao*/\n.select2-results__option[aria-selected=true] .title {\n  color: darkcyan; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.select2-selection .selected {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.select2-template-result {\n  margin: 0;\n  position: relative;\n}\n.select2-template-result .title {\n  color: darkcyan;\n  font-weight: bold;\n}\n.select2-container--default .select2-results > .select2-results__options {\n  max-height: 350px;\n  overflow-y: auto;\n}\n\n/* hover qua cac cai */\n.select2-results__option.select2-results__option--highlighted .title {\n  color: #fff;\n}\n\n/* khi selected hover vao*/\n.select2-results__option[aria-selected=true] .title {\n  color: darkcyan;\n}\n.wrap-table th {\n  white-space: nowrap;\n}\n", "", {"version":3,"sources":["D:/Project/GonsaGithub/GonsaProjectModule/Gonsa.Application/ClientApp/Components/WebContract/Form.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;EACjB,wBAAwB;EACxB,oBAAoB;CAAE;AAExB;EACE,UAAU;EACV,mBAAmB;CAAE;AAEvB;EACE,gBAAgB;EAChB,kBAAkB;CAAE;AAEtB;EACE,kBAAkB;EAClB,iBAAiB;CAAE;;AAErB,uBAAuB;AACvB;EACE,YAAY;CAAE;;AAEhB,2BAA2B;AAC3B;EACE,gBAAgB;CAAE;AAEpB;EACE,oBAAoB;CAAE","file":"Form.vue","sourcesContent":[".select2-selection .selected {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.select2-template-result {\n  margin: 0;\n  position: relative; }\n\n.select2-template-result .title {\n  color: darkcyan;\n  font-weight: bold; }\n\n.select2-container--default .select2-results > .select2-results__options {\n  max-height: 350px;\n  overflow-y: auto; }\n\n/* hover qua cac cai */\n.select2-results__option.select2-results__option--highlighted .title {\n  color: #fff; }\n\n/* khi selected hover vao*/\n.select2-results__option[aria-selected=true] .title {\n  color: darkcyan; }\n\n.wrap-table th {\n  white-space: nowrap; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -15542,11 +15542,24 @@ exports.default = {
           webContractDetail.boxID = 'SizeBase';
         }
 
+        webContractDetail.itemPerBox = product.itemPerBox;
+
         if (this.$store.state.user.clnType == 'OTC') {
           webContractDetail.remnRfQt = -9999;
         } else if (this.$store.state.user.clnType == 'ETC') {
           webContractDetail.remnRfQt = product.remnRfQt;
         }
+
+        webContractDetail.itemQtty = 0;
+        webContractDetail.storeQtty = 0;
+
+        if (this.$store.state.user.clnType == 'OTC') {
+          webContractDetail.itemPrice = product.itemPrice;
+        } else if (this.$store.state.user.clnType == 'ETC') {
+          webContractDetail.itemPrice = product.storePrice;
+        }
+
+        webContractDetail.prdcAmnt = 0;
 
         webContractDetailList.push(webContractDetail);
       }
@@ -16024,7 +16037,8 @@ exports.default = {
       }
     },
     get_customer_template_selection: function get_customer_template_selection(obj) {
-      if (obj.customerID != null && obj.customerID.length > 0) return $('<div class="selected"><strong>' + obj.psCsName + '</strong></div>');
+      if (obj.customerID != null && obj.customerID.length > 0) return obj.psCsName;
+
       return obj.text;
     },
     get_customer_matcher: function get_customer_matcher(params, data) {
@@ -16062,7 +16076,8 @@ exports.default = {
       }
     },
     get_deliverycustomer_template_selection: function get_deliverycustomer_template_selection(obj) {
-      if (obj.deliverEm != null && obj.deliverEm.length > 0) return $('<div class="selected"><strong>' + obj.dlCsName + '</strong></div>');
+      if (obj.deliverEm != null && obj.deliverEm.length > 0) return obj.dlCsName;
+
       return obj.text;
     },
     get_deliverycustomer_matcher: function get_deliverycustomer_matcher(params, data) {
@@ -16115,10 +16130,6 @@ exports.default = {
     },
     save_step_product: function save_step_product() {
       this.step_active = "step-review";
-    },
-    storeQtty_OnChange: function storeQtty_OnChange(contractDetail) {
-      var prdcAmnt = contractDetail.storeQtty * contractDetail.itemPrice;
-      contractDetail.prdcAmnt = prdcAmnt;
     }
   },
   mounted: function mounted() {
@@ -18786,6 +18797,20 @@ exports.default = {
       }
       this.show_modal_add_product = false;
     },
+    calc_produt_amount: function calc_produt_amount(detail) {
+      var itemPrice = detail.itemPrice || 0;
+      var itemQtty = detail.itemQtty || 0;
+      detail.prdcAmnt = itemPrice * itemQtty;
+    },
+    store_quantity_change: function store_quantity_change(detail) {
+      detail.itemQtty = detail.storeQtty / detail.itemPerBox;
+      this.calc_produt_amount(detail);
+    },
+    item_quantity_change: function item_quantity_change(detail) {
+
+      detail.storeQtty = detail.itemQtty * detail.itemPerBox;
+      this.calc_produt_amount(detail);
+    },
     remove_webcontractdetails: function remove_webcontractdetails(contractDetail) {
       var index = this.web_contract_details.indexOf(contractDetail);
       this.web_contract_details.splice(index, 1);
@@ -18886,7 +18911,7 @@ var state = {
   show_loading: true,
   show_modal_customerlist: false,
   user: {
-    clnType: 'ETC'
+    clnType: 'OTC'
   }
 };
 
@@ -34645,29 +34670,15 @@ var render = function() {
                               _vm._v(" "),
                               _vm.issubmited_customer &&
                               _vm.errors.has("form-step-customer.psCsName")
-                                ? _c(
-                                    "p",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "validate",
-                                          rawName: "v-validate",
-                                          value: "required",
-                                          expression: "'required'"
-                                        }
-                                      ],
-                                      staticClass: "text-danger"
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.errors.first(
-                                            "form-step-customer.psCsName"
-                                          )
+                                ? _c("p", { staticClass: "text-danger" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors.first(
+                                          "form-step-customer.psCsName"
                                         )
                                       )
-                                    ]
-                                  )
+                                    )
+                                  ])
                                 : _vm._e()
                             ])
                           ]),
@@ -34723,29 +34734,15 @@ var render = function() {
                               _vm._v(" "),
                               _vm.issubmited_customer &&
                               _vm.errors.has("form-step-customer.psCsTel")
-                                ? _c(
-                                    "p",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "validate",
-                                          rawName: "v-validate",
-                                          value: "required",
-                                          expression: "'required'"
-                                        }
-                                      ],
-                                      staticClass: "text-danger"
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.errors.first(
-                                            "form-step-customer.psCsTel"
-                                          )
+                                ? _c("p", { staticClass: "text-danger" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors.first(
+                                          "form-step-customer.psCsTel"
                                         )
                                       )
-                                    ]
-                                  )
+                                    )
+                                  ])
                                 : _vm._e()
                             ])
                           ]),
@@ -34800,29 +34797,15 @@ var render = function() {
                               _vm._v(" "),
                               _vm.issubmited_customer &&
                               _vm.errors.has("form-step-customer.psCsInfo")
-                                ? _c(
-                                    "p",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "validate",
-                                          rawName: "v-validate",
-                                          value: "required",
-                                          expression: "'required'"
-                                        }
-                                      ],
-                                      staticClass: "text-danger"
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.errors.first(
-                                            "form-step-customer.psCsInfo"
-                                          )
+                                ? _c("p", { staticClass: "text-danger" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors.first(
+                                          "form-step-customer.psCsInfo"
                                         )
                                       )
-                                    ]
-                                  )
+                                    )
+                                  ])
                                 : _vm._e()
                             ])
                           ]),
@@ -34880,29 +34863,15 @@ var render = function() {
                                   _vm._v(" "),
                                   _vm.issubmited_customer &&
                                   _vm.errors.has("form-step-customer.psCsAddr")
-                                    ? _c(
-                                        "p",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.errors.first(
-                                                "form-step-customer.psCsAddr"
-                                              )
+                                    ? _c("p", { staticClass: "text-danger" }, [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errors.first(
+                                              "form-step-customer.psCsAddr"
                                             )
                                           )
-                                        ]
-                                      )
+                                        )
+                                      ])
                                     : _vm._e()
                                 ])
                               ])
@@ -35294,7 +35263,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.step_active == "step-product"
+        _vm.step_active == "step-product" || true
           ? _c("div", { staticClass: "box box-primary" }, [
               _c("div", { staticClass: "box-header with-border" }, [
                 _vm._m(4),
@@ -35358,225 +35327,341 @@ var render = function() {
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "wrap-table" }, [
                       _c(
-                        "table",
-                        {
-                          staticClass: "table table-bordered",
-                          attrs: { width: "1200" }
-                        },
+                        "form",
+                        { attrs: { "data-vv-scope": "form-step-product" } },
                         [
-                          _vm._m(5),
-                          _vm._v(" "),
                           _c(
-                            "tbody",
-                            _vm._l(_vm.web_contract_details, function(
-                              contractDetail,
-                              index
-                            ) {
-                              return _c("tr", { key: contractDetail.itemID }, [
-                                _c("td", [_vm._v(_vm._s(index + 1))]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.storeID))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "hidden" }, [
-                                  _vm._v(_vm._s(contractDetail.itemID))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "strong",
-                                    { staticClass: "text-success" },
-                                    [_vm._v(_vm._s(contractDetail.itemName))]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "hidden" }, [
-                                  _vm._v(_vm._s(contractDetail.itemUnit))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.itemUnitName))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.bchCode))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.boxID))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.remnRfQt))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: contractDetail.storeQtty,
-                                        expression: "contractDetail.storeQtty"
-                                      }
-                                    ],
-                                    staticStyle: { width: "50%" },
-                                    attrs: {
-                                      type: "number",
-                                      min: "1",
-                                      name: "name",
-                                      value: ""
-                                    },
-                                    domProps: {
-                                      value: contractDetail.storeQtty
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.storeQtty_OnChange(contractDetail)
-                                      },
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          contractDetail,
-                                          "storeQtty",
-                                          $event.target.value
+                            "table",
+                            {
+                              staticClass: "table table-bordered",
+                              attrs: { width: "1200" }
+                            },
+                            [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.web_contract_details, function(
+                                  contractDetail,
+                                  index
+                                ) {
+                                  return _c(
+                                    "tr",
+                                    { key: contractDetail.itemID },
+                                    [
+                                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.storeID))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "hidden" }, [
+                                        _vm._v(_vm._s(contractDetail.itemID))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "strong",
+                                          { staticClass: "text-success" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(contractDetail.itemName)
+                                            )
+                                          ]
                                         )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: contractDetail.itemQtty,
-                                        expression: "contractDetail.itemQtty"
-                                      }
-                                    ],
-                                    staticStyle: { width: "50%" },
-                                    attrs: {
-                                      type: "number",
-                                      name: "name",
-                                      value: ""
-                                    },
-                                    domProps: {
-                                      value: contractDetail.itemQtty
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          contractDetail,
-                                          "itemQtty",
-                                          $event.target.value
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "hidden" }, [
+                                        _vm._v(_vm._s(contractDetail.itemUnit))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(contractDetail.itemUnitName)
                                         )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatVnd")(
-                                        contractDetail.itemPrice
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatVnd")(
-                                        contractDetail.prdcAmnt
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "\n                      " +
-                                      _vm._s(contractDetail.prmtListItem) +
-                                      "\n                      "
-                                  ),
-                                  _c(
-                                    "button",
-                                    { staticClass: "btn btn-xs btn-success" },
-                                    [_vm._v("Chọn CTKM")]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "hidden" }, [
-                                  _vm._v(_vm._s(contractDetail.prmtID))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.dscnRate))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatVnd")(
-                                        contractDetail.dscnAmnt
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(contractDetail.dscnMbRt))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatVnd")(
-                                        contractDetail.dscnMbAm
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatVnd")(
-                                        contractDetail.smPdAmnt
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-xs btn-danger",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.remove_webcontractdetails(
-                                            contractDetail
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.bchCode))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.boxID))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.remnRfQt))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value:
+                                                "required|decimal|min:0|max:50",
+                                              expression:
+                                                "'required|decimal|min:0|max:50'"
+                                            },
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: contractDetail.storeQtty,
+                                              expression:
+                                                "contractDetail.storeQtty"
+                                            }
+                                          ],
+                                          key: "storeQtty" + index,
+                                          staticStyle: { width: "100%" },
+                                          attrs: {
+                                            type: "text",
+                                            "data-vv-as": "Số lượng đơn vị",
+                                            name: "storeQtty" + index
+                                          },
+                                          domProps: {
+                                            value: contractDetail.storeQtty
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.store_quantity_change(
+                                                contractDetail
+                                              )
+                                            },
+                                            keydown: function($event) {
+                                              if (
+                                                !("button" in $event) &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "enter",
+                                                  13,
+                                                  $event.key,
+                                                  "Enter"
+                                                )
+                                              ) {
+                                                return null
+                                              }
+                                              $event.preventDefault()
+                                            },
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                contractDetail,
+                                                "storeQtty",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.errors.has(
+                                          "form-step-product.storeQtty" + index
+                                        )
+                                          ? _c(
+                                              "p",
+                                              { staticClass: "text-danger" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.errors.first(
+                                                      "form-step-product.storeQtty" +
+                                                        index
+                                                    )
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value:
+                                                "required|decimal|min:0|max:50",
+                                              expression:
+                                                "'required|decimal|min:0|max:50'"
+                                            },
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: contractDetail.itemQtty,
+                                              expression:
+                                                "contractDetail.itemQtty"
+                                            }
+                                          ],
+                                          key: "itemQtty" + index,
+                                          staticStyle: { width: "100%" },
+                                          attrs: {
+                                            type: "text",
+                                            "data-vv-as": "Số lượng",
+                                            name: "itemQtty" + index
+                                          },
+                                          domProps: {
+                                            value: contractDetail.itemQtty
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.item_quantity_change(
+                                                contractDetail
+                                              )
+                                            },
+                                            keydown: function($event) {
+                                              if (
+                                                !("button" in $event) &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "enter",
+                                                  13,
+                                                  $event.key,
+                                                  "Enter"
+                                                )
+                                              ) {
+                                                return null
+                                              }
+                                              $event.preventDefault()
+                                            },
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                contractDetail,
+                                                "itemQtty",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.errors.has(
+                                          "form-step-product.itemQtty" + index
+                                        )
+                                          ? _c(
+                                              "p",
+                                              { staticClass: "text-danger" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.errors.first(
+                                                      "form-step-product.itemQtty" +
+                                                        index
+                                                    )
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatVnd")(
+                                              contractDetail.itemPrice
+                                            )
                                           )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(" Xóa ")]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatVnd")(
+                                              contractDetail.prdcAmnt
+                                            )
+                                          )
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          "\n                        " +
+                                            _vm._s(
+                                              contractDetail.prmtListItem
+                                            ) +
+                                            "\n                        "
+                                        ),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-xs btn-success"
+                                          },
+                                          [_vm._v("Chọn CTKM")]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "hidden" }, [
+                                        _vm._v(_vm._s(contractDetail.prmtID))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.dscnRate))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatVnd")(
+                                              contractDetail.dscnAmnt
+                                            )
+                                          )
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(contractDetail.dscnMbRt))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatVnd")(
+                                              contractDetail.dscnMbAm
+                                            )
+                                          )
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatVnd")(
+                                              contractDetail.smPdAmnt
+                                            )
+                                          )
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-xs btn-danger",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.remove_webcontractdetails(
+                                                  contractDetail
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v(" Xóa ")]
+                                        )
+                                      ])
+                                    ]
                                   )
-                                ])
-                              ])
-                            }),
-                            0
+                                }),
+                                0
+                              )
+                            ]
                           )
                         ]
                       )

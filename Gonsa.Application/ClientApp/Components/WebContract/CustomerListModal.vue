@@ -195,7 +195,7 @@
     .wrap-table
 
   {
-    max-height: 400px;
+    max-height: 600px;
     overflow-y: scroll;
     /*border: 1px solid #999;*/
   }

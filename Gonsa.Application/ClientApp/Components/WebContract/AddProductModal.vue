@@ -186,12 +186,27 @@ n
             webContractDetail.boxID = 'SizeBase';
           }
 
+          // item per box, field nay k phai la field cua web contract detail. nhung phai dua xuogn de tinh toan.
+          webContractDetail.itemPerBox = product.itemPerBox;
+
           // tinh so luong ton thau
           if (this.$store.state.user.clnType == 'OTC') {
             webContractDetail.remnRfQt = -9999; // qui cách bán
           } else if (this.$store.state.user.clnType == 'ETC') {
             webContractDetail.remnRfQt = product.remnRfQt; // qui cách bán
           }
+
+          webContractDetail.itemQtty = 0;
+          webContractDetail.storeQtty = 0;
+
+          // ItemPrice giá bán
+          if (this.$store.state.user.clnType == 'OTC') {
+            webContractDetail.itemPrice = product.itemPrice; // OTC thì lấy giá item price
+          } else if (this.$store.state.user.clnType == 'ETC') {
+            webContractDetail.itemPrice = product.storePrice; // ETC thì lấy giá store price
+          }
+          // tiền hàng
+          webContractDetail.prdcAmnt = 0;
 
           webContractDetailList.push(webContractDetail);
         }
@@ -272,6 +287,9 @@ n
   }
   table td {
     white-space: nowrap;
+  }
+  .wrap-table{
+    min-height:450px;
   }
   .add-product-modal .modal-body{
     min-height:300px;
