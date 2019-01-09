@@ -1,0 +1,9 @@
+D:\Project\Gonsa\Gonsa.Entities\bin\Release\netcoreapp2.1\Gonsa.Entities.deps.json
+D:\Project\Gonsa\Gonsa.Entities\bin\Release\netcoreapp2.1\Gonsa.Entities.dll
+D:\Project\Gonsa\Gonsa.Entities\bin\Release\netcoreapp2.1\Gonsa.Entities.pdb
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.csprojAssemblyReference.cache
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.csproj.CoreCompileInputs.cache
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.AssemblyInfoInputs.cache
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.AssemblyInfo.cs
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.dll
+D:\Project\Gonsa\Gonsa.Entities\obj\Release\netcoreapp2.1\Gonsa.Entities.pdb

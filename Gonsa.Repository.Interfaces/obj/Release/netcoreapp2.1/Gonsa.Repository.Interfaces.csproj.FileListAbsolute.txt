@@ -1,0 +1,12 @@
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\bin\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.deps.json
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\bin\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.dll
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\bin\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.pdb
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\bin\Release\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\bin\Release\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.csprojAssemblyReference.cache
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.csproj.CoreCompileInputs.cache
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.AssemblyInfoInputs.cache
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.AssemblyInfo.cs
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.csproj.CopyComplete
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.dll
+D:\Project\Gonsa\Gonsa.Repository.Interfaces\obj\Release\netcoreapp2.1\Gonsa.Repository.Interfaces.pdb

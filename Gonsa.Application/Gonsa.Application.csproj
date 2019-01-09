@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove="yarn.lock" />
+    <Compile Remove="wwwroot\bower_components\**" />
+
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="ClientApp\**" />
+    <Content Remove="wwwroot\bower_components\**" />
+    <EmbeddedResource Remove="wwwroot\bower_components\**" />
+    <None Remove="wwwroot\bower_components\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\dist\css\adminlte.css.map" />
+    <None Include="wwwroot\dist\css\adminlte.min.css.map" />
+    <None Include="wwwroot\dist\js\adminlte.js" />
+    <None Include="wwwroot\dist\js\adminlte.min.js" />
+    <None Include="wwwroot\dist\js\demo.js" />
+    <None Include="wwwroot\dist\js\pages\dashboard.js" />
+    <None Include="wwwroot\dist\js\pages\dashboard2.js" />
+    <None Include="wwwroot\plugins\bootstrap-slider\bootstrap-slider.js" />
+    <None Include="wwwroot\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
+    <None Include="wwwroot\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
+    <None Include="wwwroot\plugins\iCheck\icheck.js" />
+    <None Include="wwwroot\plugins\iCheck\icheck.min.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.date.extensions.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.extensions.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.numeric.extensions.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.phone.extensions.js" />
+    <None Include="wwwroot\plugins\input-mask\jquery.inputmask.regex.extensions.js" />
+    <None Include="wwwroot\plugins\jQueryUI\jquery-ui.js" />
+    <None Include="wwwroot\plugins\jQueryUI\jquery-ui.min.js" />
+    <None Include="wwwroot\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
+    <None Include="wwwroot\plugins\jvectormap\jquery-jvectormap-usa-en.js" />
+    <None Include="wwwroot\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <None Include="wwwroot\plugins\pace\pace.js" />
+    <None Include="wwwroot\plugins\pace\pace.min.js" />
+    <None Include="wwwroot\plugins\timepicker\bootstrap-timepicker.js" />
+    <None Include="wwwroot\plugins\timepicker\bootstrap-timepicker.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gonsa.Data\Gonsa.Data.csproj" />
+    <ProjectReference Include="..\Gonsa.Repository.Interfaces\Gonsa.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\Gonsa.Repository\Gonsa.Repository.csproj" />
+  </ItemGroup>
+
+  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
+    <Exec Command="npm install --ignore-scripts" />
+    <Exec Command="npm run build" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,43 @@
+
+@{
+    ViewData["Title"] = "Test";
+}
+<div>
+    <select id="test" class="form-control">
+        <option value="0000131968:137941">Nhà thuốc thanh hà</option>
+    </select>
+</div>
+<h2>Test</h2>
+@section scripts{
+    <script>
+        $(function () {
+            $('#test').select2({
+                //templateResult: (obj) => {
+                //    if (obj.customerID != null && obj.customerID.length > 0) {
+                //        return $(`<div class='select2-template-result'>
+                //            <div class='title'>${obj.psCsName}</div>
+                //            <div class=""><span>${obj.psCsTel}</span></div>
+                //            <div class=""><small>${obj.psCsInfo}</small></div>
+                //            </div>`);
+                //    } else {
+                //        return obj.text;
+                //    }
+                //},
+                minimumInputLength: 1,
+                quietMillis: 2000,
+                ajax: {
+                    url: 'http://localhost:1109/api/customer?pageSize=100',
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            term: params.term || 'bác sĩ',
+                            page: params.page || 1
+                        }
+                    },
+                    cache: true
+                }
+            })
+        });
+    </script>
+}
+

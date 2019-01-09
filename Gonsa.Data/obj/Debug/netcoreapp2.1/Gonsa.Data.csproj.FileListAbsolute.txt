@@ -1,0 +1,9 @@
+D:\Project\Gonsa\Gonsa.Data\bin\Debug\netcoreapp2.1\Gonsa.Data.deps.json
+D:\Project\Gonsa\Gonsa.Data\bin\Debug\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\Gonsa\Gonsa.Data\bin\Debug\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.csproj.CoreCompileInputs.cache
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.AssemblyInfoInputs.cache
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.AssemblyInfo.cs
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\Gonsa\Gonsa.Data\obj\Debug\netcoreapp2.1\Gonsa.Data.csprojAssemblyReference.cache
