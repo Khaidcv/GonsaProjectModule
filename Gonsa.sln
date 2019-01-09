@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gonsa.Entities", "Gonsa.Ent
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gonsa.Application", "Gonsa.Application\Gonsa.Application.csproj", "{A0B473C5-EFD6-4830-9CAE-E4AB13377693}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gonsa.Utilities", "Gonsa.Utilities\Gonsa.Utilities.csproj", "{F86445FC-57F8-41EE-9DF1-0EDA6B5112E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A0B473C5-EFD6-4830-9CAE-E4AB13377693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B473C5-EFD6-4830-9CAE-E4AB13377693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B473C5-EFD6-4830-9CAE-E4AB13377693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86445FC-57F8-41EE-9DF1-0EDA6B5112E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86445FC-57F8-41EE-9DF1-0EDA6B5112E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86445FC-57F8-41EE-9DF1-0EDA6B5112E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F86445FC-57F8-41EE-9DF1-0EDA6B5112E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

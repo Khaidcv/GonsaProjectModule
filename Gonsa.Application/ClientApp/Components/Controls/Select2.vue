@@ -2,17 +2,18 @@
   <div>
     <select class="form-control" ref="select" style="width:100%;">
       <option value="">{{placeholder}}</option>
+      <option v-if="get_selected_data" v-bind:value="value">
+        <strong>{{get_selected_data().text}}</strong>
+      </option>
     </select>
   </div>
 </template>
 <script>
   export default {
-    props: ["value", "templateResult", "templateSelection", "options", "skey", "placeholder", "matcher"],
+    props: ["value", "templateResult", "templateSelection", "options", "skey", "placeholder", "matcher", "ajax","get_selected_data"],
     mounted() {
-
       var vm = this;
       var el = $(this.$refs.select);
-
       // phần trên này không cần, do khi dùng v-if nó sẽ không render ra nên giwof phải làm trong đây.
       var opt = {
         allowClear: true,
@@ -22,7 +23,10 @@
           return obj;
         })
       };
-
+      if (this.ajax) {
+        opt.delay = 15000;
+        opt.ajax = this.ajax;
+      }
       if (this.templateSelection) {
         opt.templateSelection = this.templateSelection;
       }
@@ -34,8 +38,12 @@
       }
       el.select2(opt);
       el.val(this.value).trigger('change');
-      // phần trên này không cần, do khi dùng v-if nó sẽ không render ra nên phải render lại. khi v-if render sẽ gọi hàm mounted.
 
+      if (this.ajax) {
+        alert("co ajax");
+      }
+
+      // phần trên này không cần, do khi dùng v-if nó sẽ không render ra nên phải render lại. khi v-if render sẽ gọi hàm mounted.
       el.on('select2:select', function () {
         vm.$emit("change", this.value);
       });
@@ -54,6 +62,7 @@
     },
     watch: {
       options() {
+        if (this.ajax) return;
         var vm = this;
         var el = $(this.$refs.select);
         var opt = {
@@ -64,7 +73,6 @@
             return obj;
           })
         };
-
         if (this.templateSelection) {
           opt.templateSelection = this.templateSelection;
         }
@@ -74,7 +82,6 @@
         if (this.matcher) {
           opt.matcher = this.matcher;
         }
-
         el.select2(opt);
       },
       value() {
@@ -86,7 +93,6 @@
         try {
           $(this.$refs.select).off().select2('destroy');
         } catch (e) {
-
         }
       }
     }
@@ -96,7 +102,7 @@
   .select2-selection__clear {
     font-size: 22px;
   }
-  .select2-selection__clear:hover{
-    color:#8d1111;
-  }
+    .select2-selection__clear:hover {
+      color: #8d1111;
+    }
 </style>

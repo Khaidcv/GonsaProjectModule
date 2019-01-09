@@ -46,8 +46,8 @@
                     <div class="col-sm-9">
                       <Select2 skey="customerID" placeholder="Chọn khách hàng" name="customerID" v-validate="'required'" key="customerID"
                                v-model="webContract.customerID"
+                               :ajax="customer_ajax" :get_selected_data="get_customer_init_selected_value"
                                :templateResult="get_customer_template_result"
-                               :options="customers"
                                :templateSelection="get_customer_template_selection"
                                :matcher="get_customer_matcher"
                                @change="customer_OnChange($event)">
@@ -492,6 +492,23 @@
     data() {
       return {
         customers: [],
+        customer_ajax: {
+          url: '/api/customer/test?PageSize=50',
+          dataType: 'json',
+          data: function (params) {
+            if (params.term) {
+              return {
+                term: params.term || '',
+                page: params.page || 1
+              }
+            } else {
+              return {
+                page: params.page || 1
+              }
+            }
+          },
+          cache: true
+        },
         issubmited_customer: false, // xac nhan da submit form customer
         issubmited_delivery_customer: false, // xac nhan da submit form delivery customer
         delivery_customers: [],
@@ -519,7 +536,7 @@
     },
     methods: {
       async get_customers() {
-        let response = await this.$http.get("/api/customer?pageSize=10");
+        let response = await this.$http.get("/api/customer?PageSize=60");
         this.customers = response.data.data;
       },
       async get_delivery_customers() {
@@ -533,7 +550,9 @@
       },
       async load_customer_info() {
         if (this.webContract.customerID && this.webContract.customerID.length > 0) {
-          var cus = this.customers.find(item => { return item.customerID == this.webContract.customerID });
+          let customer_response = await this.$http.get("/api/customer/" + this.webContract.customerID);
+          //var cus = this.customers.find(item => { return item.customerID == this.webContract.customerID });
+          var cus = customer_response.data;
           this.webContract.psCsName = cus.psCsName;
           this.webContract.memberTypeName = cus.memberTypeName;
           this.webContract.membType = cus.membType;
@@ -584,7 +603,8 @@
                 <div class=""><small>${obj.psCsInfo}</small></div>
                 </div>`);
         } else {
-          return obj.text;
+          //return obj.text;
+          return null;
         }
       }, // Cấu hình selec2 cho customer
       get_customer_template_selection(obj) {
@@ -616,6 +636,12 @@
         }
 
         return null;
+      },
+      get_customer_init_selected_value() { // gasn gia tri mac dinh cho lookup.
+        return {
+          id: this.webContract.customerID,
+          text: this.webContract.psCsName
+        };
       },
       get_deliverycustomer_template_result(obj) {
         if (obj.dlCsName != null && obj.dlCsName.length > 0) {
@@ -691,7 +717,7 @@
     },
     async mounted() {
       this.$validator.localize('en', dic.vn);
-      await this.get_customers();
+      //await this.get_customers();
       this.$store.state.show_loading = false;
     },
     filters: {

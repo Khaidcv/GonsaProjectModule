@@ -12,21 +12,20 @@
     <script>
         $(function () {
             $('#test').select2({
-                //templateResult: (obj) => {
-                //    if (obj.customerID != null && obj.customerID.length > 0) {
-                //        return $(`<div class='select2-template-result'>
-                //            <div class='title'>${obj.psCsName}</div>
-                //            <div class=""><span>${obj.psCsTel}</span></div>
-                //            <div class=""><small>${obj.psCsInfo}</small></div>
-                //            </div>`);
-                //    } else {
-                //        return obj.text;
-                //    }
-                //},
-                minimumInputLength: 1,
-                quietMillis: 2000,
+                templateResult: (obj) => {
+                    if (obj.customerID != null && obj.customerID.length > 0) {
+                        return $(`<div class='select2-template-result'>
+                            <div class='title'>${obj.psCsName}</div>
+                            <div class=""><span>${obj.psCsTel}</span></div>
+                            <div class=""><small>${obj.psCsInfo}</small></div>
+                            </div>`);
+                    } else {
+                        return null;
+                    }
+                },
+                quietMillis: 5000,
                 ajax: {
-                    url: 'http://localhost:1109/api/customer?pageSize=100',
+                    url: 'http://localhost:1109/api/customer/test?pageSize=100',
                     dataType: 'json',
                     data: function (params) {
                         return {

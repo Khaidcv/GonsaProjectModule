@@ -51,6 +51,7 @@
     <ProjectReference Include="..\Gonsa.Data\Gonsa.Data.csproj" />
     <ProjectReference Include="..\Gonsa.Repository.Interfaces\Gonsa.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\Gonsa.Repository\Gonsa.Repository.csproj" />
+    <ProjectReference Include="..\Gonsa.Utilities\Gonsa.Utilities.csproj" />
   </ItemGroup>
 
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
