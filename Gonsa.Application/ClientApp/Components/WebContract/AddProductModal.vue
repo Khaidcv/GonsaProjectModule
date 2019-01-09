@@ -18,7 +18,7 @@
             </div>
             <br />
             <div class="wrap-table">
-              <table class="table-bordered table-striped table" style="width:1500px">
+              <table class="table-bordered table" style="width:1500px">
                 <thead>
                   <tr>
                     <th>.No</th>
@@ -33,7 +33,6 @@
                     <th>Số lượng tồn</th>
                     <th v-if="$store.state.user.clnType=='ETC'">Số lượng tồn thầu</th>
                     <th>Mã lô sản phẩm</th>
-                    <th>Chọn</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,8 +47,8 @@
                     <td><strong class="text-info">{{product.itemName}}</strong></td>
                     <td>{{product.itemUnitName}}</td>
                     <td>{{product.itemPerBox}}</td>
-                    <td>{{product.itemPrice}}</td>
-                    <td>{{product.storePrice}}</td>
+                    <td>{{product.itemPrice | formatVnd}}</td>
+                    <td>{{product.storePrice | formatVnd}}</td>
                     <td>{{product.saleOhQt}}</td>
                     <td>{{product.realOhQt}}</td>
                     <td v-if="$store.state.user.clnType=='ETC'">{{product.remnRfQt}}</td>
@@ -185,6 +184,19 @@ n
           webContractDetailList.push(webContractDetail);
         }
         this.$emit("selected", webContractDetailList);
+      }
+    },
+    filters: {
+      formatVnd(number) {
+        var decimals = 0;
+        var dec_point = ",";
+        var thousands_sep = ".";
+        var n = number, c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+        var d = dec_point == undefined ? "," : dec_point;
+        var t = thousands_sep == undefined ? "." : thousands_sep, s = n < 0 ? "-" : "";
+        var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "") + " ₫";
       }
     },
     watch: {

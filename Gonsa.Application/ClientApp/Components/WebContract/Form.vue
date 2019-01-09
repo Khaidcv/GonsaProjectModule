@@ -73,7 +73,7 @@
                     <label for="" class="col-sm-3 control-label span-required">Mã thẻ thành viên</label>
                     <div class="col-sm-9">
                       <input type="text" name="memberCardID" v-validate="'required'"
-                             class="form-control" v-model="webContract.memberCardID" placeholder="Mã thẻ thành viên">
+                             class="form-control" v-model="webContract.memberCardID" readonly="readonly" placeholder="Mã thẻ thành viên">
                       <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.memberCardID')">{{errors.first('form-step-customer.memberCardID')}}</p>
                     </div>
                   </div>
@@ -82,7 +82,7 @@
                     <label for="" class="col-sm-3 control-label span-required">Loại thẻ</label>
                     <div class="col-sm-9">
                       <input type="text" name="memberTypeName" v-validate="'required'"
-                             class="form-control" v-model="webContract.memberTypeName" placeholder="Loại thẻ">
+                             class="form-control" v-model="webContract.memberTypeName" readonly="readonly" placeholder="Loại thẻ">
                       <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.memberTypeName')">{{errors.first('form-step-customer.memberTypeName')}}</p>
                     </div>
                   </div>
@@ -91,7 +91,7 @@
                     <label for="" class="col-sm-3 control-label span-required">Tỷ lệ giảm thẻ</label>
                     <div class="col-sm-9">
                       <input type="text" name="dscnMbRt" v-validate="'required'"
-                             class="form-control" v-model="webContract.dscnMbRt" placeholder="Tỷ lệ giảm thẻ">
+                             class="form-control" v-model="webContract.dscnMbRt" readonly="readonly" placeholder="Tỷ lệ giảm thẻ">
                       <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.dscnMbRt')">{{errors.first('form-step-customer.dscnMbRt')}}</p>
                     </div>
                   </div>
