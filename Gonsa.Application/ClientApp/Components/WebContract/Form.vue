@@ -221,7 +221,7 @@
       </div>
       <!-- Đơn vị nhận hàng-->
       <!-- Giỏ hàng -->
-      <div class="box box-primary" v-if="step_active == 'step-product' || true">
+      <div class="box box-primary" v-if="step_active == 'step-product'">
         <div class="box-header with-border">
           <h3 class="box-title">
             <img src="/dist/img/shopping-bags.png" width="30" alt="Sản phẩm" />

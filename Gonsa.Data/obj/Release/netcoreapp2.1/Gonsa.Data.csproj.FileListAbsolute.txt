@@ -7,3 +7,12 @@ D:\Project\Gonsa\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.AssemblyInfoInp
 D:\Project\Gonsa\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.AssemblyInfo.cs
 D:\Project\Gonsa\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.dll
 D:\Project\Gonsa\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\bin\Release\netcoreapp2.1\Gonsa.Data.deps.json
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\bin\Release\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\bin\Release\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.csprojAssemblyReference.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.csproj.CoreCompileInputs.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.AssemblyInfoInputs.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.AssemblyInfo.cs
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Data\obj\Release\netcoreapp2.1\Gonsa.Data.pdb

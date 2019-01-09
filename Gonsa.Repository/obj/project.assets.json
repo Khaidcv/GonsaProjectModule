@@ -3567,11 +3567,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\Gonsa\\Gonsa.Repository\\Gonsa.Repository.csproj",
+      "projectUniqueName": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Repository\\Gonsa.Repository.csproj",
       "projectName": "Gonsa.Repository",
-      "projectPath": "D:\\Project\\Gonsa\\Gonsa.Repository\\Gonsa.Repository.csproj",
+      "projectPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Repository\\Gonsa.Repository.csproj",
       "packagesPath": "C:\\Users\\T440\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\Gonsa\\Gonsa.Repository\\obj\\",
+      "outputPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3590,11 +3590,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\Project\\Gonsa\\Gonsa.Data\\Gonsa.Data.csproj": {
-              "projectPath": "D:\\Project\\Gonsa\\Gonsa.Data\\Gonsa.Data.csproj"
+            "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Data\\Gonsa.Data.csproj": {
+              "projectPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Data\\Gonsa.Data.csproj"
             },
-            "D:\\Project\\Gonsa\\Gonsa.Repository.Interfaces\\Gonsa.Repository.Interfaces.csproj": {
-              "projectPath": "D:\\Project\\Gonsa\\Gonsa.Repository.Interfaces\\Gonsa.Repository.Interfaces.csproj"
+            "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Repository.Interfaces\\Gonsa.Repository.Interfaces.csproj": {
+              "projectPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Repository.Interfaces\\Gonsa.Repository.Interfaces.csproj"
             }
           }
         }

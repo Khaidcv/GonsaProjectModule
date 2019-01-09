@@ -34,6 +34,27 @@ namespace Gonsa.Application.Api
                 });
             }
             int Offset = ((page - 1) * PageSize);
+            return Ok(new
+            {
+                data = result.OrderBy(x => x.PsCsName).Skip(Offset).Take(PageSize),
+                total = result.Count()
+            });
+        }
+
+        [HttpGet]
+        [Route("test")]
+        public async Task<ActionResult<IEnumerable<Customer>>> get2(int PageSize = -1, int page = 1, string term = "")
+        {
+            IEnumerable<Customer> result = await customerRes.GetAll();
+            if (PageSize == -1)
+            {
+                return Ok(new
+                {
+                    data = result.OrderBy(x => x.PsCsName),
+                    total = result.Count()
+                });
+            }
+            int Offset = ((page - 1) * PageSize);
             //return Ok(new
             //{
             //    data = result.OrderBy(x => x.PsCsName).Skip(Offset).Take(PageSize),

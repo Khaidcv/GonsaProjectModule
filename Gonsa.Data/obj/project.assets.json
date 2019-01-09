@@ -3467,11 +3467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\Gonsa\\Gonsa.Data\\Gonsa.Data.csproj",
+      "projectUniqueName": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Data\\Gonsa.Data.csproj",
       "projectName": "Gonsa.Data",
-      "projectPath": "D:\\Project\\Gonsa\\Gonsa.Data\\Gonsa.Data.csproj",
+      "projectPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Data\\Gonsa.Data.csproj",
       "packagesPath": "C:\\Users\\T440\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\Gonsa\\Gonsa.Data\\obj\\",
+      "outputPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

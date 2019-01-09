@@ -688,11 +688,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\Gonsa\\Gonsa.Entities\\Gonsa.Entities.csproj",
+      "projectUniqueName": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Entities\\Gonsa.Entities.csproj",
       "projectName": "Gonsa.Entities",
-      "projectPath": "D:\\Project\\Gonsa\\Gonsa.Entities\\Gonsa.Entities.csproj",
+      "projectPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Entities\\Gonsa.Entities.csproj",
       "packagesPath": "C:\\Users\\T440\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\Gonsa\\Gonsa.Entities\\obj\\",
+      "outputPath": "D:\\Project\\GonsaGithub\\GonsaProjectModule\\Gonsa.Entities\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
