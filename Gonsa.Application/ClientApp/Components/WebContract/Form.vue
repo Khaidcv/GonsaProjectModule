@@ -53,7 +53,7 @@
                                @change="customer_OnChange($event)">
                       </Select2>
                       <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.customerID')">{{errors.first('form-step-customer.customerID')}}</p>
-                      <div class="text-right">
+                      <div class="text-right hidden">
                         <button type="button" class="btn-xs btn-default" @click="show_modal_customer_list=true">Mở danh sách khách hàng dạng bảng</button>
                       </div>
                     </div>
@@ -497,71 +497,7 @@
         delivery_customers: [],
         show_modal_customer_list: false,
         step_active: "step-customer",
-        web_contract_details: [
-          {
-            storeID: 'KHO1',
-            itemID: 'MASP0001',
-            itemName: 'Sản phẩm 0001',
-            itemUnit: 'Mã đơn vị tính 01',
-            itemUnitName: 'Tên đơn vi tính 01',
-            bchCode: 'Mã lô 0001',
-            boxID: 'Qui cách bán 01',
-            remnRfQt: 55,
-            storeQtty: 2,
-            itemQtty: 3,
-            itemPrice: 100000,
-            prdcAmnt: 25000000,
-            prmtListItem: 'Chương trình KM 001',
-            prmtID: 'MÃ CTKM',
-            dscnRate: '50%',
-            dscnAmnt: 50000,
-            dscnMbRt: '10%',
-            dscnMbAm: 15000,
-            smPdAmnt: 2000000
-          },
-          {
-            storeID: 'KHO2',
-            itemID: 'MASP0002',
-            itemName: 'Sản phẩm 0002',
-            itemUnit: 'Mã đơn vị tính 02',
-            itemUnitName: 'Tên đơn vi tính 02',
-            bchCode: 'Mã lô 0002',
-            boxID: 'Qui cách bán 02',
-            remnRfQt: 15,
-            storeQtty: 2,
-            itemQtty: 4,
-            itemPrice: 15000000,
-            prdcAmnt: 100000,
-            prmtListItem: 'Chương trình KM 002',
-            prmtID: 'MÃ CTKM',
-            dscnRate: '50%',
-            dscnAmnt: 300000,
-            dscnMbRt: '10%',
-            dscnMbAm: 2000000,
-            smPdAmnt: 10000000
-          },
-          {
-            storeID: 'KHO3',
-            itemID: 'MASP0003',
-            itemName: 'Sản phẩm 0003',
-            itemUnit: 'Mã đơn vị tính 03',
-            itemUnitName: 'Tên đơn vi tính 03',
-            bchCode: 'Mã lô 0001',
-            boxID: 'Qui cách bán 03',
-            remnRfQt: 50,
-            storeQtty: 4,
-            itemQtty: 1,
-            itemPrice: 15000000,
-            prdcAmnt: '20.000.000 vnđ',
-            prmtListItem: 'Chương trình KM 003',
-            prmtID: 'MÃ CTKM',
-            dscnRate: '50%',
-            dscnAmnt: 200000,
-            dscnMbRt: '10%',
-            dscnMbAm: 5000000,
-            smPdAmnt: 26000000
-          }
-        ],
+        web_contract_details: [],
         webContract: {
           customerID: null,
           psCsName: '',
