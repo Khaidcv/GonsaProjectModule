@@ -11,7 +11,7 @@
           </div>
           <div class="modal-body" v-if="show">
             <div class="input-group">
-              <input type="text" placeholder="Nhập mã hoặc tên sản phẩm..." class="form-control">
+              <input type="text" placeholder="Nhập tên sản phẩm..." class="form-control">
               <span class="input-group-btn">
                 <button type="button" class="btn btn-primary btn-flat">Tìm kiếm</button>
               </span>
@@ -26,7 +26,7 @@
                     <th>Mã sản phẩm</th>
                     <th style="width:200px;">Tên sản phẩm</th>
                     <th>Tên đơn vị tính</th>
-                    <th>Số lượng đơnvị/hộp</th>
+                    <th>Số lượng đơn vị/hộp</th>
                     <th>Giá hộp</th>
                     <th>Giá đơn vị</th>
                     <th>Số lượng được bán</th>
@@ -49,15 +49,15 @@
                     <td>{{product.itemPerBox}}</td>
                     <td>{{product.itemPrice | formatVnd}}</td>
                     <td>{{product.storePrice | formatVnd}}</td>
-                    <td>{{product.saleOhQt}}</td>
-                    <td>{{product.realOhQt}}</td>
+                    <td>{{product.slOhQtty}}</td>
+                    <td>{{product.rmRfQtty}}</td>
                     <td v-if="$store.state.user.clnType=='ETC'">{{product.remnRfQt}}</td>
                     <td>{{product.bchCode}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="text-right">
+            <div class="text-right hidden">
               <ul class="pagination pagination-sm">
                 <template v-if="pagination.currentPage>1">
                   <li>
@@ -255,8 +255,7 @@ n
     width: 20px;
     cursor: pointer;
   }
-
-  table th {
+  table td {
     white-space: nowrap;
   }
 </style>
