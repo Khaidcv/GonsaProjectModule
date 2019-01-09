@@ -6,6 +6,7 @@ using Gonsa.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Gonsa.Data;
+using Gonsa.Utilities;
 namespace Gonsa.Application.Api
 {
     [Route("api/[controller]")]
@@ -22,6 +23,10 @@ namespace Gonsa.Application.Api
         public async Task<ActionResult<IEnumerable<Product>>> get(int PageSize = -1, int page = 1, string term = "")
         {
             var products = await _productRes.GetAll("21:020", ",00005.0001,00005.0001,00005.0002", ",0084.0080.0005,0084.0080.0011,0084.0080.0021", "000204", "000224", "01");
+            if (string.IsNullOrWhiteSpace(term) == false)
+            {
+                products = products.Where(x => x.ItemName.NonUnicode().ToLower().Contains(term.NonUnicode().ToLower())).OrderBy(x => x.ItemName);
+            }
             return Ok(products);
         }
     }

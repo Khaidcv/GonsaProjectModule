@@ -40,7 +40,7 @@
       el.val(this.value).trigger('change');
 
       if (this.ajax) {
-        alert("co ajax");
+        
       }
 
       // phần trên này không cần, do khi dùng v-if nó sẽ không render ra nên phải render lại. khi v-if render sẽ gọi hàm mounted.

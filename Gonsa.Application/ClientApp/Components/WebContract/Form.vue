@@ -269,7 +269,7 @@
                       <td>{{(index+1)}}</td>
                       <td>{{contractDetail.storeID}}</td>
                       <td class="hidden">{{contractDetail.itemID}}</td>
-                      <td><strong>{{contractDetail.itemName}}</strong></td>
+                      <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
                       <td class="hidden">{{contractDetail.itemUnit}}</td>
                       <td>{{contractDetail.itemUnitName}}</td>
                       <td>{{contractDetail.bchCode}}</td>

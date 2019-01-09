@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="modal" ref="modal">
+    <div class="modal add-product-modal" ref="modal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -11,9 +11,10 @@
           </div>
           <div class="modal-body" v-if="show">
             <div class="input-group">
-              <input type="text" placeholder="Nhập tên sản phẩm..." class="form-control">
+              <input type="text" placeholder="Nhập tên sản phẩm..." @keyup.13="search" v-model="keyword"  class="form-control">
               <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat">Tìm kiếm</button>
+                <button v-if="keyword.length>0" @click="()=>{keyword=''; search()}" class="btn btn-defal btn-flat">X</button>
+                <button @click="search" type="button"class="btn btn-primary btn-flat">Tìm kiếm</button>
               </span>
             </div>
             <br />
@@ -41,7 +42,7 @@
                     <td>
                       <template>
                       </template>
-                      <input v-model="selectedsProductID" v-bind:value="product.itemID" type="checkbox" name="selectedsProductID[]" value="" />
+                      <input v-model="selectedsProductID" v-bind:value="index" type="checkbox" name="selectedsProductID[]" value="" />
                     </td>
                     <td>{{product.itemID}}</td>
                     <td><strong class="text-info">{{product.itemName}}</strong></td>
@@ -132,6 +133,7 @@ n
         flag_loaddata: false,
         selectedsProductID: [],
         products: [],
+        keyword : '',
         pagination: {
           currentPage: 1,
           total: 0,
@@ -142,8 +144,12 @@ n
     },
     methods: {
       async get_products() {
-        let response = await this.$http.get("/api/product");
-        console.log(response);
+        this.selectedsProductID = []; // reset lai list da chon.
+        let url = "/api/product";
+        if (this.keyword) {
+          url += "?term=" + this.keyword;
+        }
+        let response = await this.$http.get(url);
         this.products = response.data;
         //this.pagination.total = response.data.total;
         this.pagination.total = 5;
@@ -154,10 +160,16 @@ n
         await this.get_products();
         this.$store.state.show_loading = false;
       },
+      async search() {
+        this.$store.state.show_loading = true;
+        await this.get_products();
+        this.$store.state.show_loading = false;
+      },
       save_close() {
         var webContractDetailList = [];
         for (var i = 0; i < this.selectedsProductID.length; i++) {
-          var product = this.products.find((item) => { return item.itemID == this.selectedsProductID[i] });
+          //var product = this.products.find((item) => { return item.itemID == this.selectedsProductID[i] });
+          var product = this.products[i];
           var webContractDetail = {};
 
           webContractDetail.storeID = product.storeID;
@@ -202,7 +214,10 @@ n
     watch: {
       show() {
         if (this.show) {
+          //reset list dang chon, va reset tu khoa tim kiem.
           this.selectedsProductID = [];
+          this.keyword = '';
+
           this.$store.state.show_loading = true;
           if (this.products.length == 0) {
             // Goi await trong ham khong async.
@@ -257,5 +272,8 @@ n
   }
   table td {
     white-space: nowrap;
+  }
+  .add-product-modal .modal-body{
+    min-height:300px;
   }
 </style>
