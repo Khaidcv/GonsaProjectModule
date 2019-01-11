@@ -10,10 +10,8 @@ const MAIN_SET_COUNTER = 'MAIN_SET_COUNTER'
 const state = {
   counter: 1,
   show_loading: true,
-  show_modal_customerlist: false,
-  user: {
-    clnType : 'OTC'
-  }
+  Menus: [],
+  user_info: {}
 }
 
 // MUTATIONS

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
@@ -11,18 +12,18 @@ namespace Gonsa.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public async Task<IEnumerable<Customer>> GetAll()
+        public async Task<IEnumerable<Customer>> GetAll(string ZoneID,string RegionID)
         {
             using (IDbConnection conn = Connection)
             {
                 string sQuery = @"wspCustomers";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@CmpnID", "00");
-                parameters.Add("@ClnID", "21:020");
-                parameters.Add("@ZoneID", ",00005.0001,00005.0001,00005.0002");
-                parameters.Add("@RegionID", ",0084.0080.0005,0084.0080.0011,0084.0080.0021");
-                parameters.Add("@ASM", "000204");
-                parameters.Add("@SUB", "000224");
+                //parameters.Add("@CmpnID", "00");
+                //parameters.Add("@ClnID", "21:020");
+                parameters.Add("@ZoneID", ZoneID.Replace("','",","));
+                parameters.Add("@RegionID", RegionID.Replace("','", ","));
+                //parameters.Add("@ASM", "000204");
+                //parameters.Add("@SUB", "000224");
                 conn.Open();
                 var result = await conn.QueryAsync<Customer>(sQuery, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
@@ -41,6 +42,18 @@ namespace Gonsa.Repository
 
                 var result = await conn.QueryAsync<DeliveryCustomer>(sQuery, parameters, commandType: CommandType.StoredProcedure);
                 return result;
+            }
+        }
+
+        public async Task<Customer> Get(string CusomterID)
+        {
+            using (IDbConnection conn = Connection)
+            {
+                string sQuery = $"select CustomerID,CsName PsCsName from BosCataloge.dbo.mnuCustomersInfo where CustomerID = '{CusomterID}'";
+                conn.Open();
+
+                var result = await conn.QueryAsync<Customer>(sQuery, commandType: CommandType.Text);
+                return result.FirstOrDefault();
             }
         }
 

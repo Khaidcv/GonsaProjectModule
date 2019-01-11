@@ -14,10 +14,12 @@ namespace Gonsa.Data
         public decimal ItemPerBox { get; set; } // Số lượng đơn vị/ 1 hộp.
         public decimal ItemPrice { get; set; } // Giá/hộp
         public decimal StorePrice { get; set; } // Giá/đơn vị
-        public decimal SlOhQtty { get; set; } // Số lượng được bán - store quantity
-        public decimal SlOhItQt { get; set; } // Số lượng tồn - item quantity
-        public decimal RmRfQtty { get; set; } // chưa biết
-        public decimal RmRfItQt { get; set; } // chưa biết
+        public decimal SlOhItQt { get; set; } // Số lượng được bán hộp
+        public decimal SlOhQtty { get; set; } // Số lượng được bán Đơn vị
+        public decimal RmRfQtty { get; set; } //Số lượng tồn thầu Đơn vị
+        public decimal RmRfItQt { get; set; } // Số lượng tồn thầu Hộp
+        public decimal RmPlItQt { get; set; } //Số lượng tồn dự trù hộp
+        public decimal RmPlQtty { get; set; } //Số lượng tồn dự trù Đơn vị
         public string BchCode { get; set; } // Mã lô
     }
 }

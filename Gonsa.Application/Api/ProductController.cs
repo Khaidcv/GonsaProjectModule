@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Gonsa.Data;
 using Gonsa.Utilities;
+using Microsoft.AspNetCore.Identity;
+using Gonsa.Application.Models.Account;
+using System.Security.Claims;
+
 namespace Gonsa.Application.Api
 {
     [Route("api/[controller]")]
@@ -14,15 +18,18 @@ namespace Gonsa.Application.Api
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRes;
-        public ProductController(IProductRepository productRes)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ProductController(IProductRepository productRes, UserManager<ApplicationUser> userManager)
         {
             _productRes = productRes;
+            _userManager = userManager;
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Product>>> get(int PageSize = -1, int page = 1, string term = "")
+        public async Task<ActionResult<IEnumerable<Product>>> get(string MembType = "", string term = "")
         {
-            var products = await _productRes.GetAll("21:020", ",00005.0001,00005.0001,00005.0002", ",0084.0080.0005,0084.0080.0011,0084.0080.0021", "000204", "000224", "01");
+            ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType);
             if (string.IsNullOrWhiteSpace(term) == false)
             {
                 products = products.Where(x => x.ItemName.NonUnicode().ToLower().Contains(term.NonUnicode().ToLower())).OrderBy(x => x.ItemName);

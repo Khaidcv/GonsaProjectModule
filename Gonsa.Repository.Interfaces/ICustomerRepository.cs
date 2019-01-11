@@ -9,7 +9,8 @@ namespace Gonsa.Repository.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task<IEnumerable<Customer>> GetAll();
+        Task<IEnumerable<Customer>> GetAll(string ZoneID,string RegionID);
+        Task<Customer> Get(string CusomterID);
         Task<IEnumerable<DeliveryCustomer>> GetByDelivery(string CustomerID);
     }
 }

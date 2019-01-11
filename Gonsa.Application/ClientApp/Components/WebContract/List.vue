@@ -37,6 +37,7 @@
                       <th>Khách hàng</th>
                       <th>Ngày đơn hàng</th>
                       <th>Tình trạng</th>
+                      <th>Bước duyệt tiếp theo</th>
                       <th>#</th>
                     </tr>
                   </thead>
@@ -44,10 +45,11 @@
                     <tr v-for="(webcontract,index) in web_contract_list" v-bind:key="index">
                       <td>{{(index+1)}}</td>
                       <td><strong>{{webcontract.oid}}</strong></td>
-                      <td><strong class="text-primary">{{webcontract.psCsName}}</strong></td>
+                      <td><strong class="text-primary">{{webcontract.csName}}</strong></td>
                       <td>{{webcontract.odate | filterOdate}}</td>
                       <!--cách khác $options.filters.linkify(message)-->
-                      <td :inner-html.prop="webcontract.signNumb | filterStatus"></td>
+                      <td :inner-html.prop="webcontract.currSignNumb | filterStatus"></td>
+                      <td>{{webcontract.stepName}}</td>
                       <td width="150">
                         <button class="btn btn-xs btn-primary">Xem</button>
                         <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
@@ -56,7 +58,7 @@
                   </tbody>
                 </table>
               </div>
-              <div class="tl-table-footer clearfix"><div class="row"><div class="col-sm-6 col-xs-12 tl-table-pageinfo"><small><strong>Displaying 1 to 50 of 9.481 items.</strong></small></div> <div class="col-sm-6 col-xs-12 tl-table-pagination"><div><ul class="pagination pagination-sm"><li class="active"><a>1</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)">2</a></li><li><a onclick="gotoPage(3)" href="javascript:void(0)">3</a></li><li><a href="javascript:void(0)">...</a></li><li></li><li><a onclick="gotoPage(190)" data-page="190" href="javascript:void(0)">190</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)" data-page="2"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
+              <div class="tl-table-footer clearfix hidden"><div class="row"><div class="col-sm-6 col-xs-12 tl-table-pageinfo"><small><strong>Displaying 1 to 50 of 9.481 items.</strong></small></div> <div class="col-sm-6 col-xs-12 tl-table-pagination"><div><ul class="pagination pagination-sm"><li class="active"><a>1</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)">2</a></li><li><a onclick="gotoPage(3)" href="javascript:void(0)">3</a></li><li><a href="javascript:void(0)">...</a></li><li></li><li><a onclick="gotoPage(190)" data-page="190" href="javascript:void(0)">190</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)" data-page="2"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
             </div>
             <!-- /.box-body -->
           </div>

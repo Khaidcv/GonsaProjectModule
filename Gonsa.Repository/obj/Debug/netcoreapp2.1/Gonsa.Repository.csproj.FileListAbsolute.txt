@@ -12,3 +12,17 @@ D:\Project\Gonsa\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.Inter
 D:\Project\Gonsa\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.csproj.CopyComplete
 D:\Project\Gonsa\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Data.dll
 D:\Project\Gonsa\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.deps.json
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Data.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.Interfaces.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Data.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\bin\Debug\netcoreapp2.1\Gonsa.Repository.Interfaces.pdb
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.csprojAssemblyReference.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.csproj.CoreCompileInputs.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.AssemblyInfoInputs.cache
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.AssemblyInfo.cs
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.csproj.CopyComplete
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.dll
+D:\Project\GonsaGithub\GonsaProjectModule\Gonsa.Repository\obj\Debug\netcoreapp2.1\Gonsa.Repository.pdb

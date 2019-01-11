@@ -8,6 +8,6 @@ namespace Gonsa.Repository.Interfaces
 {
     public interface IWebContractRepository
     {
-        Task<IEnumerable<WebContract>> GetAll();
+        Task<IEnumerable<WebContract_Monitor>> GetAll(string cmpnID, string CrtUser);
     }
 }

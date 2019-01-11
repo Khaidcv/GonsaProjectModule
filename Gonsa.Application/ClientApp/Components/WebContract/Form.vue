@@ -7,7 +7,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="#">Đơn hàng</a></li>
+        <li><router-link to="/web-contract">Đơn hàng</router-link></li>
         <li class="active">Thêm mới</li>
       </ol>
     </section>
@@ -21,7 +21,7 @@
         <button class="btn btn-sm btn-default" @tclick="save_delivery_customer()" v-bind:class="{'btn-success' : step_active=='step-product'}">Danh sách sản phẩm  <i class="fa fa-arrow-circle-right"></i></button>
         <button class="btn btn-sm btn-default" @tclick="save_product()" v-bind:class="{'btn-success' : step_active=='step-review'}">Tổng quan đơn hàng</button>
       </p>
-      
+
       <!-- Chọn khách hàng -->
       <div class="box box-primary" v-if="step_active == 'step-customer'">
         <div class="box-header with-border">
@@ -31,7 +31,6 @@
           </h3>
 
           <div class="box-tools pull-right">
-            <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
             <button @click="save_customer_info()" class="btn btn-primary">Chọn đơn vị nhận hàng <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -221,7 +220,7 @@
       </div>
       <!-- Đơn vị nhận hàng-->
       <!-- Giỏ hàng -->
-      <div class="box box-primary" v-if="step_active == 'step-product' || true">
+      <div class="box box-primary" v-if="step_active == 'step-product'">
         <div class="box-header with-border">
           <h3 class="box-title">
             <img src="/dist/img/shopping-bags.png" width="30" alt="Sản phẩm" />
@@ -247,69 +246,56 @@
                         <th>.No</th>
                         <th>Mã kho</th>
                         <th>Tên sản phẩm</th>
-                        <td class="hidden">Mã đơn vị tính</td>
                         <th>Tên đơn vị tính</th>
-                        <th>Mã lô</th>
-                        <th>Qui cách bán</th>
-                        <th>Số lượng tồn thầu DVI</th>
-                        <th>Số lượng bán DVI</th>
-                        <th>Số lượng bán hộp</th>
+                        <th v-if="$store.state.user_info.clnType=='ETC'">Mã lô</th>
+                        <th v-if="false">Qui cách bán</th>
+                        <th v-if="$store.state.user_info.clnType=='ETC'">SL tồn thầu (đơn vị)</th>
+                        <th>SL bán (đơn vị)</th>
+                        <th>SL bán (hộp)</th>
                         <th>Giá bán</th>
                         <th>Tiền hàng</th>
-                        <th>Tên chương trình khuyến mại</th>
-                        <th>% GG.KM</th>
-                        <th>Tiền GG.KM</th>
-                        <th>% G.Thẻ</th>
-                        <th>Tiền G.Thẻ</th>
+                        <th v-if="$store.state.user_info.clnType=='OTC'">Tên chương trình KM</th>
+                        <th v-if="$store.state.user_info.clnType=='OTC'">% GG.KM</th>
+                        <th v-if="$store.state.user_info.clnType=='OTC'">Tiền GG.KM</th>
+                        <th v-if="$store.state.user_info.clnType=='OTC'">% G.Thẻ</th>
+                        <th v-if="$store.state.user_info.clnType=='OTC'">Tiền G.Thẻ</th>
                         <th>Thành tiền hàng</th>
                         <th>#</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(contractDetail,index) in web_contract_details" :key="contractDetail.itemID">
+                      <tr v-for="(contractDetail,index) in web_contract_details" :key="index">
                         <td>{{(index+1)}}</td>
                         <td>{{contractDetail.storeID}}</td>
-                        <td class="hidden">{{contractDetail.itemID}}</td>
                         <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
-                        <td class="hidden">{{contractDetail.itemUnit}}</td>
                         <td>{{contractDetail.itemUnitName}}</td>
-                        <td>{{contractDetail.bchCode}}</td>
-                        <td>{{contractDetail.boxID}}</td>
-                        <td>{{contractDetail.remnRfQt}}</td>
+                        <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.bchCode}}</td>
+                        <td v-if="false">{{contractDetail.boxID}}</td>
+                        <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.remnRfQt}}</td> <!-- So luong ton thau don vi-->
                         <td>
-                          <input type="text" :key="'storeQtty'+index"
-                                 v-validate="'required|decimal|min:0|max:50'" data-vv-as="Số lượng đơn vị"
+                          <input type="number" min="0" max="200"
                                  @change="store_quantity_change(contractDetail)"
-                                 style="width:100%"
-                                 v-on:keydown.enter.prevent=''
-                                 v-model="contractDetail.storeQtty"
-                                 :name="'storeQtty'+index" />
-                          <p class="text-danger" v-if="errors.has('form-step-product.storeQtty'+index)">{{errors.first('form-step-product.storeQtty'+index)}}</p>
+                                 v-model="contractDetail.storeQtty" />
                         </td>
                         <td>
-                          <input type="text" :key="'itemQtty'+index"
-                                 v-validate="'required|decimal|min:0|max:50'" data-vv-as="Số lượng"
+                          <input type="number" min="0" max="200"
                                  @change="item_quantity_change(contractDetail)"
-                                 style="width:100%"
-                                 v-on:keydown.enter.prevent=''
-                                 v-model="contractDetail.itemQtty"
-                                 :name="'itemQtty'+index" />
-                          <p class="text-danger" v-if="errors.has('form-step-product.itemQtty'+index)">{{errors.first('form-step-product.itemQtty'+index)}}</p>
+                                 v-model="contractDetail.itemQtty" />
                         </td>
                         <td>{{contractDetail.itemPrice | formatVnd}}</td>
                         <td>{{contractDetail.prdcAmnt | formatVnd}}</td>
-                        <td>
+                        <td class="text-right" v-if="$store.state.user_info.clnType=='OTC'">
                           {{contractDetail.prmtListItem}}
-                          <button class="btn btn-xs btn-success">Chọn CTKM</button>
+                          <button @click="openProductPromotionModal(index)" type="button" class="btn btn-xs btn-success">Tìm CTKM</button>
+                          <button v-if="contractDetail.prmtListItem" @click="removeProductPromotion(index)" type="button" class="btn btn-xs btn-default">X</button>
                         </td>
-                        <td class="hidden">{{contractDetail.prmtID}}</td>
-                        <td>{{contractDetail.dscnRate}}</td>
-                        <td>{{contractDetail.dscnAmnt | formatVnd}}</td>
-                        <td>{{contractDetail.dscnMbRt}}</td>
-                        <td>{{contractDetail.dscnMbAm | formatVnd}}</td>
+                        <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnRate}}</td>
+                        <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnAmnt | formatVnd}}</td>
+                        <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnMbRt}}</td>
+                        <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnMbAm | formatVnd}}</td>
                         <td>{{contractDetail.smPdAmnt | formatVnd}}</td>
                         <td>
-                          <button @click="remove_webcontractdetails(contractDetail)" class="btn btn-xs btn-danger"> Xóa </button>
+                          <button type="button" @click="remove_webcontractdetails(contractDetail)" class="btn btn-xs btn-danger"> Xóa </button>
                         </td>
                       </tr>
                     </tbody>
@@ -327,7 +313,7 @@
       </div>
       <!-- Giỏ hàng -->
       <!-- Review -->
-      <div class="box box-primary" v-if="step_active == 'step-review'">
+      <div class="box box-primary box-review" v-if="step_active == 'step-review'">
         <div class="box-header with-border">
           <h3 class="box-title">
             <img src="/dist/img/vitamin-c.png" width="30" alt="Sản phẩm" />
@@ -335,12 +321,12 @@
           </h3>
           <div class="box-tools pull-right">
             <button @click="step_active='step-product'" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Quay lại</button>
-            <button class="btn btn-success">
+            <button disabled class="btn btn-success">
               Duyệt đơn hàng <i class="fa fa-check-circle-o" aria-hidden="true"></i>
             </button>
-            <button class="btn btn-primary">Lưu đơn hàng <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-            <button class="btn btn-danger">Xóa đơn hàng <i class="fa fa-trash"></i></button>
-            <button class="btn btn-warning">Cancel đơn hàng <i class="fa fa-ban" aria-hidden="true"></i></button>
+            <button disabled class="btn btn-primary">Lưu đơn hàng <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button disabled class="btn btn-danger">Xóa đơn hàng <i class="fa fa-trash"></i></button>
+            <button disabled class="btn btn-warning">Cancel đơn hàng <i class="fa fa-ban" aria-hidden="true"></i></button>
           </div>
         </div>
         <!-- /.box-header -->
@@ -352,11 +338,11 @@
                 <tbody>
                   <tr>
                     <td width="40%"><strong>Số kênh :</strong></td>
-                    <td></td>
+                    <td>{{webContract.clnID}}</td>
                   </tr>
                   <tr>
                     <td><strong>Mã kênh :</strong></td>
-                    <td></td>
+                    <td>{{webContract.clnPath}}</td>
                   </tr>
                   <tr>
                     <td><strong>Số đơn đặt hàng :</strong></td>
@@ -368,7 +354,7 @@
                   </tr>
                   <tr>
                     <td><strong>Tên trình dược viên :</strong></td>
-                    <td></td>
+                    <td>{{webContract.saleEmName}}</td>
                   </tr>
                   <tr>
                     <td><strong>Tình trạng :</strong></td>
@@ -449,26 +435,79 @@
           </div>
           <!-- /.row -->
           <div class="row">
-            <hr/>
+            <div class="col-md-12">
+              <table class="table table-bordered" width="1200">
+                <thead>
+                  <tr>
+                    <th>.No</th>
+                    <th>Mã kho</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Tên đơn vị tính</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Mã lô</th>
+                    <th v-if="false">Qui cách bán</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">SL tồn thầu (đơn vị)</th>
+                    <th>SL bán (đơn vị)</th>
+                    <th>SL bán (hộp)</th>
+                    <th>Giá bán</th>
+                    <th>Tiền hàng</th>
+                    <th v-if="$store.state.user_info.clnType=='OTC'">Tên chương trình KM</th>
+                    <th v-if="$store.state.user_info.clnType=='OTC'">% GG.KM</th>
+                    <th v-if="$store.state.user_info.clnType=='OTC'">Tiền GG.KM</th>
+                    <th v-if="$store.state.user_info.clnType=='OTC'">% G.Thẻ</th>
+                    <th v-if="$store.state.user_info.clnType=='OTC'">Tiền G.Thẻ</th>
+                    <th>Thành tiền hàng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(contractDetail,index) in web_contract_details" :key="index">
+                    <td>{{(index+1)}}</td>
+                    <td>{{contractDetail.storeID}}</td>
+                    <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
+                    <td>{{contractDetail.itemUnitName}}</td>
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.bchCode}}</td>
+                    <td v-if="false">{{contractDetail.boxID}}</td>
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.remnRfQt}}</td> <!-- So luong ton thau don vi-->
+                    <td>{{contractDetail.storeQtty}}</td>
+                    <td>{{contractDetail.itemQtty}}</td>
+                    <td>{{contractDetail.itemPrice | formatVnd}}</td>
+                    <td>{{contractDetail.prdcAmnt | formatVnd}}</td>
+                    <td class="text-right" v-if="$store.state.user_info.clnType=='OTC'">
+                      {{contractDetail.prmtListItem}}
+                      <button @click="openProductPromotionModal(index)" type="button" class="btn btn-xs btn-success">Tìm CTKM</button>
+                      <button v-if="contractDetail.prmtListItem" @click="removeProductPromotion(index)" type="button" class="btn btn-xs btn-default">X</button>
+                    </td>
+                    <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnRate}}</td>
+                    <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnAmnt | formatVnd}}</td>
+                    <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnMbRt}}</td>
+                    <td v-if="$store.state.user_info.clnType=='OTC'">{{contractDetail.dscnMbAm | formatVnd}}</td>
+                    <td>{{contractDetail.smPdAmnt | formatVnd}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <hr />
             <div class="col-md-4 col-md-offset-8">
               <h4><i class="fa fa-money"></i> <strong class="text-success">Thông tin thanh toán</strong></h4>
               <table cellpadding="5" class="table">
                 <tbody>
                   <tr>
                     <td><strong>Tổng tiền hàng :</strong></td>
-                    <td></td>
+                    <td>{{webContract.prdcAmnt| formatVnd}}</td>
                   </tr>
                   <tr>
                     <td><strong>Tiền giảm giá khuyến mãi :</strong></td>
-                    <td></td>
+                    <td>{{webContract.dscnAmnt| formatVnd}}</td>
                   </tr>
                   <tr>
                     <td><strong>Tiền giảm thẻ :</strong></td>
-                    <td></td>
+                    <td>{{webContract.dscnMbAm| formatVnd}}</td>
                   </tr>
                   <tr>
                     <td><strong>Tổng thanh toán :</strong></td>
-                    <td></td>
+                    <td>{{webContract.sum_Amnt | formatVnd}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -476,35 +515,39 @@
           </div>
           <!--row-->
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-right hidden">
-          
-        </div>
       </div>
       <!-- Review -->
     </section>
     <!-- /.content -->
     <template>
-      <CustomerListModal v-bind:show="show_modal_customer_list"
+      <CustomerListModal :show="show_modal_customer_list"
                          @hide="show_modal_customer_list=false"
                          @selected="customer_OnChange"></CustomerListModal>
-      <AddProductModal v-bind:show="show_modal_add_product"
+      <AddProductModal :show="show_modal_add_product"
+                       :membType="webContract.membType"
                        @hide="show_modal_add_product=false"
                        @selected="webContractDetail_Selected"></AddProductModal>
+      <SelectProductPromotionModal :show="show_product_promotion_modal"
+                                   :membType="this.webContract.membType"
+                                   @hide="onCloseProductPromotionModal"
+                                   :index="contract_detail_change_promotion_index"
+                                   @change="onProductPromotionChange"></SelectProductPromotionModal>
     </template>
   </div>
 </template>
 <script>
   import Common from '../../mixins/Common.js'
   import WebContractDetailsMixin from '../../mixins/WebContractDetails.js'
+  import ProductPromotion from '../../mixins/ProductPromotion'
   import dic from '../../libs/validation_dic/webcontract.js'
   import Select2 from '../Controls/Select2.vue';
   import CustomerListModal from './CustomerListModal.vue'
   import AddProductModal from './AddProductModal.vue'
+  import SelectProductPromotionModal from './SelectProductPromotionModal.vue'
 
   export default {
-    mixins: [Common, WebContractDetailsMixin],
-    components: { Select2, CustomerListModal, AddProductModal },
+    mixins: [Common, WebContractDetailsMixin, ProductPromotion],
+    components: { Select2, CustomerListModal, AddProductModal, SelectProductPromotionModal },
     data() {
       return {
         customers: [],
@@ -546,7 +589,21 @@
           // Delivery Customer
           dlCsName: '',
           deliverEm: null,
-          dlCsInfo: ''
+          dlCsInfo: '',
+
+          // thông tin đơn hàng.
+          clnID: '',
+          clnPath: '',
+          oid: '',
+          odate : null,
+          saleEmID: '',
+          saleEmName: '',
+
+          // thanh toan
+          prdcAmnt: 0, // tổn tiền hàng
+          dscnAmnt: 0, // Tiền giảm giá khuyến mãi.
+          dscnMbAm: 0, // tiền giảm thẻ,
+          sum_Amnt : 0, // tổng thành toán.
         }
       }
     },
@@ -596,7 +653,10 @@
         }
       },
       customer_OnChange(customerID) {
+        // clear giỏ hàng
+        this.web_contract_details = [];
 
+        this.$store.state.show_loading = true; // baatj loading
         if (customerID) {
 
         } else {
@@ -610,6 +670,8 @@
 
         this.webContract.deliverEm = null;
         this.deliveryCustomer_OnChange(null);
+
+        this.$store.state.show_loading = false; // off loading
       }, // Khi thay đổi khách hàng, change khi mở modal và chọn, và khi chọn từ select2.
       get_customer_template_result(obj) {
         if (obj.customerID != null && obj.customerID.length > 0) {
@@ -626,7 +688,7 @@
       get_customer_template_selection(obj) {
         if (obj.customerID != null && obj.customerID.length > 0)
           return obj.psCsName;
-          //return $('<div class="selected"><strong>' + obj.psCsName + '</strong></div>');
+        //return $('<div class="selected"><strong>' + obj.psCsName + '</strong></div>');
         return obj.text;
       },
       get_customer_matcher(params, data) {
@@ -674,7 +736,7 @@
       get_deliverycustomer_template_selection(obj) {
         if (obj.deliverEm != null && obj.deliverEm.length > 0)
           return obj.dlCsName;
-          //return $('<div class="selected"><strong>' + obj.dlCsName + '</strong></div>');
+        //return $('<div class="selected"><strong>' + obj.dlCsName + '</strong></div>');
         return obj.text;
       },
       get_deliverycustomer_matcher(params, data) {
@@ -724,15 +786,35 @@
         });
       },
       save_step_product() {
+        // kiểm tra có sản phẩm trong giỏi hàng
+        if (this.web_contract_details.length == 0) {
+          alert("Không có sản phẩm nào trong giỏ hàng !");
+          return true;
+        }
+
+        // kiểm tra có detail nào chưa nhập số lượng không
+        var no_quantity_check = this.web_contract_details.filter(function (item) { return item.storeQtty == null || item.itemQtty == null }).length;
+        if (no_quantity_check > 0) {
+          alert("Cập nhật số lượng trong giỏ hàng .");
+          return;
+        }
+
         // check dữ liệu
         // chuyển sáng review
         this.step_active = "step-review";
       }
     },
-    async mounted() {
+    async  mounted() {
       this.$validator.localize('en', dic.vn);
-      //await this.get_customers();
       this.$store.state.show_loading = false;
+
+      this.$http.get("/api/apiaccount/getCurrentuser").then((res) => {
+        var user = res.data;
+        this.webContract.clnID = user.clnID;
+        this.webContract.clnPath = user.clnPath;
+        this.webContract.saleEmID = user.userCode;
+        this.webContract.saleEmName = user.fullName;
+      });
     },
     filters: {
       formatVnd(number) {
@@ -787,9 +869,16 @@
   {
     color: darkcyan;
   }
+
   }
-  .wrap-table th{
-    white-space:nowrap;
+
+  .wrap-table th {
+    white-space: nowrap;
+  }
+
+  .box-review strong,
+  .box-review td {
+    white-space: normal;
   }
 </style>
 

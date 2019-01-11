@@ -11,10 +11,10 @@
           </div>
           <div class="modal-body" v-if="show">
             <div class="input-group">
-              <input type="text" placeholder="Nhập tên sản phẩm..." @keyup.13="search" v-model="keyword"  class="form-control">
+              <input type="text" placeholder="Nhập tên sản phẩm..." @keyup.13="search" v-model="keyword" class="form-control">
               <span class="input-group-btn">
                 <button v-if="keyword.length>0" @click="()=>{keyword=''; search()}" class="btn btn-defal btn-flat">X</button>
-                <button @click="search" type="button"class="btn btn-primary btn-flat">Tìm kiếm</button>
+                <button @click="search" type="button" class="btn btn-primary btn-flat">Tìm kiếm</button>
               </span>
             </div>
             <br />
@@ -30,10 +30,13 @@
                     <th>Số lượng đơn vị/hộp</th>
                     <th>Giá hộp</th>
                     <th>Giá đơn vị</th>
-                    <th>Số lượng được bán</th>
-                    <th>Số lượng tồn</th>
-                    <th v-if="$store.state.user.clnType=='ETC'">Số lượng tồn thầu</th>
-                    <th>Mã lô sản phẩm</th>
+                    <th>SL được bán (hộp)</th>
+                    <th>SL được bán (đơn vị)</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (hộp)</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (đơn vị)</th>
+                    <th>Sl dụ trù (hộp)</th>
+                    <th>Sl dụ trù (đơn vị)</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Mã lô sản phẩm</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -50,10 +53,13 @@
                     <td>{{product.itemPerBox}}</td>
                     <td>{{product.itemPrice | formatVnd}}</td>
                     <td>{{product.storePrice | formatVnd}}</td>
-                    <td>{{product.slOhQtty}}</td>
-                    <td>{{product.rmRfQtty}}</td>
-                    <td v-if="$store.state.user.clnType=='ETC'">{{product.remnRfQt}}</td>
-                    <td>{{product.bchCode}}</td>
+                    <td>{{product.slOhItQt}}</td> <!-- Số lượng được bán hộp-->
+                    <td>{{product.slOhQtty}}</td> <!-- Số lượng được bán đơn vị-->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfItQt}}</td> <!-- Số lượng tồn thầu hộp-->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfQtty}}</td> <!-- Số lượng tồn thầu đơn vị-->
+                    <td>{{product.rmPlItQt}}</td> <!-- Số lượng dụ trù hộp-->
+                    <td>{{product.rmPlQtty}}</td> <!-- Số lượng dụ trù đơn vị-->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.bchCode}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -127,13 +133,13 @@ n
 </template>
 <script>
   export default {
-    props: ["show"],
+    props: ["show","membType"],
     data() {
       return {
         flag_loaddata: false,
         selectedsProductID: [],
         products: [],
-        keyword : '',
+        keyword: '',
         pagination: {
           currentPage: 1,
           total: 0,
@@ -145,9 +151,9 @@ n
     methods: {
       async get_products() {
         this.selectedsProductID = []; // reset lai list da chon.
-        let url = "/api/product";
+        let url = "/api/product?membType=" + this.membType;
         if (this.keyword) {
-          url += "?term=" + this.keyword;
+          url += "&term=" + this.keyword;
         }
         let response = await this.$http.get(url);
         this.products = response.data;
@@ -180,33 +186,41 @@ n
           webContractDetail.bchCode = product.bchCode; // mã lô
 
           // qui cách bán
-          if (this.$store.state.user.clnType == 'OTC') {
+          if (this.$store.state.user_info.clnType == 'OTC') {
             webContractDetail.boxID = 'SizeItem';
-          } else if (this.$store.state.user.clnType == 'ETC') {
+          } else if (this.$store.state.user_info.clnType == 'ETC') {
             webContractDetail.boxID = 'SizeBase';
           }
 
           // item per box, field nay k phai la field cua web contract detail. nhung phai dua xuogn de tinh toan.
           webContractDetail.itemPerBox = product.itemPerBox;
+          webContractDetail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
+          webContractDetail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
 
-          // tinh so luong ton thau
-          if (this.$store.state.user.clnType == 'OTC') {
-            webContractDetail.remnRfQt = -9999; // qui cách bán
-          } else if (this.$store.state.user.clnType == 'ETC') {
-            webContractDetail.remnRfQt = product.remnRfQt; // qui cách bán
+
+          // tinh so luong ton thau theo đơn vị. (store)
+          if (this.$store.state.user_info.clnType == 'OTC') { // -9999
+            webContractDetail.remnRfQt = -9999; 
+          } else if (this.$store.state.user_info.clnType == 'ETC') { // 
+            webContractDetail.remnRfQt = product.rmRfQtty; 
           }
-
-          webContractDetail.itemQtty = 0;
-          webContractDetail.storeQtty = 0;
+          
+          webContractDetail.itemQtty = null;
+          webContractDetail.storeQtty = null;
 
           // ItemPrice giá bán
-          if (this.$store.state.user.clnType == 'OTC') {
+          if (this.$store.state.user_info.clnType == 'OTC') {
             webContractDetail.itemPrice = product.itemPrice; // OTC thì lấy giá item price
-          } else if (this.$store.state.user.clnType == 'ETC') {
+          } else if (this.$store.state.user_info.clnType == 'ETC') {
             webContractDetail.itemPrice = product.storePrice; // ETC thì lấy giá store price
           }
           // tiền hàng
           webContractDetail.prdcAmnt = 0;
+
+          webContractDetail.prmtID = '';
+          webContractDetail.prmtListItem = '';
+          webContractDetail.dscnAmnt = null;
+          webContractDetail.dscnRate = null;
 
           webContractDetailList.push(webContractDetail);
         }
@@ -285,13 +299,21 @@ n
     width: 20px;
     cursor: pointer;
   }
+
   table td {
     white-space: nowrap;
   }
-  .wrap-table{
-    min-height:450px;
+
+  .wrap-table {
+    min-height: 450px;
   }
-  .add-product-modal .modal-body{
-    min-height:300px;
+
+    .wrap-table tr:hover {
+      /*cursor: pointer;*/
+      background: #eee;
+    }
+
+  .add-product-modal .modal-body {
+    min-height: 300px;
   }
 </style>

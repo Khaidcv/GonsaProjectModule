@@ -8,7 +8,7 @@
     </div>
     
     <NavbarHeader></NavbarHeader>
-
+    
     <aside class="main-sidebar">
       <SideBar></SideBar>
     </aside>
@@ -222,7 +222,7 @@
 <script>
   import NavbarHeader from './Navbar-Header.vue'
   import SideBar from './SideBar.vue'
-  export default {
+    export default {
     components: { SideBar, NavbarHeader },
     data() {
       return {}
@@ -233,9 +233,6 @@
         this.$store.state.show_loading = true;
         // react to route changes...
       }
-    },
-    mounted() {
-
     }
   }
 </script>

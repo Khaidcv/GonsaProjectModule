@@ -9,7 +9,6 @@ import VeeValidate from 'vee-validate';
 
 Vue.use(VeeValidate);
 
-// Registration of global components
 //Vue.component('icon', FontAwesomeIcon)
 router.beforeEach((to, from, next) => {
   store.state.show_loading = true;
@@ -18,6 +17,10 @@ router.beforeEach((to, from, next) => {
 
 
 Vue.prototype.$http = axios
+
+axios.get("/api/apiaccount/getCurrentuser").then(function (res) {
+  store.state.user_info = res.data;
+});
 
 sync(store, router)
 

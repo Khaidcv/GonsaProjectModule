@@ -8,6 +8,11 @@ using Gonsa.Data;
 using Microsoft.EntityFrameworkCore;
 using Gonsa.Repository.Interfaces;
 using Gonsa.Repository;
+using Microsoft.AspNetCore.Identity;
+using Gonsa.Application.Data;
+using Gonsa.Application.Models.Account;
+using Gonsa.Application.Providers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Gonsa.Application
 {
@@ -23,6 +28,14 @@ namespace Gonsa.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // dang
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Account/login";
+                options.LogoutPath = "/Account/Logout";
+            });
+            // end dang
+
             // Add framework services.
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -33,10 +46,22 @@ namespace Gonsa.Application
                     // cấu hình lại json format cho datetime
                     options.SerializerSettings.DateFormatString = "dd/MM/yyyy HH:mm";
                 });
+
+            // dang
+            services.AddTransient<IUserStore<ApplicationUser>, UserStore>();
+            services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+            services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
+            services.AddScoped<CustomStore>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>(
+            ).AddDefaultTokenProviders();
+            // end dang
+
+
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IWebContractRepository, WebContractRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddDbContext<BosOnlineContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BosOnlineContext")));
+            services.AddTransient<IProductPromotionRepository, ProductPromotionRepository>();
+            //services.AddDbContext<BosOnlineContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BosOnlineContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +83,7 @@ namespace Gonsa.Application
             }
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

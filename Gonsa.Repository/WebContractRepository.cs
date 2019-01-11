@@ -12,49 +12,16 @@ namespace Gonsa.Repository
 {
     public class WebContractRepository : IWebContractRepository, IDisposable
     {
-        public async Task<IEnumerable<WebContract>> GetAll()
+        public async Task<IEnumerable<WebContract_Monitor>> GetAll(string cmpnID,string CrtUser)
         {
-            DynamicParameters parameters = new DynamicParameters();
             using (IDbConnection conn = Connection)
             {
-                string sQuery = @"SELECT [CmpnID]
-                          ,[ClnID]
-                          ,[ZoneID]
-                          ,[RegionID]
-                          ,[CustomerID]
-                          ,[EntryID]
-                          ,[FactorID]
-                          ,[OID]
-                          ,[ODATE]
-                          ,[ClnPath]
-                          ,[MemberCardID]
-                          ,[MembType]
-                          ,[DscnMbRt]
-                          ,[PsCsName]
-                          ,[PsCsFReg]
-                          ,[PsCsTel]
-                          ,[PsCsAddr]
-                          ,[PsCsInfo]
-                          ,[DeliverEm]
-                          ,[DlCsName]
-                          ,[DlCsAddr]
-                          ,[DlCsInfo]
-                          ,[SaleEmID]
-                          ,[SaleEmName]
-                          ,[DESCRIP]
-                          ,[PrdcAmnt]
-                          ,[DscnMbAm]
-                          ,[DscnAmnt]
-                          ,[Sum_Amnt]
-                          ,[SignNumb]
-                          ,[SignDate]
-                          ,[Crt_User]
-                          ,[Crt_Date]
-                          ,[ChgeUser]
-                          ,[ChgeDate]
-                      FROM [BosOnline].[dbo].[webContracts]";
+                string sQuery = @"wspListContractsMonitor";
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@cmpnID", cmpnID);
+                parameters.Add("@CrtUser", CrtUser);
                 conn.Open();
-                var result = await conn.QueryAsync<WebContract>(sQuery, commandType: CommandType.Text);
+                var result = await conn.QueryAsync<WebContract_Monitor>(sQuery,param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

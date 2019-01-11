@@ -52,7 +52,7 @@
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
-            <li class="dropdown messages-menu">
+            <li class="dropdown messages-menu hidden">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-envelope-o"></i>
                 <span class="label label-success">4</span>
@@ -130,7 +130,7 @@
               </ul>
             </li>
             <!-- Notifications: style can be found in dropdown.less -->
-            <li class="dropdown notifications-menu">
+            <li class="dropdown notifications-menu hidden">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">10</span>
@@ -172,7 +172,7 @@
               </ul>
             </li>
             <!-- Tasks: style can be found in dropdown.less -->
-            <li class="dropdown tasks-menu">
+            <li class="dropdown tasks-menu hidden">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-flag-o"></i>
                 <span class="label label-danger">9</span>
@@ -257,9 +257,10 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <span class="hidden-xs">Trung Le</span>
+                <span class="hidden-xs">{{$store.state.user_info.fullName}}</span>
               </a>
-              <ul class="dropdown-menu">
+              
+              <ul class="dropdown-menu hidden">
                 <!-- User image -->
                 <li class="user-header">
                   <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -295,8 +296,11 @@
                 </li>
               </ul>
             </li>
-            <!-- Control Sidebar Toggle Button -->
             <li>
+              <a href="/Account/Logout">Đăng xuất</a>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li class="hidden">
               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
             </li>
           </ul>
