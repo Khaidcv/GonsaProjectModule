@@ -10,7 +10,6 @@
 @inject IConfiguration Configuration
 @inject SignInManager<ApplicationUser> SignInManager
 @model LoginViewModel
-
 @{
     Layout = null;
 }
@@ -44,35 +43,46 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
-        body,
         html {
-            height: 100%;
+            height: auto !important;
         }
 
-        /*.login-page {
-            border: 1px solid #000;
-            background-image: url(/dist/img/main_bg.png);
-            background-repeat: no-repeat;
+        .login-page {
             background-size: cover;
-        }*/
-
+        }
+        .login-box {
+            margin: 10px auto !important;
+        }
         .login-box ul.list-inline {
             margin: 0;
+        }
+
+        .btn.btn-flat {
+            border-radius: 4px !important;
+        }
+
+        .has-feedback .form-control {
+            border-radius: 5px;
+        }
+
+        .logo-img {
+            max-height: 100px;
         }
     </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Gonsa</b> System</a>
+            @*<a href="#"><b>Gonsa</b></a>*@
+            <img class="logo-img" src="http://gonsa.cdn.vccloud.vn/wp-content/themes/gonsa/inc/v1/images/gonsa/logo.png" />
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             <h4 class="login-box-msg">Đăng nhập hệ thống</h4>
-            <form asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Login" method="post">
-                <hr />
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form id="loginForm" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
+                <div id="allsummaryerror" class="text-danger"></div>
 
                 <div class="form-group has-feedback">
                     <label>Tên Đăng nhập</label>
@@ -88,24 +98,17 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 text-right text-center">
-                        <div>
+                        <P>
                             @Html.GoogleReCaptcha(Configuration.GetValue<String>("GoogleReCaptcha:ClientKey"), "enabledbutton")
-                        </div>
-                        <hr /> <!--disabled="disabled"-->
-                        <button type="submit" id="btn_login" disabled="disabled"
-                                class="btn btn-primary btn-flat">
-                            Đăng nhập <i class="fa fa-sign-in" aria-hidden="true"></i>
-                        </button>
+                        </P>
+                        <button type="submit" id="btn_login" disabled="disabled" class="btn btn-primary btn-flat">Đăng nhập <i class="fa fa-sign-in" aria-hidden="true"></i></button>
                     </div>
-                    <!-- /.col -->
                 </div>
 
             </form>
-
             <div>
                 <br />
-                <ul class="list-inline text-right">
-                    <li><a href="#">Quên mật khẩu</a></li>
+                <ul class="list-inline text-center">
                     <li> <a href="~/Account/register" class="text-center">Đăng ký tài khoản</a></li>
                 </ul>
             </div>
@@ -119,13 +122,33 @@
     <script src="~/assets/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- iCheck -->
     <script src="~/plugins/iCheck/icheck.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
     <script>
+        $(document).ready(function () {
+            $(document).on("click", "#loginForm", function () {
+                $('#loginForm').ajaxForm({
+                    success: function (response) {
+                        //  console.log(response);
+                        var rs = JSON.parse(response);
+                        if (rs.status == "fail") {
+                            $("#allsummaryerror").html("<p>" + rs.Description + "</p>");
+                            $("#allsummaryerror").focus();
+                        } else if (rs.status == "success") {
+                            $("#allsummaryerror").html("");
+                            location.href = "/";
+                        }
+
+                    }
+                })
+            })
+        })
         function enabledbutton() {
+            //alert("ok");
             $("#btn_login").prop("disabled", false);
         }
+
     </script>
 </body>
 </html>

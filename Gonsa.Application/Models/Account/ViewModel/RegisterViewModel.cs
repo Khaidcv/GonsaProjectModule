@@ -1,4 +1,3 @@
-using Gonsa.Application.Providers.ddl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,11 +11,21 @@ namespace Gonsa.Application.Models.Account.ViewModel
 
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Tên đầy đủ bắt buộc nhập")]
+        [Required(ErrorMessage = "Họ bắt buộc nhập")]
         [DataType(DataType.Text)]
-        //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
-        [Display(Name = "Full Name")]
-        public string FullName { get; set; }
+        //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Chỉ được nhập ký tự")]
+        [Display(Name = "Họ")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Tên đệm bắt buộc nhập")]
+        [DataType(DataType.Text)]
+        //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Chỉ được nhập ký tự")]
+        [Display(Name = "Tên đệm")]
+        public string MiddleName { get; set; }
+        [Required(ErrorMessage ="Tên bắt buộc nhập")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Tên")]
+        public string LastName { get; set; }
 
         [Required]
         [Display(Name = "Position")]
@@ -24,30 +33,30 @@ namespace Gonsa.Application.Models.Account.ViewModel
 
         [Required(ErrorMessage = "Tên đăng nhập bắt buộc nhập")]
         [DataType(DataType.Text)]
-        [RegularExpression(@"^[a-zA-Z\w\-. ]+$", ErrorMessage = "Use letters only please")]
-        // [RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed")]
-        [Display(Name = "User Name")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Chỉ được nhập ký tự")]
+        [StringLength(30, ErrorMessage = "Ký tự {0} phải ít nhất {2} và tối đa {1}.", MinimumLength = 6)]
+        [Display(Name = "Tên đăng nhập")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Email bắt buộc nhập")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Không đúng định dạng email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Mật khẩu bắt buộc nhập")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Ký tự {0} phải ít nhất {2} và tối đa {1}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Xác nhận mật khẩu")]
+        [Compare("Password", ErrorMessage = "Mật khẩu không không trùng khớp.")]
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Vị trí/nhiệm vụ bắt buộc nhập")]
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Task Info")]
-        [MinLength(5, ErrorMessage = "The min lenght is 5")]
+        [Display(Name = "Mô tả vị trí")]
+        [MinLength(5, ErrorMessage = "Tối thiểu là 5 ký tự")]
         public string TaskInfo { get; set; }
     }
 }

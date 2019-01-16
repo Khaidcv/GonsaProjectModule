@@ -12,9 +12,14 @@ namespace Gonsa.Repository
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly IGonSaConnection _gonSaConnection;
+        public ProductRepository(IGonSaConnection gonSaConnection)
+        {
+            _gonSaConnection = gonSaConnection;
+        }
         public async Task<IEnumerable<Product>> GetAll(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string MembType)
         {
-            using (IDbConnection conn = Connection)
+            using (IDbConnection conn = _gonSaConnection.GetConnection())
             {
                 string sQuery = @"wspProducts";
                 DynamicParameters parameters = new DynamicParameters();
@@ -29,14 +34,6 @@ namespace Gonsa.Repository
                 conn.Open();
                 var result = await conn.QueryAsync<Product>(sQuery, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
-            }
-        }
-
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection("Data Source=tcp:45.118.151.118,5172\\SQLEXPRESS;Initial Catalog=BosOnline;Persist Security Info=True;User ID=devcode; Password=dev@#123");
             }
         }
     }

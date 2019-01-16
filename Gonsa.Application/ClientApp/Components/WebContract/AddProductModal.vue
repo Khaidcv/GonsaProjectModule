@@ -40,7 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(product,index) in products" v-bind:key="index">
+                  <tr v-for="(product,index) in products" @click="check($event)" v-bind:key="index">
                     <td>{{(index+1)}}</td>
                     <td>
                       <template>
@@ -133,13 +133,15 @@ n
 </template>
 <script>
   export default {
-    props: ["show","membType"],
+    props: ["show", "membType"],
     data() {
       return {
-        flag_loaddata: false,
+        // lưu danh sách product đã chọn.
         selectedsProductID: [],
+        // danh sách sản phẩm từ api.
         products: [],
         keyword: '',
+        // phân trang.
         pagination: {
           currentPage: 1,
           total: 0,
@@ -158,7 +160,6 @@ n
         let response = await this.$http.get(url);
         this.products = response.data;
         //this.pagination.total = response.data.total;
-        this.pagination.total = 5;
       },
       async loadPage(page) {
         this.$store.state.show_loading = true;
@@ -166,65 +167,80 @@ n
         await this.get_products();
         this.$store.state.show_loading = false;
       },
+      async check(evt) {
+
+      },
       async search() {
         this.$store.state.show_loading = true;
         await this.get_products();
         this.$store.state.show_loading = false;
       },
       save_close() {
-        var webContractDetailList = [];
-        for (var i = 0; i < this.selectedsProductID.length; i++) {
-          //var product = this.products.find((item) => { return item.itemID == this.selectedsProductID[i] });
-          var product = this.products[i];
-          var webContractDetail = {};
+        if (this.selectedsProductID.length == 0) {
+          alert("Vui lòng chọn sản phẩm để đưa vào giỏ hàng !");
+          return;
+        }
 
-          webContractDetail.storeID = product.storeID;
-          webContractDetail.itemID = product.itemID;
-          webContractDetail.itemName = product.itemName;
-          webContractDetail.itemUnit = product.itemUnit;
-          webContractDetail.itemUnitName = product.itemUnitName;
-          webContractDetail.bchCode = product.bchCode; // mã lô
+        var details = [];
+        for (let i = 0; i < this.selectedsProductID.length; i++) {
+          var product = this.products[this.selectedsProductID[i]];
+          var detail = {};
 
-          // qui cách bán
+          detail.storeID = product.storeID;
+          detail.itemID = product.itemID;
+          detail.itemName = product.itemName;
+          detail.itemUnit = product.itemUnit;
+          detail.itemUnitName = product.itemUnitName;
+          detail.bchCode = product.bchCode; // mã lô
+
+          // Qui cách bán
           if (this.$store.state.user_info.clnType == 'OTC') {
-            webContractDetail.boxID = 'SizeItem';
+            detail.boxID = 'SizeItem';
           } else if (this.$store.state.user_info.clnType == 'ETC') {
-            webContractDetail.boxID = 'SizeBase';
+            detail.boxID = 'SizeBase';
           }
 
-          // item per box, field nay k phai la field cua web contract detail. nhung phai dua xuogn de tinh toan.
-          webContractDetail.itemPerBox = product.itemPerBox;
-          webContractDetail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
-          webContractDetail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
+          // webContractDetail không có thông tin này, nhưng gắn vào để làm dữ liệu tính toán.
+          // Lưu form type 2 không có giá trị, call api để lấy lại.
+          detail.itemPerBox = product.itemPerBox; //  Item per box(số lượng đơn vị/hộp)
+          detail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
+          detail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
 
 
           // tinh so luong ton thau theo đơn vị. (store)
           if (this.$store.state.user_info.clnType == 'OTC') { // -9999
-            webContractDetail.remnRfQt = -9999; 
-          } else if (this.$store.state.user_info.clnType == 'ETC') { // 
-            webContractDetail.remnRfQt = product.rmRfQtty; 
+            detail.remnRfQt = -9999;
+          } else if (this.$store.state.user_info.clnType == 'ETC') { //
+            detail.remnRfQt = product.rmRfQtty;
           }
-          
-          webContractDetail.itemQtty = null;
-          webContractDetail.storeQtty = null;
+
+          detail.itemQtty = 0;
+          detail.storeQtty = 0;
 
           // ItemPrice giá bán
           if (this.$store.state.user_info.clnType == 'OTC') {
-            webContractDetail.itemPrice = product.itemPrice; // OTC thì lấy giá item price
+            detail.itemPrice = product.itemPrice; // OTC thì lấy giá item price
           } else if (this.$store.state.user_info.clnType == 'ETC') {
-            webContractDetail.itemPrice = product.storePrice; // ETC thì lấy giá store price
+            detail.itemPrice = product.storePrice; // ETC thì lấy giá store price
           }
-          // tiền hàng
-          webContractDetail.prdcAmnt = 0;
 
-          webContractDetail.prmtID = '';
-          webContractDetail.prmtListItem = '';
-          webContractDetail.dscnAmnt = null;
-          webContractDetail.dscnRate = null;
+          // Thành tiền.
+          detail.prdcAmnt = 0;
 
-          webContractDetailList.push(webContractDetail);
+          // gán null
+          detail.prmtID = "";
+          detail.prmtListItem = "";
+          detail.dscnAmnt = 0;
+          detail.dscnRate = 0;
+
+          detail.dscnMbRt = 0;
+          detail.dscnMbAm = 0;
+
+          details.push(detail);
         }
-        this.$emit("selected", webContractDetailList);
+
+        // gửi dữ liệu qua Form, qua props selected. với tham số là hàm webContractDetail_Selected trong mixins web_contractdetail.
+        this.$emit("selected", details);
       }
     },
     filters: {
@@ -243,18 +259,23 @@ n
     watch: {
       show() {
         if (this.show) {
-          //reset list dang chon, va reset tu khoa tim kiem.
+          // khi mở popup, reset lại list danh sách product đang chọn. và từ khoa tìm kiếm.
           this.selectedsProductID = [];
           this.keyword = '';
 
           this.$store.state.show_loading = true;
-          if (this.products.length == 0) {
+
+          // Kiểm tra chưa lấy sản phẩm thì lấy rồi show, còn lấy rồi thì chỉ show.
+          if (this.products.length == 0 || true) {
+
             // Goi await trong ham khong async.
             (async () => {
               await this.get_products();
               this.$store.state.show_loading = false;
               $(this.$refs.modal).modal('show');
             })();
+
+
           } else {
             this.$store.state.show_loading = false;
             $(this.$refs.modal).modal('show');
@@ -266,6 +287,7 @@ n
     },
     mounted() {
       var vm = this;
+      // Cấu hình khi đọc modal, gọi hàm hide để Form lắng nghe.
       $(this.$refs.modal).on('hidden.bs.modal', () => {
         vm.$emit("hide");
       });
@@ -295,8 +317,8 @@ n
 </script>
 <style lang="scss">
   input[type="checkbox"] {
-    height: 20px;
-    width: 20px;
+    height: 15px;
+    width: 15px;
     cursor: pointer;
   }
 
@@ -309,7 +331,6 @@ n
   }
 
     .wrap-table tr:hover {
-      /*cursor: pointer;*/
       background: #eee;
     }
 

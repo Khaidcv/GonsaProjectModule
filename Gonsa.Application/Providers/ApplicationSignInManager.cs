@@ -19,7 +19,7 @@ namespace Gonsa.Application.Providers
         private readonly string _connectionString;
         public ApplicationSignInManager(UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<ApplicationUser>> logger, IAuthenticationSchemeProvider schemes, IConfiguration configuration) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("BosOnlineContext");
         }
         public override Task<SignInResult> CheckPasswordSignInAsync(ApplicationUser user, string password, bool lockoutOnFailure)
         {
@@ -37,8 +37,8 @@ namespace Gonsa.Application.Providers
             {
                 return error;
             }
-          //  CryptePass hash = new CryptePass();
-            if (appuser.PasswordEx == password)
+            CryptePass hash = new CryptePass();
+            if (appuser.PasswordEx == hash.getSHA1(password))
             {
                 var alwaysLockout = AppContext.TryGetSwitch("Microsoft.AspNetCore.Identity.CheckPasswordSignInAlwaysResetLockoutOnSuccess", out var enabled) && enabled;
                 // Only reset the lockout when TFA is not enabled when not in quirks mode

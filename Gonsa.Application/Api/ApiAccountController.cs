@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Gonsa.Application.Data;
 using Gonsa.Application.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 namespace Gonsa.Application.Api
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ApiAccountController : ControllerBase
     {
@@ -20,7 +22,7 @@ namespace Gonsa.Application.Api
         private readonly UserManager<ApplicationUser> _userManager;
         public ApiAccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("BosOnlineContext");
             _userManager = userManager;
         }
         [HttpGet("getCurrentuser")]

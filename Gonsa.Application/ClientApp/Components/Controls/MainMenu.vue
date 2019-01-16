@@ -42,9 +42,11 @@
     methods: {
       get_router_link(menuID) {
         if (menuID == "81003") {
-          return "/new-web-contract";
-        } else if (menuID == '82' || menuID == '83') {
-          return "/web-contract";
+          return "/web-contract/new";
+        } else if (menuID == '83') {
+          return "/web-contract?status=101";
+        }  else if (menuID == '82') {
+          return "/in-process";
         } else {
           return "/in-process";
         }

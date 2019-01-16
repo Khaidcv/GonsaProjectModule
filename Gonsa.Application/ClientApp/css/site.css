@@ -23,9 +23,6 @@ form .form-group .text-danger{
 
 
     /* qui trình tạo đơn hàng */
-.btn-group.btn-breadcrumb .btn{
-    cursor:default;
-}
 .btn-group.btn-breadcrumb .btn-success {
     color: #fff;
 }

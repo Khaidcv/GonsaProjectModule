@@ -37,7 +37,7 @@ namespace Gonsa.Application.Api
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("backup")]
         public async Task<ActionResult<IEnumerable<Customer>>> get(int PageSize = -1, int page = 1, string term = "")
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
@@ -59,7 +59,7 @@ namespace Gonsa.Application.Api
         }
 
         [HttpGet]
-        [Route("test")]
+        [Route("")]
         public async Task<ActionResult<IEnumerable<Customer>>> get2(int PageSize, int page = 1, string term = "")
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);

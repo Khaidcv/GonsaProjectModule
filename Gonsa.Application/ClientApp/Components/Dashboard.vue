@@ -18,14 +18,9 @@
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box" style="background:#fff;">
             <div class="inner">
-              <h3>150</h3>
-
-              <h4>Đơn hàng đã lưu</h4>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
+              <h4>Danh sách tất cả đơn hàng</h4>
             </div>
             <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
@@ -33,46 +28,31 @@
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>53</h3>
-
+              <h4>Đơn hàng chờ xử lý</h4>
+            </div>
+            <router-link to="/web-contract?status=0" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
               <h4>Đơn hàng đã Post</h4>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+            <router-link to="/web-contract?status=101" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-info">
             <div class="inner">
-              <h3>44</h3>
-
               <h4>Đơn hàng Team Lead đã duyệt</h4>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>65</h3>
-
-              <h4>Đơn hàng trả về chờ chỉnh sửa</h4>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+            <router-link to="/web-contract?status=201" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -80,49 +60,34 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
               <h4>Đơn hàng đã lập phiếu bán</h4>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+            <router-link to="/web-contract?status=301" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box" style="background:#0094ff">
             <div class="inner">
-              <h3>44</h3>
-
               <h4>Đơn hàng đang giao</h4>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+            <router-link to="/web-contract?status=401" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-green">
             <div class="inner">
-              <h3>65</h3>
-
               <h4>Đơn hàng hoàn tất</h4>
             </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <router-link to="/web-contract" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
+            <router-link to="/web-contract?status=501" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-          <router-link to="/new-web-contract" class="btn btn-primary btn-lg">
+          <router-link to="/web-contract/new" class="btn btn-primary btn-lg">
             <i class="fa fa-plus"></i> Thêm đơn hàng mới
           </router-link>
         </div>

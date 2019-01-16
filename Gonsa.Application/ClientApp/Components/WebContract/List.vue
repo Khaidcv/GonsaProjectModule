@@ -1,14 +1,15 @@
 <template>
   <div>
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Danh sách đơn hàng
-        <small>Đơn hàng</small>
+        <small v-if="status" :inner-html.prop="status | filterStatus"></small>
+        <small v-else>
+          Tất cả đơn hàng
+        </small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="#">Đơn hàng</a></li>
+        <li><router-link to="/"><i class="fa fa-dashboard"></i> Dashboard</router-link></li>
         <li class="active">Danh sách đơn hàng</li>
       </ol>
     </section>
@@ -17,8 +18,8 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <p>
-            <router-link to="/new-web-contract" class="btn btn-primary btn-sm">
+          <p class="text-right">
+            <router-link to="/web-contract/new" class="btn btn-primary btn-sm">
               <i class="fa fa-plus"></i> Thêm đơn hàng mới
             </router-link>
           </p>
@@ -51,8 +52,7 @@
                       <td :inner-html.prop="webcontract.currSignNumb | filterStatus"></td>
                       <td>{{webcontract.stepName}}</td>
                       <td width="150">
-                        <button class="btn btn-xs btn-primary">Xem</button>
-                        <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                        <router-link :to="'/web-contract/edit/'+webcontract.oid" class="btn btn-xs btn-primary">Xem đơn hàng</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -73,21 +73,35 @@
   </div>
 </template>
 <script>
+  import WebContractMixin from '../../mixins/WebContract.js'
   export default {
+    mixins : [WebContractMixin],
     data() {
       return {
-        web_contract_list: []
+        web_contract_list: [],
+        status: null
       }
     },
     methods: {
       async load_web_contrac_list() {
-        let response = await this.$http.get("/api/webcontract");
-        this.web_contract_list = response.data;
+        try{
+            let url = "/api/webcontract";
+            let status = this.$route.query.status;
+            if(status){
+                this.status = status;
+                url+="?status="+status;
+            }
+            let response = await this.$http.get(url).catch((error)=>{
+                console.log(error);
+                this.$router.push("/web-contract");
+            });
+            if(response.data){
+                this.web_contract_list = response.data;
+            }
+        }catch(e){
+            console.log(e);
+        }
       }
-    },
-    async created() {
-      await this.load_web_contrac_list();
-      this.$store.state.show_loading = false;
     },
     filters :{
       filterOdate(value){
@@ -96,29 +110,12 @@
         }else{
             return "";
         }
-      },
-      filterStatus(status){
-        if(status==-1){
-            return `<span class='label label-default'>Đã lưu</span>`;
-        }else  if(status==101){
-            return `<span class='label label-primary'>Đã post</span>`;
-        }else  if(status==201){
-            return `<span class='label label-info'>Team Lead Duyệt</span>`;
-        }else  if(status==0){
-            return `<span class='label label-warning'>Trả về chờ chỉnh sửa</span>`;
-        }else  if(status==301){
-            return `<span class='label label-default'>Đã lập phiếu bán</span>`;
-        }else  if(status==401){
-            return `<span class='label label-default'>Hàng đang giao</span>`;
-        }else  if(status==501){
-            return `<span class='label label-success'>Hoàn tất</span>`;
-        }else{
-            return "";
-        }
       }
     },
-    mounted() {
-
+   async mounted() {
+      this.$store.state.show_loading = true;
+      await this.load_web_contrac_list();
+      this.$store.state.show_loading = false;
     }
   }
 </script>

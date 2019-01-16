@@ -25,7 +25,8 @@ namespace Gonsa.Application.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                IEnumerable<ApplicationUser> enumerable = await connection.QueryAsync<ApplicationUser>("bosGetApplicationTools_ByGroupUser_Onl", new { Model = loginName },
+                IEnumerable<ApplicationUser> enumerable =
+                    await connection.QueryAsync<ApplicationUser>("bosConfigure.dbo.bosGetApplicationTools_ByGroupUser_Onl", new { Model = loginName },
                         commandType: CommandType.StoredProcedure);
                 user = enumerable;
             }
@@ -37,19 +38,17 @@ namespace Gonsa.Application.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                result = await connection.QueryAsync<int>("bos_ChkUser", new { LoginName = LoginName });
+                result = await connection.QueryAsync<int>("bosConfigure.dbo.bos_ChkUser", new { LoginName = LoginName });
             }
             return result;
         }
-        public async Task<List<web_bosMenu_ByGroup>> bosGetApplicationTools_ByGroupUser_Onl(string groupList)
+        public async Task<IEnumerable<web_bosMenu_ByGroup>> bosGetApplicationTools_ByGroupUser_Onl(string groupList)
         {
-            dynamic rs;
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                rs = await connection.QueryAsync<web_bosMenu_ByGroup>("bosGetApplicationTools_ByGroupUser_Onl");
+                return await connection.QueryAsync<web_bosMenu_ByGroup>("bosConfigure.dbo.bosGetApplicationTools_ByGroupUser_Onl", new { Grp_Code = groupList }, commandType: CommandType.StoredProcedure);
             }
-            return rs;
         }
         public int ChkUser(string LoginName)
         {
@@ -58,7 +57,7 @@ namespace Gonsa.Application.Data
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    return connection.QueryFirstOrDefault<int>($@"bos_ChkUser", new { LoginName = LoginName }, commandType: CommandType.StoredProcedure);
+                    return connection.QueryFirstOrDefault<int>($@"bosConfigure.dbo.bos_ChkUser", new { LoginName = LoginName }, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception)
@@ -72,7 +71,7 @@ namespace Gonsa.Application.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                rs = connection.QueryFirstOrDefault<int>($@"bos_regUser", new
+                rs = connection.QueryFirstOrDefault<int>($@"bosConfigure.dbo.bos_regUser", new
                 {
                     LoginName = user.LoginName,
                     FullName = user.FullName,

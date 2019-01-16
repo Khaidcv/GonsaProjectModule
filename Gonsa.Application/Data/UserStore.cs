@@ -16,10 +16,9 @@ namespace Gonsa.Application.Data
      IUserTwoFactorStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
         private readonly string _connectionString;
-      //  private readonly bosConfigcontext _db;
         public UserStore(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("BosOnlineContext");
         //    _db = db;
         }
 
@@ -79,7 +78,7 @@ namespace Gonsa.Application.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"bosGetUserByLoginName_Onl", new { LognName = LognName }, commandType: CommandType.StoredProcedure);
+                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"bosConfigure.dbo.bosGetUserByLoginName_Onl", new { LognName = LognName }, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -239,7 +238,7 @@ namespace Gonsa.Application.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"bosGetUserByLoginName_Onl", new { LognName = userId }, commandType: CommandType.StoredProcedure);
+                return await connection.QuerySingleOrDefaultAsync<ApplicationUser>($@"bosConfigure.dbo.bosGetUserByLoginName_Onl", new { LognName = userId }, commandType: CommandType.StoredProcedure);
             }
         }
     }

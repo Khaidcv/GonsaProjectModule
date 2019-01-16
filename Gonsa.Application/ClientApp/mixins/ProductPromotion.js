@@ -24,6 +24,7 @@ export default {
       this.onCloseProductPromotionModal();
     },
     openProductPromotionModal(index) {
+      // Khi mở popup, gán index để khi đóng, hoặc khi sửa, từ index lấy ra detail để chỉnh sửa. khi đóng thì reset lại.
       this.contract_detail_change_promotion_index = index;
       this.show_product_promotion_modal = true;
     },

@@ -18,7 +18,7 @@ namespace Gonsa.Application.Data
 
         public RoleStore(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("BosOnlineContext");
         }
 
         public async Task<IdentityResult> CreateAsync(ApplicationRole role, CancellationToken cancellationToken)

@@ -54,7 +54,6 @@
     <ProjectReference Include="..\Gonsa.Utilities\Gonsa.Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Account\" />
     <Folder Include="Providers\" />
   </ItemGroup>
 

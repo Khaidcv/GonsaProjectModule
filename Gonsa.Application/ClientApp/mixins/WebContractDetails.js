@@ -1,3 +1,4 @@
+// mixin viet danh rieng cho web contract detail
 export default {
   data() {
     return {
@@ -5,6 +6,21 @@ export default {
     }
   },
   methods: {
+    async load_product_info(detail) {
+      var url = `/api/product/line?ItemID=${detail.itemID}&ItemUnit=${detail.itemUnit}&MembType=${this.webContract.membType}`;
+      if (detail.bchCode) {
+        url += `&BchCode=${detail.bchCode}`;
+      }
+      let response = await this.$http.get(url).catch(function () {
+        alert("Không tìm thấy sản phẩm !");
+      });
+      if (response.data && response.data != null) {
+        var product = response.data;
+        //detail.itemPerBox = product.itemPerBox; //  Item per box(số lượng đơn vị/hộp)
+        detail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
+        detail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
+      }
+    },
     webContractDetail_Selected(list) {
       for (var i = 0; i < list.length; i++) {
         list[i].dscnMbRt = this.webContract.dscnMbRt || 0;
@@ -25,7 +41,8 @@ export default {
     // tính tiền giảm thẻ.
     calc_DscnMbAm(detail) {
       var prdcAmnt = detail.prdcAmnt || 0;
-      detail.dscnMbAm = (prdcAmnt * (detail.dscnMbRt || 0)) / 100;
+      var dscnMbAm = (prdcAmnt * detail.dscnMbRt) / 100;
+      detail.dscnMbAm = dscnMbAm;
     },
 
     // tính thành tiền hàng
@@ -35,7 +52,6 @@ export default {
 
     // check số lượng của số lượng bán (đơn vị)
     check_store_quantity(detail) {
-      debugger;
       var storeQtty = detail.storeQtty || 0;
       var sl_tonban_donvi = detail.slOhQtty || 0;
       var sl_tonthau_donvi = detail.rmRfQtty || 0;
@@ -49,7 +65,8 @@ export default {
     },
 
     // storeq qqty change
-    store_quantity_change(detail) {
+    async store_quantity_change(detail) {
+      await this.load_product_info(detail);
       // kiểm tra nhập nhỏ hơn 0 thì gán = 0
       if (detail.storeQtty) {
         if (detail.storeQtty < 0) {
@@ -57,10 +74,11 @@ export default {
         }
       }
 
-      // chcek sotrequantity 
+      // Số lượng bán đơn vị (nhập)
       this.check_store_quantity(detail);
       // store thay đổi thì tính item
 
+      // Tính qui ra hộp.
       //  loại trường hợp chia 0.
       if (detail.itemPerBox && detail.itemPerBox > 0) {
         detail.itemQtty = detail.storeQtty / detail.itemPerBox;
@@ -68,22 +86,25 @@ export default {
         detail.itemQtty = 0;
       }
 
+
       this.calc_product_amount(detail); // tiền hàng
       this.calc_DscnMbAm(detail); // tiền giảm thẻ
       this.calc_SmPdAmnt(detail); // thành tiền hàng
-      this.calc_payment_amount();
+      this.calc_payment_amount(); // Tiền trên đơn hàng
     },
 
     // item qtty change.
-    item_quantity_change(detail) {
+    async item_quantity_change(detail) {
       // kiểm tra nhập nhỏ hơn 0 thì gán = 0
+      await this.load_product_info(detail);
       if (detail.itemQtty) {
         if (detail.itemQtty < 0) {
           detail.itemQtty = 0;
         }
       }
 
-      // item thay dổi thì tính cho store
+      // Từ hộp quy ra đơn vị.
+      // Tính ra hộp xong gọi hàm check hộp để tính.
       detail.storeQtty = detail.itemQtty * detail.itemPerBox;
       // tính storequantity xong moi check storequantity
       this.check_store_quantity(detail);
@@ -91,7 +112,7 @@ export default {
       this.calc_product_amount(detail); // tiền hàng
       this.calc_DscnMbAm(detail); // tiền giảm thẻ
       this.calc_SmPdAmnt(detail); // thành tiền hàng
-      this.calc_payment_amount();
+      this.calc_payment_amount(); // Tiền trên đơn hàng
     },
 
     // tính tiền đơn hàng
@@ -101,13 +122,17 @@ export default {
       var dscnMbAm = 0;
       var sum_Amnt = 0;
 
-      for (var i = 0; i < this.web_contract_details.length; i++) {
-        var detail = this.web_contract_details[i];
-        prdcAmnt += detail.prdcAmnt;
-        dscnAmnt += detail.dscnAmnt;
-        dscnMbAm += detail.dscnMbAm;
-        sum_Amnt += detail.smPdAmnt;
+      if (this.web_contract_details.length > 0) {
+        const length = this.web_contract_details.length;
+        for (let i = 0; i < length; i++) {
+          var detail = this.web_contract_details[i];
+          prdcAmnt += detail.prdcAmnt || 0;
+          dscnAmnt += detail.dscnAmnt || 0;
+          dscnMbAm += detail.dscnMbAm || 0;
+          sum_Amnt += detail.smPdAmnt || 0;
+        }
       }
+
       this.webContract.prdcAmnt = prdcAmnt;
       this.webContract.dscnAmnt = dscnAmnt;
       this.webContract.dscnMbAm = dscnMbAm;
@@ -123,11 +148,10 @@ export default {
 
     removeProductPromotion(index) {
       var detail = this.web_contract_details[index];
-      detail.prmtID = null;
-      detail.prmtListItem = null;
-      detail.dscnAmnt = null;
-      detail.dscnRate = null;
-
+      detail.prmtID = "";
+      detail.prmtListItem = "";
+      detail.dscnAmnt = 0;
+      detail.dscnRate = 0;
 
       // Tính lại thành tiền hàng
       this.calc_SmPdAmnt(detail);

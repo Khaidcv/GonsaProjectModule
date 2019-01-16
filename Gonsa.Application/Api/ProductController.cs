@@ -10,10 +10,12 @@ using Gonsa.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Gonsa.Application.Models.Account;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gonsa.Application.Api
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -35,6 +37,22 @@ namespace Gonsa.Application.Api
                 products = products.Where(x => x.ItemName.NonUnicode().ToLower().Contains(term.NonUnicode().ToLower())).OrderBy(x => x.ItemName);
             }
             return Ok(products);
+        }
+
+        [HttpGet("line")]
+        public async Task<ActionResult<IEnumerable<Product>>> getProductLine(string ItemID, string ItemUnit, string BchCode="", string MembType = "")
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType);
+            if (products.Any())
+            {
+                var product = products.FirstOrDefault(x => x.ItemID == ItemID && x.ItemUnit == ItemUnit && x.BchCode == BchCode);
+                return Ok(product);
+            }
+            else
+            {
+                return Ok(null);
+            }
         }
     }
 }

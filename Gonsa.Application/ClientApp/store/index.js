@@ -9,7 +9,7 @@ const MAIN_SET_COUNTER = 'MAIN_SET_COUNTER'
 // STATE
 const state = {
   counter: 1,
-  show_loading: true,
+  show_loading: false,
   Menus: [],
   user_info: {}
 }

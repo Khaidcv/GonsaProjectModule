@@ -13,6 +13,7 @@ using Gonsa.Application.Data;
 using Gonsa.Application.Models.Account;
 using Gonsa.Application.Providers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
 
 namespace Gonsa.Application
 {
@@ -33,6 +34,7 @@ namespace Gonsa.Application
             {
                 options.LoginPath = "/Account/login";
                 options.LogoutPath = "/Account/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
             // end dang
 
@@ -52,8 +54,7 @@ namespace Gonsa.Application
             services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
             services.AddScoped<CustomStore>();
-            services.AddIdentity<ApplicationUser, ApplicationRole>(
-            ).AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddDefaultTokenProviders();
             // end dang
 
 
@@ -61,7 +62,19 @@ namespace Gonsa.Application
             services.AddTransient<IWebContractRepository, WebContractRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductPromotionRepository, ProductPromotionRepository>();
-            //services.AddDbContext<BosOnlineContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BosOnlineContext")));
+            services.AddTransient<IGonSaConnection, GonsaConnection>(serviceProvider =>
+            {
+                var connectionString = Configuration.GetConnectionString("BosOnlineContext");
+                return new GonsaConnection(connectionString);
+            });
+
+            services.AddAntiforgery(options =>
+            {
+                // Set Cookie properties using CookieBuilder properties†.
+                options.FormFieldName = "__RequestVerificationToken";
+                options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
+                options.SuppressXFrameOptionsHeader = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

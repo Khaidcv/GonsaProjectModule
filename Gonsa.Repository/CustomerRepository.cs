@@ -12,16 +12,21 @@ namespace Gonsa.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public async Task<IEnumerable<Customer>> GetAll(string ZoneID,string RegionID)
+        private readonly IGonSaConnection _gonSaConnection;
+        public CustomerRepository(IGonSaConnection gonSaConnection)
         {
-            using (IDbConnection conn = Connection)
+            _gonSaConnection = gonSaConnection;
+        }
+        public async Task<IEnumerable<Customer>> GetAll(string ZoneID, string RegionID)
+        {
+            using (IDbConnection conn = _gonSaConnection.GetConnection())
             {
                 string sQuery = @"wspCustomers";
                 DynamicParameters parameters = new DynamicParameters();
                 //parameters.Add("@CmpnID", "00");
                 //parameters.Add("@ClnID", "21:020");
-                parameters.Add("@ZoneID", ZoneID.Replace("','",","));
-                parameters.Add("@RegionID", RegionID.Replace("','", ","));
+                parameters.Add("@ZoneID", ZoneID);
+                parameters.Add("@RegionID", RegionID);
                 //parameters.Add("@ASM", "000204");
                 //parameters.Add("@SUB", "000224");
                 conn.Open();
@@ -32,7 +37,7 @@ namespace Gonsa.Repository
 
         public async Task<IEnumerable<DeliveryCustomer>> GetByDelivery(string CustomerID)
         {
-            using (IDbConnection conn = Connection)
+            using (IDbConnection conn = _gonSaConnection.GetConnection())
             {
                 string sQuery = @"wspCustomersByDelivery";
                 conn.Open();
@@ -47,21 +52,13 @@ namespace Gonsa.Repository
 
         public async Task<Customer> Get(string CusomterID)
         {
-            using (IDbConnection conn = Connection)
+            using (IDbConnection conn = _gonSaConnection.GetConnection())
             {
                 string sQuery = $"select CustomerID,CsName PsCsName from BosCataloge.dbo.mnuCustomersInfo where CustomerID = '{CusomterID}'";
                 conn.Open();
 
                 var result = await conn.QueryAsync<Customer>(sQuery, commandType: CommandType.Text);
                 return result.FirstOrDefault();
-            }
-        }
-
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection("Data Source=tcp:45.118.151.118,5172\\SQLEXPRESS;Initial Catalog=BosOnline;Persist Security Info=True;User ID=devcode; Password=dev@#123");
             }
         }
     }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Gonsa.Application.Data;
 using Gonsa.Application.Models.Account;
 using Gonsa.Application.Models.Account.ViewModel;
-using Gonsa.Application.Providers.ddl;
 using Gonsa.Application.Providers.hashsha1;
+using Gonsa.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Gonsa.Application.Controllers
 {
@@ -33,53 +34,88 @@ namespace Gonsa.Application.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("BosOnlineContext");
         }
-        //[TempData]
-        //public string ErrorMessage { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         [BindProperty]
 
         public Position ddl { get; set; }
         public List<Position> ddls { get; set; }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        //[Route("~/")]
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             //HttpContext.Session.SetString("username", "letrung193");
 
             ViewData["ReturnUrl"] = returnUrl;
-
+            string message = "";
+            var Results = new Results();
             if (ModelState.IsValid)
             {
                 await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
                 var customstore = new CustomStore(_connectionString);
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user != null)
                 {
-                    var user = await _userManager.FindByNameAsync(model.UserName);
-                    if (user != null)
+                    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
                     {
-                        var rs = customstore.bosGetApplicationTools_ByGroupUser_Onl(user.Grp_List);
+
+                        _logger.LogInformation("User logged in");
+                        Results.status = "success";
+                        Results.Description = "Đăng nhập thành công";
+                        message = JsonConvert.SerializeObject(Results);
                     }
-                    _logger.LogInformation("User logged in");
-                    return RedirectToLocal("/");
+                    else
+                    {
+                        Results.status = "fail";
+                        Results.Description = "Mật khẩu không tồn tại trong hệ thống";
+                        message = JsonConvert.SerializeObject(Results);
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Đăng nhập thất bại");
-                    return View(model);
+                    Results.status = "fail";
+                    Results.Description = "Tên đăng nhập không tồn tại trong hệ thống";
+                    message = JsonConvert.SerializeObject(Results);
                 }
             }
-            return View(model);
+            else
+            {
+                return View(model);
+            }
+            return Content(message);
         }
+
+        [HttpGet]
         [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             // if(!IsPostBack)
             ViewData["ReturnUrl"] = returnUrl;
+            string message = "";
+            var Results = new Results();
             IdentityResult rs = new IdentityResult();
             if (ModelState.IsValid)
             {
@@ -89,9 +125,9 @@ namespace Gonsa.Application.Controllers
                 var user = new ApplicationUser
                 {
                     LoginName = model.UserName,
-                    FullName = model.FullName,
+                    FullName = model.FirstName + " " + model.MiddleName + " " + model.LastName,
                     Email = model.Email,
-                    Password = model.Password
+                    Password = hash.getSHA1(model.Password)
                 };
                 var result = customStor.ChkUser(model.UserName);
                 if (result == 0)
@@ -102,16 +138,31 @@ namespace Gonsa.Application.Controllers
                     {
                         _logger.LogInformation("User created a new account with password.");
                         // await _signInManager.SignInAsync(user, isPersistent: false);
-                        return Redirect("~/login");
+                        Results.status = "success";
+                        Results.Description = "Đăng ký thành công,  tài khoản chờ xét duyệt";
+                        message = JsonConvert.SerializeObject(Results);
                     }
-                    ModelState.AddModelError(string.Empty, "Tạo user thất bại.");
-                    return View(model);
+                    else
+                    {
+                        Results.status = "fail";
+                        Results.Description = "Đăng ký thất bại";
+                        message = JsonConvert.SerializeObject(Results);
+                    }
                 }
-                ModelState.AddModelError(string.Empty, "User này đã tồn tại trong hệ thống.");
+                else
+                {
+                    Results.status = "fail";
+                    Results.Description = "Username đã tồn tại trong hệ thống";
+                    message = JsonConvert.SerializeObject(Results);
+                }
+            }
+            else
+            {
                 return View(model);
             }
-            return View(model);
+            return Content(message);
         }
+
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

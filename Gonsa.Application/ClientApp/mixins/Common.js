@@ -1,11 +1,5 @@
 export default {
-  created: function () {
-    //this.hello()
-  },
   methods: {
-    hello: function () {
-      console.log('hello from mixin!')
-    },
     xoadau(str) {
       str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
       str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");

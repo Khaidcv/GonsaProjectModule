@@ -36,7 +36,7 @@ namespace Gonsa.Application.Models.Account
         public string ClnID { get; set; }
         public string ClnPath { get; set; }
         public string Address { get; set; }
-
+        public string UserPosition { get; set; }
         public string LanguageDefault { get; set; }
     }
 }

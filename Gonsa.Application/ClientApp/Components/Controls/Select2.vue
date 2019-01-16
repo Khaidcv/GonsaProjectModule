@@ -2,15 +2,13 @@
   <div>
     <select class="form-control" ref="select" style="width:100%;">
       <option value="">{{placeholder}}</option>
-      <option v-if="get_selected_data" v-bind:value="value">
-        <strong>{{get_selected_data().text}}</strong>
-      </option>
+      <option v-if="defaulttext" selected="selected" v-bind:value="value">{{defaulttext}}</option>
     </select>
   </div>
 </template>
 <script>
   export default {
-    props: ["value", "templateResult", "templateSelection", "options", "skey", "placeholder", "matcher", "ajax","get_selected_data"],
+    props: ["value", "templateResult", "templateSelection", "options", "skey", "placeholder", "matcher", "ajax", "defaulttext", "disabled"],
     mounted() {
       var vm = this;
       var el = $(this.$refs.select);
@@ -36,11 +34,12 @@
       if (this.matcher) {
         opt.matcher = this.matcher;
       }
-      el.select2(opt);
-      el.val(this.value).trigger('change');
 
+      el.select2(opt);
       if (this.ajax) {
-        
+
+      } else {
+        el.val(this.value).trigger('change');
       }
 
       // phần trên này không cần, do khi dùng v-if nó sẽ không render ra nên phải render lại. khi v-if render sẽ gọi hàm mounted.
@@ -102,6 +101,7 @@
   .select2-selection__clear {
     font-size: 22px;
   }
+
     .select2-selection__clear:hover {
       color: #8d1111;
     }

@@ -41,7 +41,7 @@ namespace Gonsa.Data
         public string Crt_User { get; set; }
         public DateTime Crt_Date { get; set; }
         public string ChgeUser { get; set; }
-        public string ChgeDate { get; set; }
+        public DateTime ChgeDate { get; set; }
 
     }
 }
