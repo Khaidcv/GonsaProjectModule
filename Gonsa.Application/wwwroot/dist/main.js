@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4f092b95d20bf565797d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "68ff89d492c2db0126e5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -15194,7 +15194,13 @@ exports.default = {
   data: function data() {
     return {
       web_contract_list: [],
-      status: null
+      status: null,
+      pagination: {
+        currentPage: 1,
+        total: 0,
+        pageSize: 10,
+        max: 3
+      }
     };
   },
 
@@ -15209,12 +15215,12 @@ exports.default = {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                url = "/api/webcontract";
+                url = "/api/webcontract?page=" + _this.pagination.currentPage + "&pageSize=" + _this.pagination.pageSize;
                 status = _this.$route.query.status;
 
                 if (status) {
                   _this.status = status;
-                  url += "?status=" + status;
+                  url += "&status=" + status;
                 }
                 _context.next = 6;
                 return _this.$http.get(url).catch(function (error) {
@@ -15226,7 +15232,8 @@ exports.default = {
                 response = _context.sent;
 
                 if (response.data) {
-                  _this.web_contract_list = response.data;
+                  _this.web_contract_list = response.data.data;
+                  _this.pagination.total = response.data.total;
                 }
                 _context.next = 13;
                 break;
@@ -15244,6 +15251,30 @@ exports.default = {
           }
         }, _callee, _this, [[0, 10]]);
       }))();
+    },
+    loadPage: function loadPage(page) {
+      var _this2 = this;
+
+      return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.$store.state.show_loading = true;
+                _this2.pagination.currentPage = page;
+                _context2.next = 4;
+                return _this2.load_web_contrac_list();
+
+              case 4:
+                _this2.$store.state.show_loading = false;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, _this2);
+      }))();
     }
   },
   filters: {
@@ -15256,27 +15287,49 @@ exports.default = {
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
-    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
-      return _regenerator2.default.wrap(function _callee2$(_context2) {
+    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _this2.$store.state.show_loading = true;
-              _context2.next = 3;
-              return _this2.load_web_contrac_list();
+              _this3.$store.state.show_loading = true;
+              _context3.next = 3;
+              return _this3.load_web_contrac_list();
 
             case 3:
-              _this2.$store.state.show_loading = false;
+              _this3.$store.state.show_loading = false;
 
             case 4:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2, _this2);
+      }, _callee3, _this3);
     }))();
+  },
+
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.pagination.total / this.pagination.pageSize);
+    },
+    start: function start() {
+      var start = this.pagination.currentPage - this.pagination.max;
+      if (start <= 1) {
+        return 1;
+      } else {
+        return start;
+      }
+    },
+    end: function end() {
+      var end = this.pagination.currentPage + this.pagination.max;
+      if (end > this.totalPages) {
+        return this.totalPages;
+      } else {
+        return end;
+      }
+    }
   }
 };
 
@@ -32214,7 +32267,184 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "text-right" }, [
+                _c(
+                  "ul",
+                  { staticClass: "pagination pagination-sm" },
+                  [
+                    _vm.pagination.currentPage > 1
+                      ? [
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.loadPage(_vm.pagination.currentPage - 1)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-arrow-left" })]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.pagination.currentPage > _vm.pagination.max + 1
+                            ? _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.loadPage(1)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("1")]
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.start >= _vm.pagination.max
+                      ? [
+                          _vm.start == _vm.pagination.max
+                            ? _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.loadPage(2)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("2")]
+                                )
+                              ])
+                            : _c("li", [
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v("...")
+                                ])
+                              ])
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._l(_vm.end, function(n) {
+                      return n >= _vm.start
+                        ? [
+                            n == _vm.pagination.currentPage
+                              ? [
+                                  _c("li", { staticClass: "active" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "#" }
+                                      },
+                                      [_vm._v(_vm._s(n))]
+                                    )
+                                  ])
+                                ]
+                              : [
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "page-link",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.loadPage(n)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(n))]
+                                    )
+                                  ])
+                                ]
+                          ]
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _vm.end + 1 < _vm.totalPages
+                      ? [
+                          _vm.end + 2 == _vm.totalPages
+                            ? _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.loadPage(_vm.totalPages - 1)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(_vm.totalPages - 1))]
+                                )
+                              ])
+                            : _c("li", [
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v("...")
+                                ])
+                              ])
+                        ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.pagination.currentPage < _vm.totalPages
+                      ? [
+                          _vm.pagination.currentPage <
+                          _vm.totalPages - _vm.pagination.max
+                            ? _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.loadPage(_vm.totalPages)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(_vm.totalPages))]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.pagination.currentPage < _vm.totalPages
+                            ? _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "page-link",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.loadPage(
+                                          _vm.pagination.currentPage + 1
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-arrow-right"
+                                    })
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ])
             ])
           ])
         ])
@@ -32242,84 +32472,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Bước duyệt tiếp theo")]),
         _vm._v(" "),
         _c("th", [_vm._v("#")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tl-table-footer clearfix hidden" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-6 col-xs-12 tl-table-pageinfo" }, [
-          _c("small", [
-            _c("strong", [_vm._v("Displaying 1 to 50 of 9.481 items.")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-6 col-xs-12 tl-table-pagination" }, [
-          _c("div", [
-            _c("ul", { staticClass: "pagination pagination-sm" }, [
-              _c("li", { staticClass: "active" }, [_c("a", [_vm._v("1")])]),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      onclick: "gotoPage(2)",
-                      href: "javascript:void(0)"
-                    }
-                  },
-                  [_vm._v("2")]
-                )
-              ]),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      onclick: "gotoPage(3)",
-                      href: "javascript:void(0)"
-                    }
-                  },
-                  [_vm._v("3")]
-                )
-              ]),
-              _c("li", [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("...")
-                ])
-              ]),
-              _c("li"),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      onclick: "gotoPage(190)",
-                      "data-page": "190",
-                      href: "javascript:void(0)"
-                    }
-                  },
-                  [_vm._v("190")]
-                )
-              ]),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      onclick: "gotoPage(2)",
-                      href: "javascript:void(0)",
-                      "data-page": "2"
-                    }
-                  },
-                  [_c("i", { staticClass: "fa fa-angle-right" })]
-                )
-              ])
-            ])
-          ])
-        ])
       ])
     ])
   }

@@ -58,7 +58,58 @@
                   </tbody>
                 </table>
               </div>
-              <div class="tl-table-footer clearfix hidden"><div class="row"><div class="col-sm-6 col-xs-12 tl-table-pageinfo"><small><strong>Displaying 1 to 50 of 9.481 items.</strong></small></div> <div class="col-sm-6 col-xs-12 tl-table-pagination"><div><ul class="pagination pagination-sm"><li class="active"><a>1</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)">2</a></li><li><a onclick="gotoPage(3)" href="javascript:void(0)">3</a></li><li><a href="javascript:void(0)">...</a></li><li></li><li><a onclick="gotoPage(190)" data-page="190" href="javascript:void(0)">190</a></li><li><a onclick="gotoPage(2)" href="javascript:void(0)" data-page="2"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
+              <div class="text-right">
+                <ul class="pagination pagination-sm">
+                  <template v-if="pagination.currentPage>1">
+                    <li>
+                      <a class="page-link" href="#" tabindex="-1" @click="loadPage(pagination.currentPage - 1)"><i class="fa fa-arrow-left"></i></a>
+                    </li>
+                    <li v-if="pagination.currentPage > pagination.max + 1">
+                      <a href="#" @click="loadPage(1)">1</a>
+                    </li>
+                  </template>
+                  <template v-if="start>=pagination.max">
+                    <li v-if="start==pagination.max">
+                      <a href="#" @click="loadPage(2)">2</a>
+                    </li>
+                    <li v-else>
+                      <a href="#">...</a>
+                    </li>
+                  </template>
+
+                  <template v-if="n >= start" v-for="n in end">
+                    <template v-if="n==pagination.currentPage">
+                      <li class="active">
+                        <a class="page-link" href="#">{{n}}</a>
+                      </li>
+                    </template>
+                    <template v-else>
+                      <li>
+                        <a class="page-link" href="#" @click="loadPage(n)">{{n}}</a>
+                      </li>
+                    </template>
+                  </template>
+
+                  <template v-if="end + 1 < totalPages">
+                    <li v-if="end + 2 == totalPages">
+                      <a href="#" @click="loadPage(totalPages-1)">{{(totalPages-1)}}</a>
+                    </li>
+                    <li v-else>
+                      <a href="#">...</a>
+                    </li>
+                  </template>
+
+                  <template v-if="pagination.currentPage< totalPages">
+                    <li v-if="pagination.currentPage < totalPages - pagination.max">
+                      <a href="#" @click="loadPage(totalPages)">{{totalPages}}</a>
+                    </li>
+
+                    <li v-if="pagination.currentPage<totalPages">
+                      <a class="page-link" href="#" @click="loadPage(pagination.currentPage + 1)"><i class="fa fa-arrow-right"></i></a>
+                    </li>
+                  </template>
+                </ul>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -79,29 +130,42 @@
     data() {
       return {
         web_contract_list: [],
-        status: null
+        status: null,
+        pagination: {
+          currentPage: 1,
+          total: 0,
+          pageSize: 10,
+          max: 3
+        }
       }
     },
     methods: {
       async load_web_contrac_list() {
         try{
-            let url = "/api/webcontract";
+          let url = "/api/webcontract?page=" + this.pagination.currentPage + "&pageSize=" + this.pagination.pageSize;
             let status = this.$route.query.status;
             if(status){
                 this.status = status;
-                url+="?status="+status;
+                url+="&status="+status;
             }
             let response = await this.$http.get(url).catch((error)=>{
                 console.log(error);
                 this.$router.push("/web-contract");
             });
             if(response.data){
-                this.web_contract_list = response.data;
+              this.web_contract_list = response.data.data;
+              this.pagination.total = response.data.total;
             }
         }catch(e){
             console.log(e);
         }
-      }
+      },
+      async loadPage(page) {
+        this.$store.state.show_loading = true;
+        this.pagination.currentPage = page;
+        await this.load_web_contrac_list();
+        this.$store.state.show_loading = false;
+      },
     },
     filters :{
       filterOdate(value){
@@ -116,6 +180,27 @@
       this.$store.state.show_loading = true;
       await this.load_web_contrac_list();
       this.$store.state.show_loading = false;
+    },
+    computed: {
+      totalPages: function () {
+        return Math.ceil(this.pagination.total / this.pagination.pageSize)
+      },
+      start() {
+        var start = this.pagination.currentPage - this.pagination.max;
+        if (start <= 1) {
+          return 1;
+        } else {
+          return start;
+        }
+      },
+      end() {
+        var end = this.pagination.currentPage + this.pagination.max;
+        if (end > this.totalPages) {
+          return this.totalPages;
+        } else {
+          return end;
+        }
+      }
     }
   }
 </script>

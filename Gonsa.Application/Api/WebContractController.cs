@@ -27,17 +27,22 @@ namespace Gonsa.Application.Api
             _userManager = userManager;
         }
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<WebContract>>> getAll(string status)
+        public async Task<ActionResult<IEnumerable<WebContract>>> getAll(string status, int PageSize = -1, int page = 1)
         {
             try
             {
                 ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
                 var result = await _webContractRes.GetAll(user.CmpnID, user.UserCode);
+                int Offset = ((page - 1) * PageSize);
                 if (string.IsNullOrWhiteSpace(status) == false) // has value.
                 {
                     result = result.Where(x => x.CurrSignNumb == int.Parse(status));
                 }
-                return Ok(result);
+                return Ok(new
+                {
+                    data = result.Skip(Offset).Take(PageSize),
+                    total = result.Count()
+                });
             }
             catch (Exception ex)
             {
