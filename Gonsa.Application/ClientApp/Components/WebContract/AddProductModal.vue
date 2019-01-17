@@ -133,7 +133,7 @@ n
 </template>
 <script>
   export default {
-    props: ["show", "membType"],
+    props: ["show", "membType","customerID"],
     data() {
       return {
         // lưu danh sách product đã chọn.
@@ -153,7 +153,7 @@ n
     methods: {
       async get_products() {
         this.selectedsProductID = []; // reset lai list da chon.
-        let url = "/api/product?membType=" + this.membType;
+        let url = "/api/product?membType=" + this.membType +"&customerID="+this.customerID;
         if (this.keyword) {
           url += "&term=" + this.keyword;
         }

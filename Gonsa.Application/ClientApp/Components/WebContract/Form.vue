@@ -13,7 +13,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" v-if="show">
       <p class="btn-group btn-breadcrumb">
         <button class="btn btn-sm btn-default"><i class="fa fa-plus"></i></button>
         <button class="btn btn-sm btn-default" @click="step_active='step-customer'" v-bind:class="{'btn-success' : step_active=='step-customer'}">Thông tin khách hàng  <i class="fa fa-arrow-circle-right"></i></button>
@@ -105,9 +105,9 @@
 
                   <!--Điện thoaị-->
                   <div class="form-group">
-                    <label for="" class="col-sm-3 control-label span-required">Điện thoại</label>
+                    <label for="" class="col-sm-3 control-label">Điện thoại</label>
                     <div class="col-sm-9">
-                      <input type="text" name="psCsTel" v-validate="'required|numeric|min:8|max:12'"
+                      <input type="text" name="psCsTel" v-validate="'numeric|min:8|max:12'"
                              class="form-control" v-model="webContract.psCsTel" placeholder="Điện thoại">
                       <p class="text-danger" v-if="issubmited_customer && errors.has('form-step-customer.psCsTel')">{{errors.first('form-step-customer.psCsTel')}}</p>
                     </div>
@@ -384,7 +384,12 @@
                   </tr>
                   <tr>
                     <td><strong>Tình trạng :</strong></td>
-                    <td :inner-html.prop="webContract.signNumb | filterStatus"></td>
+                    <template v-if="mode==1">
+                      <td :inner-html.prop="webContract.signNumb | filterStatus"></td>
+                    </template>
+                    <template v-else>
+                      <td></td>
+                    </template>
                   </tr>
                   <tr>
                     <td><strong>Ghi chú :</strong></td>
@@ -556,7 +561,7 @@
                          @hide="show_modal_customer_list=false"
                          @selected="customer_OnChange"></CustomerListModal>
       <AddProductModal :show="show_modal_add_product"
-                       :membType="webContract.membType"
+                       :membType="webContract.membType" :customerID="webContract.customerID"
                        @hide="show_modal_add_product=false"
                        @selected="webContractDetail_Selected"></AddProductModal>
       <SelectProductPromotionModal :show="show_product_promotion_modal"
@@ -913,7 +918,8 @@
       async delete_webContract() {
         if (confirm("Bạn có chắc chắn muốn xóa đơn hàng không ?") == false) return;
 
-        let response = await this.$http.delete("/api/webcontract/" + this.webContract.oid);
+        let response = await this.$http.post("/api/webcontract/delete?OID=" + this.webContract.oid);
+        console.log(response);
         if (response.data.status == 1) {
           this.$router.push("/web-contract");
         } else {
@@ -1051,6 +1057,11 @@
       },
       userPosition() {
         return this.$store.state.user_info.userPosition.toLowerCase();
+      }
+    },
+    watch: {
+      webContract() {
+        console.log("change");
       }
     }
   }

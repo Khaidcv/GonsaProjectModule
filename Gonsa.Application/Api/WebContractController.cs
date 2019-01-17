@@ -133,8 +133,8 @@ namespace Gonsa.Application.Api
             }
         }
 
-        [HttpDelete("{OID}")]
-        public async Task<ActionResult> delete([FromRoute]string OID)
+        [HttpPost("delete")]
+        public async Task<ActionResult> delete([FromQuery]string OID)
         {
             try
             {

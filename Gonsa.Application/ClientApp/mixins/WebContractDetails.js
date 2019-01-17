@@ -7,16 +7,17 @@ export default {
   },
   methods: {
     async load_product_info(detail) {
-      var url = `/api/product/line?ItemID=${detail.itemID}&ItemUnit=${detail.itemUnit}&MembType=${this.webContract.membType}`;
+      var url = `/api/product/line?ItemID=${detail.itemID}&ItemUnit=${detail.itemUnit}&MembType=${this.webContract.membType}&customerID=${this.webContract.customerID}`;
       if (detail.bchCode) {
         url += `&BchCode=${detail.bchCode}`;
       }
       let response = await this.$http.get(url).catch(function () {
         alert("Không tìm thấy sản phẩm !");
       });
+      console.log(response);
       if (response.data && response.data != null) {
         var product = response.data;
-        //detail.itemPerBox = product.itemPerBox; //  Item per box(số lượng đơn vị/hộp)
+        //detail.itemPerBox = product.itemPerBox; //  Item per box(số lượng đơn vị/hộp), cos tra ve trong api get web contract
         detail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
         detail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
       }

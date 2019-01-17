@@ -1,5 +1,10 @@
 // mixin dungf chung cho list va form.
 export default {
+  data() {
+    return {
+      show : false
+    }
+  },
   async mounted() {
     try {
       let response = await this.$http.get('/api/ApiAccount/ApiGetMenu');
@@ -7,7 +12,7 @@ export default {
        // Check xem co menu khong.
         var check = response.data.find((item) => { return item.menuID == "81003" });
         if (check) {
-
+          this.show = true; // de show form, gia tri duoc gan trong form.
         } else {
           this.$router.push("/");
         }

@@ -3,12 +3,14 @@ import WebContract from '../Components/WebContract/List.vue'
 import FormWebContract from '../Components/WebContract/Form.vue'
 import InProcess from '../Components/InProcess.vue'
 import NotFound from '../Components/NotFound.vue'
+import Navigate from '../Components/Navigate.vue'
 
 export const routes = [
   { name: 'Home', path: '/', component: Dashboard },
   { name: 'WebContract', path: '/web-contract', component: WebContract },
-  { name: 'NewWebContract', path: '/web-contract/new', component: FormWebContract },
+  { name: 'NewWebContract', path: '/new-web-contract', component: FormWebContract },
   { name: 'EditWebContract', path: '/web-contract/edit/:oid', component: FormWebContract },
   { name: 'InProcess', path: '/in-process', component: InProcess },
+  { name: 'Navigate', path: '/navigate/:url', component: Navigate },
   { name: 'NotFound', path: '/**', component: NotFound }
 ]

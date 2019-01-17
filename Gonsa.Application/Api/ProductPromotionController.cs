@@ -69,7 +69,7 @@ namespace Gonsa.Application.Api
                     DscnRate = 10
                 }
             };
-            return Ok(products_mock);
+            return Ok(products);
         }
     }
 }

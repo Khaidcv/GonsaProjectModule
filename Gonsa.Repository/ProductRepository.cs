@@ -17,7 +17,7 @@ namespace Gonsa.Repository
         {
             _gonSaConnection = gonSaConnection;
         }
-        public async Task<IEnumerable<Product>> GetAll(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string MembType)
+        public async Task<IEnumerable<Product>> GetAll(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string MembType, string CustomerID)
         {
             using (IDbConnection conn = _gonSaConnection.GetConnection())
             {
@@ -29,7 +29,7 @@ namespace Gonsa.Repository
                 parameters.Add("@ASM", ASM);
                 parameters.Add("@SUB", SUB);
                 parameters.Add("@TEAM", "");
-                parameters.Add("@CustomerID", "");
+                parameters.Add("@CustomerID", CustomerID);
                 parameters.Add("@MembType", MembType);
                 conn.Open();
                 var result = await conn.QueryAsync<Product>(sQuery, param: parameters, commandType: CommandType.StoredProcedure);

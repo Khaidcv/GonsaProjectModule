@@ -42,7 +42,7 @@ namespace Gonsa.Application.Api
         {
             var customstore = new CustomStore(_connectionString);
             var rs = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-            var grouplst = rs.Grp_List.Replace("','", ",");
+            var grouplst = rs.Grp_List.Replace("'", "");
             var menu = await customstore.bosGetApplicationTools_ByGroupUser_Onl(grouplst);
             if (menu != null)
             {

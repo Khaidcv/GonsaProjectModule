@@ -8,6 +8,6 @@ namespace Gonsa.Repository.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAll(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string MembType);
+        Task<IEnumerable<Product>> GetAll(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string MembType,string CustomerID);
     }
 }

@@ -28,10 +28,10 @@ namespace Gonsa.Application.Api
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Product>>> get(string MembType = "", string term = "")
+        public async Task<ActionResult<IEnumerable<Product>>> get(string MembType = "", string customerID = "", string term = "")
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType);
+            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType, customerID);
             if (string.IsNullOrWhiteSpace(term) == false)
             {
                 products = products.Where(x => x.ItemName.NonUnicode().ToLower().Contains(term.NonUnicode().ToLower())).OrderBy(x => x.ItemName);
@@ -40,10 +40,10 @@ namespace Gonsa.Application.Api
         }
 
         [HttpGet("line")]
-        public async Task<ActionResult<IEnumerable<Product>>> getProductLine(string ItemID, string ItemUnit, string BchCode="", string MembType = "")
+        public async Task<ActionResult<IEnumerable<Product>>> getProductLine(string ItemID, string ItemUnit, string BchCode = "", string MembType = "", string customerID = "")
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType);
+            var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType, customerID);
             if (products.Any())
             {
                 var product = products.FirstOrDefault(x => x.ItemID == ItemID && x.ItemUnit == ItemUnit && x.BchCode == BchCode);

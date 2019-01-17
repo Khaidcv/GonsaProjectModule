@@ -15,27 +15,24 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" v-if="show">
       <div class="row">
         <div class="col-xs-12">
           <p class="text-right">
-            <router-link to="/web-contract/new" class="btn btn-primary btn-sm">
+            <router-link to="/new-web-contract" class="btn btn-primary btn-sm">
               <i class="fa fa-plus"></i> Thêm đơn hàng mới
             </router-link>
           </p>
           <div class="box box-primary">
-            <div class="box-header hidden">
-
-            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="tl-wrap-table">
-                <table class="table table-bordered">
+                <table class="table table-bordered" width="1200">
                   <thead>
                     <tr>
                       <th>.No</th>
                       <th>Số DDH</th>
-                      <th>Khách hàng</th>
+                      <th style="width:200px">Khách hàng</th>
                       <th>Ngày đơn hàng</th>
                       <th>Tình trạng</th>
                       <th>Bước duyệt tiếp theo</th>
@@ -126,7 +123,7 @@
 <script>
   import WebContractMixin from '../../mixins/WebContract.js'
   export default {
-    mixins : [WebContractMixin],
+    mixins: [WebContractMixin],
     data() {
       return {
         web_contract_list: [],
@@ -141,23 +138,23 @@
     },
     methods: {
       async load_web_contrac_list() {
-        try{
+        try {
           let url = "/api/webcontract?page=" + this.pagination.currentPage + "&pageSize=" + this.pagination.pageSize;
-            let status = this.$route.query.status;
-            if(status){
-                this.status = status;
-                url+="&status="+status;
-            }
-            let response = await this.$http.get(url).catch((error)=>{
-                console.log(error);
-                this.$router.push("/web-contract");
-            });
-            if(response.data){
-              this.web_contract_list = response.data.data;
-              this.pagination.total = response.data.total;
-            }
-        }catch(e){
-            console.log(e);
+          let status = this.$route.query.status;
+          if (status) {
+            this.status = status;
+            url += "&status=" + status;
+          }
+          let response = await this.$http.get(url).catch((error) => {
+            console.log(error);
+            this.$router.push("/web-contract");
+          });
+          if (response.data) {
+            this.web_contract_list = response.data.data;
+            this.pagination.total = response.data.total;
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
       async loadPage(page) {
@@ -167,19 +164,17 @@
         this.$store.state.show_loading = false;
       },
     },
-    filters :{
-      filterOdate(value){
-        if(value){
-            return value.substring(0,10);
-        }else{
-            return "";
+    filters: {
+      filterOdate(value) {
+        if (value) {
+          return value.substring(0, 10);
+        } else {
+          return "";
         }
       }
     },
-   async mounted() {
-      this.$store.state.show_loading = true;
-      await this.load_web_contrac_list();
-      this.$store.state.show_loading = false;
+    async mounted() {
+      await this.loadPage(1);
     },
     computed: {
       totalPages: function () {
@@ -204,3 +199,13 @@
     }
   }
 </script>
+<style scoped>
+
+  .tl-wrap-table {
+    overflow-x: scroll;
+  }
+
+    .tl-wrap-table th {
+      white-space: nowrap;
+    }
+</style>

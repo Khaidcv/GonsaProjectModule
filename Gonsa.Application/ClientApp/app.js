@@ -8,10 +8,10 @@ import VeeValidate from 'vee-validate';
 
 Vue.use(VeeValidate);
 
-//router.beforeEach((to, from, next) => {
-//  store.state.show_loading = true;
-//  next();
-//});
+router.beforeEach((to, from, next) => {
+  store.state.show_loading = true;
+  next();
+});
 
 
 Vue.prototype.$http = axios

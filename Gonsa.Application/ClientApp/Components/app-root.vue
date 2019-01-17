@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper">
-    <div class="page-loading" v-if="$store.state.show_loading">
+    <div class="page-loading" v-bind:class="{hidden:$store.state.show_loading == false}">
       <div class="loading-main">
         <img src="/dist/img/loading.svg" alt="Loading" />
         <div id="loading-text">Loading...</div>
       </div>
     </div>
-    
+
     <NavbarHeader></NavbarHeader>
-    
+
     <aside class="main-sidebar">
       <SideBar></SideBar>
     </aside>
@@ -213,14 +213,14 @@
     </aside>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
-   immediately after the control sidebar -->
+    immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
   </div>
 </template>
 <script>
   import NavbarHeader from './Navbar-Header.vue'
   import SideBar from './SideBar.vue'
-    export default {
+  export default {
     components: { SideBar, NavbarHeader },
     data() {
       return {}
@@ -241,7 +241,6 @@
     right: 0;
     left: 0;
     bottom: 0;
-    /*background: rgba(250,250,250,0.5);*/
     background: rgba(250, 250, 250, 0);
     z-index: 99999;
   }
@@ -256,10 +255,11 @@
       margin-top: -20px;
       margin-left: -50px;
       box-shadow: 1px 2px 10px #666;
+      img
 
-      img {
-        width: 40px;
-        height: 40px;
-      }
-    }
+  {
+    width: 40px;
+    height: 40px;
+  }
+  }
 </style>

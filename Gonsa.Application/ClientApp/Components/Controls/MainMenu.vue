@@ -1,5 +1,5 @@
 <template>
-  <li class="treeview">
+  <li v-bind:class="{treeview : get_child_by_parent.length>0}">
     <template v-if="get_child_by_parent.length>0">
       <a href="#">
         <i v-bind:class="currentMenu.menuIcon"></i>
@@ -18,7 +18,7 @@
     </template>
     <template v-else>
       <router-link v-bind:to="get_router_link(currentMenu.menuID)">
-        <i v-bind:class="currentMenu.menuIcon"></i>{{currentMenu.menuDscpt}}
+        <i v-bind:class="currentMenu.menuIcon"></i><span>{{currentMenu.menuDscpt}}</span>
       </router-link>
     </template>
   </li>
@@ -42,9 +42,9 @@
     methods: {
       get_router_link(menuID) {
         if (menuID == "81003") {
-          return "/web-contract/new";
+          return "/navigate/new-web-contract";
         } else if (menuID == '83') {
-          return "/web-contract?status=101";
+          return "/navigate/web-contract?status=101";
         }  else if (menuID == '82') {
           return "/in-process";
         } else {
