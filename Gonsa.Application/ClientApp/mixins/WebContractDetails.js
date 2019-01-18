@@ -11,6 +11,9 @@ export default {
       if (detail.bchCode) {
         url += `&BchCode=${detail.bchCode}`;
       }
+      if (detail.qc_XaBang) {
+        url += `&Qc_XaBang=${detail.qc_XaBang}`;
+      }
       let response = await this.$http.get(url).catch(function () {
         alert("Không tìm thấy sản phẩm !");
       });

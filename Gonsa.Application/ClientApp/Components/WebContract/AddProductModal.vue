@@ -32,6 +32,7 @@
                     <th>Giá đơn vị</th>
                     <th>SL được bán (hộp)</th>
                     <th>SL được bán (đơn vị)</th>
+                    <th>Số hợp đồng thầu</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (hộp)</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (đơn vị)</th>
                     <th>Sl dụ trù (hộp)</th>
@@ -55,9 +56,12 @@
                     <td>{{product.storePrice | formatVnd}}</td>
                     <td>{{product.slOhItQt}}</td> <!-- Số lượng được bán hộp-->
                     <td>{{product.slOhQtty}}</td> <!-- Số lượng được bán đơn vị-->
+                    <td>{{product.qc_XaBang}}</td> <!--Số hợp đồng thầu -->
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfItQt}}</td> <!-- Số lượng tồn thầu hộp-->
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfQtty}}</td> <!-- Số lượng tồn thầu đơn vị-->
-                    <td>{{product.rmPlItQt}}</td> <!-- Số lượng dụ trù hộp-->
+                    <td>
+                      {{product.rmPlItQt}}
+                    </td> <!-- Số lượng dụ trù hộp-->
                     <td>{{product.rmPlQtty}}</td> <!-- Số lượng dụ trù đơn vị-->
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{product.bchCode}}</td>
                   </tr>
@@ -191,6 +195,7 @@ n
           detail.itemName = product.itemName;
           detail.itemUnit = product.itemUnit;
           detail.itemUnitName = product.itemUnitName;
+          detail.qc_XaBang = product.qc_XaBang;
           detail.bchCode = product.bchCode; // mã lô
 
           // Qui cách bán
@@ -205,7 +210,6 @@ n
           detail.itemPerBox = product.itemPerBox; //  Item per box(số lượng đơn vị/hộp)
           detail.slOhQtty = product.slOhQtty; // số lượng tồn bán đơn vị.
           detail.rmRfQtty = product.rmRfQtty; // số lượng tồn thầu đơn vị..
-
 
           // tinh so luong ton thau theo đơn vị. (store)
           if (this.$store.state.user_info.clnType == 'OTC') { // -9999

@@ -40,13 +40,13 @@ namespace Gonsa.Application.Api
         }
 
         [HttpGet("line")]
-        public async Task<ActionResult<IEnumerable<Product>>> getProductLine(string ItemID, string ItemUnit, string BchCode = "", string MembType = "", string customerID = "")
+        public async Task<ActionResult<IEnumerable<Product>>> getProductLine(string ItemID, string ItemUnit, string BchCode = "", string Qc_XaBang = "", string MembType = "", string customerID = "")
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             var products = await _productRes.GetAll(user.ClnID, user.ZoneID, user.RegionID, user.ASM, user.SUB, MembType, customerID);
             if (products.Any())
             {
-                var product = products.FirstOrDefault(x => x.ItemID == ItemID && x.ItemUnit == ItemUnit && x.BchCode == BchCode);
+                var product = products.FirstOrDefault(x => x.ItemID == ItemID && x.ItemUnit == ItemUnit && x.BchCode == BchCode && x.Qc_XaBang == Qc_XaBang);
                 return Ok(product);
             }
             else

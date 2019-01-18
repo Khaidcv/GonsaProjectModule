@@ -139,7 +139,9 @@
                             $("#allsummaryerror").html("");
                             location.href = "/";
                         }
-
+                    },
+                    error : function (){
+                        alert("Lỗi hệ thống, vui lòng thử lại sau");
                     }
                 })
             })

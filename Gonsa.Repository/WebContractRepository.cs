@@ -161,6 +161,7 @@ namespace Gonsa.Repository
                         detailParams.Add("@ItemName", detail.ItemName);
                         detailParams.Add("@ItemUnit", detail.ItemUnit);
                         detailParams.Add("@ItemUnitName", detail.ItemUnitName);
+                        detailParams.Add("@Qc_XaBang", detail.Qc_XaBang ?? "");
                         detailParams.Add("@ItemQtty", detail.ItemQtty);
                         detailParams.Add("@RemnRfQt", detail.RemnRfQt);
                         detailParams.Add("@StoreQtty", detail.StoreQtty);
@@ -279,6 +280,7 @@ namespace Gonsa.Repository
                         detailParams.Add("@ItemName", detail.ItemName);
                         detailParams.Add("@ItemUnit", detail.ItemUnit);
                         detailParams.Add("@ItemUnitName", detail.ItemUnitName);
+                        detailParams.Add("@Qc_XaBang", detail.Qc_XaBang ?? "");
                         detailParams.Add("@ItemQtty", detail.ItemQtty);
                         detailParams.Add("@RemnRfQt", detail.RemnRfQt);
                         detailParams.Add("@StoreQtty", detail.StoreQtty);

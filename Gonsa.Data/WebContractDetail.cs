@@ -17,6 +17,7 @@ namespace Gonsa.Data
         public string ItemName { get; set; }
         public string ItemUnit { get; set; }
         public string ItemUnitName { get; set; }
+        public string Qc_XaBang { get; set; }
         public decimal ItemQtty { get; set; }
         public decimal RemnRfQt { get; set; }
         public decimal StoreQtty { get; set; }

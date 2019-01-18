@@ -251,6 +251,7 @@
                         <th>Mã kho</th>
                         <th>Tên sản phẩm</th>
                         <th>Tên đơn vị tính</th>
+                        <th v-if="$store.state.user_info.clnType=='ETC'">Số hợp đồng thầu</th>
                         <th v-if="$store.state.user_info.clnType=='ETC'">Mã lô</th>
                         <th v-if="false">Qui cách bán</th>
                         <th v-if="$store.state.user_info.clnType=='ETC'">SL tồn thầu (đơn vị)</th>
@@ -272,7 +273,8 @@
                         <td>{{(index+1)}}</td>
                         <td>{{contractDetail.storeID}}</td>
                         <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
-                        <td>{{contractDetail.itemUnitName}}</td>
+                        <td>{{contractDetail.itemUnitName}}</td> <!-- tê dơn vị tính-->
+                        <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.qc_XaBang}}</td> <!-- Số hợp đồng thầu-->
                         <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.bchCode}}</td>
                         <td v-if="false">{{contractDetail.boxID}}</td>
                         <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.remnRfQt}}</td> <!-- So luong ton thau don vi-->
@@ -484,6 +486,7 @@
                     <th>Mã kho</th>
                     <th>Tên sản phẩm</th>
                     <th>Tên đơn vị tính</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Số hợp đồng thầu</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">Mã lô</th>
                     <th v-if="false">Qui cách bán</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">SL tồn thầu (đơn vị)</th>
@@ -505,6 +508,7 @@
                     <td>{{contractDetail.storeID}}</td>
                     <td><strong class="text-success">{{contractDetail.itemName}}</strong></td>
                     <td>{{contractDetail.itemUnitName}}</td>
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.qc_XaBang}}</td> <!-- Số hợp đồng thầu-->
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.bchCode}}</td>
                     <td v-if="false">{{contractDetail.boxID}}</td>
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{contractDetail.remnRfQt}}</td> <!-- So luong ton thau don vi-->
@@ -861,13 +865,14 @@
           let bchCode = item.bchCode;
           let storeID = item.storeID;
           let prmtID = item.prmtID;
+          let qc_XaBang = item.qc_XaBang;
 
           var duplicate_items = this.web_contract_details.filter(function (detail) {
-            return detail.itemID == itemID && detail.boxID == boxID && detail.bchCode == bchCode && detail.storeID == storeID && detail.prmtID == prmtID
+            return detail.itemID == itemID && detail.boxID == boxID && detail.bchCode == bchCode && detail.storeID == storeID && detail.prmtID == prmtID && detail.qc_XaBang == qc_XaBang
           });
           if (duplicate_items.length > 1) {
             var dup_item = duplicate_items[0];
-            alert(`Sản phẩm ${dup_item.itemName} với cùng qui cách bán, mã lô, mã kho, CTKM đã tồn tại. !`);
+            alert(`Sản phẩm ${dup_item.itemName} với cùng qui cách bán, mã lô, số hợp đồng thầu, mã kho, CTKM bị trùng lặp. !`);
             return;
             //duplicate_list.push({
             //  itemName: duplicate_item[0].itemName
@@ -1056,7 +1061,9 @@
         return this.mode == 1 && (this.webContract.signNumb >= 401 && this.webContract.signNumb < 501);
       },
       userPosition() {
-        return this.$store.state.user_info.userPosition.toLowerCase();
+        if (this.$store.state.user_info.userPosition)
+          return this.$store.state.user_info.userPosition.toLowerCase();
+        return "";
       }
     },
     watch: {

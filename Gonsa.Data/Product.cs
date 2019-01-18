@@ -16,6 +16,7 @@ namespace Gonsa.Data
         public decimal StorePrice { get; set; } // Giá/đơn vị
         public decimal SlOhItQt { get; set; } // Số lượng được bán hộp
         public decimal SlOhQtty { get; set; } // Số lượng được bán Đơn vị
+        public string Qc_XaBang { get; set; } // Số hợp đồng thầu
         public decimal RmRfQtty { get; set; } //Số lượng tồn thầu Đơn vị
         public decimal RmRfItQt { get; set; } // Số lượng tồn thầu Hộp
         public decimal RmPlItQt { get; set; } //Số lượng tồn dự trù hộp
