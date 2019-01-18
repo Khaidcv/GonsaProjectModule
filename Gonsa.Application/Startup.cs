@@ -34,10 +34,8 @@ namespace Gonsa.Application
             {
                 options.LoginPath = "/Account/login";
                 options.LogoutPath = "/Account/Logout";
-                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                options.Cookie.Expiration = TimeSpan.FromDays(30);
             });
-            // end dang
-
             // Add framework services.
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

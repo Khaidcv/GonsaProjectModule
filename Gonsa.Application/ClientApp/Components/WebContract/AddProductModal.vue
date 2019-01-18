@@ -46,10 +46,10 @@
                     <td>
                       <template>
                       </template>
-                      <input v-model="selectedsProductID" v-bind:value="index" type="checkbox" name="selectedsProductID[]" value="" />
+                      <input v-model="selectedsProductID" v-bind:id="'checkbox-product-'+index" v-bind:value="index" type="checkbox" name="selectedsProductID[]" value="" />
                     </td>
                     <td>{{product.itemID}}</td>
-                    <td><strong class="text-info">{{product.itemName}}</strong></td>
+                    <td class="td-checkbox"><label v-bind:for="'checkbox-product-'+index" class="text-info">{{product.itemName}}</label></td>
                     <td>{{product.itemUnitName}}</td>
                     <td>{{product.itemPerBox}}</td>
                     <td>{{product.itemPrice | formatVnd}}</td>
@@ -329,7 +329,9 @@ n
   table td {
     white-space: nowrap;
   }
-
+  table .td-checkbox label{
+    cursor:pointer;
+  }
   .wrap-table {
     min-height: 450px;
   }

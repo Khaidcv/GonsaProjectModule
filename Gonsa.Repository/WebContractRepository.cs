@@ -244,7 +244,38 @@ namespace Gonsa.Repository
                     await con.ExecuteAsync(sQuery, param: parameters, transaction: dbTransaction);
 
                     var insertedWebContract = await con.QuerySingleAsync<WebContract>("SELECT * FROM dbo.webContracts where OID = @OID", new { OID = webContract.OID }, transaction: dbTransaction); // webcontract ở trên ko có thông só, vì store monitor ko trả về.
-                    var details = await GetDetails(webContract.OID);
+                    var details = await con.QueryAsync<WebContractDetail>("SELECT * FROM dbo.webContractDetails where OID = @OID", new { OID = webContract.OID }, transaction: dbTransaction);
+                    //foreach qua lisst moi
+                    //foreach (var new_detail in webContractViewModel.WebContractDetails)
+                    //{
+                    //    // kiem tra co trong orderluc chua sua khong.
+                    //    var existing_list = oldDetails.Where(x =>
+                    //    x.ItemID == new_detail.ItemID
+                    //    && x.BoxID == new_detail.BoxID
+                    //    && x.BchCode == new_detail.BchCode
+                    //    && x.StoreID == new_detail.StoreID
+                    //    && x.PrmtID == new_detail.PrmtID && ((x.Qc_XaBang ?? "") == new_detail.Qc_XaBang));
+                    //    if (existing_list.Any()) // co trong list cu.
+                    //    {
+                    //        var existing = existing_list.FirstOrDefault();
+                    //        await IncOnHandProductLine(insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, existing.ItemID, VISA, new_detail.ItemQtty, existing.ItemQtty, new_detail.StoreQtty, existing.StoreQtty, con, dbTransaction);
+                    //        // check ton kho theo entity moi.
+
+
+                    //        // cap nhat theo detail moi.
+                    //        await DecOnHandProductLine(insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, existing.ItemID, VISA, ItemQtty: new_detail.ItemQtty, ItemQtty_Old: existing.ItemQtty, StoreQtty: new_detail.StoreQtty, StoreQtty_Old: existing.StoreQtty, dbConnection: con, dbTransaction: dbTransaction);
+                    //    }
+                    //}
+
+                    //foreach (var detail in oldDetails)
+                    //{
+                    //    await IncOnHandProductLine(insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);
+                    //}
+
+                    //await con.ExecuteAsync("DELETE FROM webContractDetails where OID= @OID", new
+                    //{
+                    //    OID = webContract.OID
+                    //}, transaction: dbTransaction, commandType: CommandType.Text);
                     foreach (var detail in details)
                     {
                         await IncOnHandProductLine(insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);

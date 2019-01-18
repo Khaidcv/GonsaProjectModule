@@ -167,8 +167,7 @@ namespace Gonsa.Application.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            return RedirectToAction("Login");
+            return Redirect("/");
         }
 
         #region Helpers

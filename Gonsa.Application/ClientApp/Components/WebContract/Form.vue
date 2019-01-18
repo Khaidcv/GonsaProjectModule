@@ -916,7 +916,8 @@
           alert(response.data.message);
           window.location.href = "/web-contract/edit/" + this.webContract.oid;
         } else {
-          alert(response.data.message);
+          alert("Lỗi, không thể lưu đơn hàng.");
+          console.log(response.data.message);
         }
         this.$store.state.show_loading = false;
       },
@@ -998,6 +999,15 @@
         let webcontract_response = await this.$http.get("/api/webcontract/" + oid);
         this.webContract = webcontract_response.data.webContract;
         this.web_contract_details = webcontract_response.data.webContractDetails;
+
+        // init lai field qc_xabang trong detail, vi sotre tra ve null. nhugn tren formko co truong hop null, neu ko co gi tri thi la ""
+        for (var i = 0; i < this.web_contract_details.length; i++) {
+          if (this.web_contract_details[i].qc_XaBang == null) {
+            this.web_contract_details[i].qc_XaBang = "";
+          }
+        }
+        // end
+
         this.get_delivery_customers();
         this.step_active = 'step-review'; // măc đinh khi vào form sẽ chuyển đến phần review.
         this.form_title = 'Đơn hàng : ' + this.webContract.oid;
