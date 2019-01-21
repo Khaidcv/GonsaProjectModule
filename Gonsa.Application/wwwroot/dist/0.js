@@ -1734,17 +1734,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   props: {
     show: Boolean,
-    itemID: {
-      type: String,
-      default: ',00005.0001,00005.0001,00005.0002'
-    },
-    prdcQtty: {
-      type: Number,
-      default: 0
-    },
-    prdcAmnt: {
-      type: Number,
-      default: 0
+    detail_editing: {
+      type: Object
     },
     customerID: {
       type: String,
@@ -1773,8 +1764,9 @@ exports.default = {
             switch (_context.prev = _context.next) {
               case 0:
                 param = $.param({
-                  itemID: _this.itemID,
-                  prdcQtty: _this.prdcQtty,
+                  itemID: _this.detail_editing.itemID,
+                  prdcQtty: _this.detail_editing.itemQtty || 0,
+                  prdcAmnt: _this.detail_editing.prdcAmnt || 0,
                   customerID: _this.customerID,
                   membType: _this.membType
                 });
@@ -1967,10 +1959,12 @@ exports.default = {
       this.onCloseProductPromotionModal();
     },
     openProductPromotionModal: function openProductPromotionModal(index) {
+      this.detail_editing = this.web_contract_details[index];
       this.contract_detail_change_promotion_index = index;
       this.show_product_promotion_modal = true;
     },
     onCloseProductPromotionModal: function onCloseProductPromotionModal() {
+      this.detail_editing = null;
       this.contract_detail_change_promotion_index = -1;
       this.show_product_promotion_modal = false;
     }
@@ -2002,7 +1996,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      show_modal_add_product: false
+      show_modal_add_product: false,
+      detail_editing: null
     };
   },
 
@@ -2049,10 +2044,57 @@ exports.default = {
       }))();
     },
     webContractDetail_Selected: function webContractDetail_Selected(list) {
+      var _this2 = this;
+
+      var error_items = [];
+
+      var _loop = function _loop() {
+        item = list[i];
+
+        item.dscnMbRt = _this2.webContract.dscnMbRt || 0;
+
+        var itemID = item.itemID;
+        var boxID = item.boxID;
+        var bchCode = item.bchCode;
+        var storeID = item.storeID;
+        var prmtID = item.prmtID;
+        var qc_XaBang = item.qc_XaBang;
+
+        duplicate_items = _this2.web_contract_details.filter(function (detail) {
+          return detail.itemID == itemID && detail.boxID == boxID && detail.bchCode == bchCode && detail.storeID == storeID && detail.prmtID == prmtID && detail.qc_XaBang == qc_XaBang;
+        });
+
+        if (duplicate_items.length > 0) {
+          dup_item = duplicate_items[0];
+          added = error_items.filter(function (e) {
+            return e.itemName == dup_item.itemName;
+          }).length > 0;
+
+          if (added == false) {
+            error_items.push({
+              itemName: dup_item.itemName
+            });
+          }
+        } else {
+          _this2.web_contract_details.push(item);
+        }
+      };
+
       for (var i = 0; i < list.length; i++) {
-        list[i].dscnMbRt = this.webContract.dscnMbRt || 0;
-        this.web_contract_details.push(list[i]);
+        var item;
+        var duplicate_items;
+        var dup_item;
+        var added;
+
+        _loop();
       }
+
+      if (error_items.length) {
+        alert("Sản phẩm " + error_items.map(function (e) {
+          return e.itemName;
+        }).join(" ,") + " đã có trong giỏ hàng.");
+      }
+
       this.show_modal_add_product = false;
     },
     calc_product_amount: function calc_product_amount(detail) {
@@ -2073,15 +2115,19 @@ exports.default = {
       var sl_tonban_donvi = detail.slOhQtty || 0;
       var sl_tonthau_donvi = detail.rmRfQtty || 0;
       if (sl_tonthau_donvi != -1) {
-        if (storeQtty > sl_tonban_donvi || storeQtty > sl_tonthau_donvi) {
-          alert("S\u1ED1 l\u01B0\u1EE3ng b\xE1n (\u0111\u01A1n v\u1ECB) " + storeQtty + " kh\xF4ng \u0111\u01B0\u1EE3c l\u1EDBn h\u01A1n s\u1ED1 l\u01B0\u1EE3ng t\u1ED3n b\xE1n(" + sl_tonban_donvi + ") ho\u1EB7c s\u1ED1 l\u01B0\u1EE3ng t\u1ED3n th\u1EA7u(" + sl_tonthau_donvi + ")");
+        if (storeQtty > sl_tonban_donvi) {
+          alert("S\u1ED1 l\u01B0\u1EE3ng b\xE1n (\u0111\u01A1n v\u1ECB) " + storeQtty + " kh\xF4ng \u0111\u01B0\u1EE3c l\u1EDBn h\u01A1n s\u1ED1 l\u01B0\u1EE3ng t\u1ED3n b\xE1n(" + sl_tonban_donvi + ")");
+          detail.storeQtty = 0;
+          detail.itemQtty = 0;
+        } else if (storeQtty > sl_tonthau_donvi) {
+          alert("S\u1ED1 l\u01B0\u1EE3ng b\xE1n (\u0111\u01A1n v\u1ECB) " + storeQtty + " kh\xF4ng \u0111\u01B0\u1EE3c l\u1EDBn h\u01A1n s\u1ED1 l\u01B0\u1EE3ng t\u1ED3n th\u1EA7u(" + sl_tonthau_donvi + ")");
           detail.storeQtty = 0;
           detail.itemQtty = 0;
         }
       }
     },
     store_quantity_change: function store_quantity_change(detail) {
-      var _this2 = this;
+      var _this3 = this;
 
       return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
         return _regenerator2.default.wrap(function _callee2$(_context2) {
@@ -2089,7 +2135,7 @@ exports.default = {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.load_product_info(detail);
+                return _this3.load_product_info(detail);
 
               case 2:
                 if (detail.storeQtty) {
@@ -2098,7 +2144,7 @@ exports.default = {
                   }
                 }
 
-                _this2.check_store_quantity(detail);
+                _this3.check_store_quantity(detail);
 
                 if (detail.itemPerBox && detail.itemPerBox > 0) {
                   detail.itemQtty = detail.storeQtty / detail.itemPerBox;
@@ -2106,20 +2152,20 @@ exports.default = {
                   detail.itemQtty = 0;
                 }
 
-                _this2.calc_product_amount(detail);
-                _this2.calc_DscnMbAm(detail);
-                _this2.calc_SmPdAmnt(detail);
-                _this2.calc_payment_amount();
+                _this3.calc_product_amount(detail);
+                _this3.calc_DscnMbAm(detail);
+                _this3.calc_SmPdAmnt(detail);
+                _this3.calc_payment_amount();
               case 9:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, _this2);
+        }, _callee2, _this3);
       }))();
     },
     item_quantity_change: function item_quantity_change(detail) {
-      var _this3 = this;
+      var _this4 = this;
 
       return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
         return _regenerator2.default.wrap(function _callee3$(_context3) {
@@ -2127,7 +2173,7 @@ exports.default = {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return _this3.load_product_info(detail);
+                return _this4.load_product_info(detail);
 
               case 2:
                 if (detail.itemQtty) {
@@ -2138,18 +2184,18 @@ exports.default = {
 
                 detail.storeQtty = detail.itemQtty * detail.itemPerBox;
 
-                _this3.check_store_quantity(detail);
+                _this4.check_store_quantity(detail);
 
-                _this3.calc_product_amount(detail);
-                _this3.calc_DscnMbAm(detail);
-                _this3.calc_SmPdAmnt(detail);
-                _this3.calc_payment_amount();
+                _this4.calc_product_amount(detail);
+                _this4.calc_DscnMbAm(detail);
+                _this4.calc_SmPdAmnt(detail);
+                _this4.calc_payment_amount();
               case 9:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, _this3);
+        }, _callee3, _this4);
       }))();
     },
     calc_payment_amount: function calc_payment_amount() {
@@ -5949,7 +5995,9 @@ var render = function() {
         _c("SelectProductPromotionModal", {
           attrs: {
             show: _vm.show_product_promotion_modal,
-            membType: this.webContract.membType,
+            membType: _vm.webContract.membType,
+            customerID: _vm.webContract.customerID,
+            detail_editing: _vm.detail_editing,
             index: _vm.contract_detail_change_promotion_index
           },
           on: {

@@ -21,6 +21,7 @@
         <button class="btn btn-sm btn-default" @click="go_step_product()" v-bind:class="{'btn-success' : step_active=='step-product'}">Danh sách sản phẩm  <i class="fa fa-arrow-circle-right"></i></button>
         <button class="btn btn-sm btn-default" @click="save_step_product()" v-bind:class="{'btn-success' : step_active=='step-review'}">Tổng quan đơn hàng</button>
       </p>
+
       <!-- Chọn khách hàng -->
       <div class="box box-primary" v-if="step_active == 'step-customer'">
         <div class="box-header with-border">
@@ -144,6 +145,7 @@
         </div>
       </div>
       <!-- Chọn khách hàng-->
+
       <!-- Đơn vị nhận hàng  -->
       <div class="box box-primary" v-if="step_active == 'step-delivery-customer'">
         <div class="box-header with-border">
@@ -218,6 +220,7 @@
         </div>
       </div>
       <!-- Đơn vị nhận hàng-->
+
       <!-- Giỏ hàng -->
       <div class="box box-primary" v-if="step_active == 'step-product'">
         <div class="box-header with-border">
@@ -328,6 +331,7 @@
         <!-- /.box-body -->
       </div>
       <!-- Giỏ hàng -->
+
       <!-- Review -->
       <div class="box box-primary box-review" v-if="step_active == 'step-review'">
         <div class="box-header with-border">
@@ -569,7 +573,9 @@
                        @hide="show_modal_add_product=false"
                        @selected="webContractDetail_Selected"></AddProductModal>
       <SelectProductPromotionModal :show="show_product_promotion_modal"
-                                   :membType="this.webContract.membType"
+                                   :membType="webContract.membType"
+                                   :customerID="webContract.customerID"
+                                   :detail_editing="detail_editing"
                                    @hide="onCloseProductPromotionModal"
                                    :index="contract_detail_change_promotion_index"
                                    @change="onProductPromotionChange"></SelectProductPromotionModal>

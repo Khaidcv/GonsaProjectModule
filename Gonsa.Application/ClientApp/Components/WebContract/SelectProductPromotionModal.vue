@@ -48,17 +48,8 @@
   export default {
     props: {
       show: Boolean,
-      itemID: {
-        type: String,
-        default: ',00005.0001,00005.0001,00005.0002'
-      },
-      prdcQtty: {
-        type: Number,
-        default: 0
-      },
-      prdcAmnt: {
-        type: Number,
-        default: 0
+      detail_editing: {
+        type : Object
       },
       customerID: {
         type: String,
@@ -78,8 +69,9 @@
     methods: {
       async get_product_promotions() {
         const param = $.param({
-          itemID: this.itemID,
-          prdcQtty: this.prdcQtty,
+          itemID: this.detail_editing.itemID,
+          prdcQtty: this.detail_editing.itemQtty || 0,
+          prdcAmnt: this.detail_editing.prdcAmnt || 0,
           customerID: this.customerID,
           membType: this.membType
         });

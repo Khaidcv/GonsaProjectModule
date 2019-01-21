@@ -18,6 +18,7 @@ Vue.prototype.$http = axios
 
 axios.get("/api/apiaccount/getCurrentuser").then(function (res) {
   store.state.user_info = res.data;
+  //store.state.user_info.clnType = 'OTC';
 });
 
 sync(store, router)

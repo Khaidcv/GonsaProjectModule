@@ -7,7 +7,7 @@ export default {
   },
   methods: {
     onProductPromotionChange(productPromotion) {
-
+      
       var detail = this.web_contract_details[this.contract_detail_change_promotion_index];
 
       detail.prmtID = productPromotion.prmtID;
@@ -25,10 +25,12 @@ export default {
     },
     openProductPromotionModal(index) {
       // Khi mở popup, gán index để khi đóng, hoặc khi sửa, từ index lấy ra detail để chỉnh sửa. khi đóng thì reset lại.
+      this.detail_editing = this.web_contract_details[index];
       this.contract_detail_change_promotion_index = index;
       this.show_product_promotion_modal = true;
     },
     onCloseProductPromotionModal() {
+      this.detail_editing = null;
       this.contract_detail_change_promotion_index = -1;
       this.show_product_promotion_modal = false;
     }

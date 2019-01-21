@@ -2,7 +2,8 @@
 export default {
   data() {
     return {
-      show_modal_add_product: false
+      show_modal_add_product: false,
+      detail_editing: null
     }
   },
   methods: {
@@ -26,10 +27,45 @@ export default {
       }
     },
     webContractDetail_Selected(list) {
+      var error_items = [];
       for (var i = 0; i < list.length; i++) {
-        list[i].dscnMbRt = this.webContract.dscnMbRt || 0;
-        this.web_contract_details.push(list[i]);
+        var item = list[i];
+        item.dscnMbRt = this.webContract.dscnMbRt || 0;
+
+
+        // lay tohng tin de kiem tra trong gio hang da co chau
+        let itemID = item.itemID;
+        let boxID = item.boxID;
+        let bchCode = item.bchCode;
+        let storeID = item.storeID;
+        let prmtID = item.prmtID;
+        let qc_XaBang = item.qc_XaBang;
+
+        // kiem tra trong igo hang
+        var duplicate_items = this.web_contract_details.filter(function (detail) {
+          return detail.itemID == itemID && detail.boxID == boxID && detail.bchCode == bchCode && detail.storeID == storeID && detail.prmtID == prmtID && detail.qc_XaBang == qc_XaBang
+        });
+
+        // neu co
+        if (duplicate_items.length > 0) {
+          var dup_item = duplicate_items[0];
+          // kiem tra da add vaolist error hcua. co roi thi thoi.
+          var added = error_items.filter((e) => { return e.itemName == dup_item.itemName }).length > 0;
+          if (added == false) {
+            error_items.push({
+              itemName: dup_item.itemName
+            })
+          }
+        } else { // neu khong co cai nao trung`. thi add vao.
+          this.web_contract_details.push(item);
+        }
       }
+
+      // co loi thi show.
+      if (error_items.length) {
+        alert("Sản phẩm " + error_items.map((e) => { return e.itemName }).join(" ,") + " đã có trong giỏ hàng.");
+      }
+
       this.show_modal_add_product = false;
     },
 
@@ -60,8 +96,12 @@ export default {
       var sl_tonban_donvi = detail.slOhQtty || 0;
       var sl_tonthau_donvi = detail.rmRfQtty || 0;
       if (sl_tonthau_donvi != -1) { // số lượng tồn thầu khác -1 mới kiểm tra
-        if (storeQtty > sl_tonban_donvi || storeQtty > sl_tonthau_donvi) {
-          alert(`Số lượng bán (đơn vị) ${storeQtty} không được lớn hơn số lượng tồn bán(${sl_tonban_donvi}) hoặc số lượng tồn thầu(${sl_tonthau_donvi})`);
+        if (storeQtty > sl_tonban_donvi) {
+          alert(`Số lượng bán (đơn vị) ${storeQtty} không được lớn hơn số lượng tồn bán(${sl_tonban_donvi})`);
+          detail.storeQtty = 0;
+          detail.itemQtty = 0;
+        } else if (storeQtty > sl_tonthau_donvi) {
+          alert(`Số lượng bán (đơn vị) ${storeQtty} không được lớn hơn số lượng tồn thầu(${sl_tonthau_donvi})`);
           detail.storeQtty = 0;
           detail.itemQtty = 0;
         }
