@@ -10,14 +10,23 @@
             <h3 class="modal-title">Danh sách sản phẩm</h3>
           </div>
           <div class="modal-body" v-if="show">
-            <div class="input-group">
-              <input type="text" placeholder="Nhập tên sản phẩm..." @keyup.13="search" v-model="keyword" class="form-control">
-              <span class="input-group-btn">
-                <button v-if="keyword.length>0" @click="()=>{keyword=''; search()}" class="btn btn-defal btn-flat">X</button>
-                <button @click="search" type="button" class="btn btn-primary btn-flat">Tìm kiếm</button>
-              </span>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" placeholder="Nhập tên sản phẩm..." @keyup.13="search" v-model="keyword" class="form-control">
+                  <span class="input-group-btn">
+                    <button v-if="keyword.length>0" @click="()=>{keyword=''; search()}" class="btn btn-defal btn-flat">X</button>
+                    <button @click="search" type="button" class="btn btn-primary btn-flat">Tìm kiếm</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <button type="button" class="btn btn-danger btn-flat btn-sm pull-right" data-dismiss="modal">Hủy <i class="fa fa-ban" aria-hidden="true"></i></button>
+                <button type="button" @click="save_close()" class="btn btn-flat btn-primary btn-sm pull-right">Đưa sản phẩm đã chọn giỏ hàng <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+              </div>
             </div>
-            <br />
+            <div class="clearfix"></div>
+            <br/>
             <div class="wrap-table">
               <table class="table-bordered table" style="width:1500px">
                 <thead>
@@ -124,10 +133,6 @@ n
               </ul>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Hủy <i class="fa fa-ban" aria-hidden="true"></i></button>
-            <button type="button" @click="save_close()" class="btn btn-primary">Đưa sản phẩm đã chọn giỏ hàng <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-          </div>
         </div>
         <!-- /.modal-content -->
       </div>
@@ -137,7 +142,7 @@ n
 </template>
 <script>
   export default {
-    props: ["show", "membType","customerID"],
+    props: ["show", "membType", "customerID"],
     data() {
       return {
         // lưu danh sách product đã chọn.
@@ -157,7 +162,7 @@ n
     methods: {
       async get_products() {
         this.selectedsProductID = []; // reset lai list da chon.
-        let url = "/api/product?membType=" + this.membType +"&customerID="+this.customerID;
+        let url = "/api/product?membType=" + this.membType + "&customerID=" + this.customerID;
         if (this.keyword) {
           url += "&term=" + this.keyword;
         }
@@ -316,6 +321,9 @@ n
           return end;
         }
       }
+    },
+    beforeDestroy() {
+      $(this.$refs.modal).modal('hide');
     }
   }
 </script>
@@ -329,9 +337,11 @@ n
   table td {
     white-space: nowrap;
   }
-  table .td-checkbox label{
-    cursor:pointer;
+
+  table .td-checkbox label {
+    cursor: pointer;
   }
+
   .wrap-table {
     min-height: 450px;
   }

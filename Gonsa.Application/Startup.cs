@@ -35,7 +35,11 @@ namespace Gonsa.Application
                 options.LoginPath = "/Account/login";
                 options.LogoutPath = "/Account/Logout";
                 options.Cookie.Expiration = TimeSpan.FromDays(30);
+                options.SlidingExpiration = true;
             });
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            options.ValidationInterval = TimeSpan.FromDays(30));
+
             // Add framework services.
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

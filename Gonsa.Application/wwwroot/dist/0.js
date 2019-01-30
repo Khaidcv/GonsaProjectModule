@@ -626,6 +626,9 @@ exports.default = {
         return end;
       }
     }
+  },
+  beforeDestroy: function beforeDestroy() {
+    $(this.$refs.modal).modal('hide');
   }
 };
 
@@ -6308,66 +6311,100 @@ var render = function() {
           _vm._v(" "),
           _vm.show
             ? _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "input-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.keyword,
-                        expression: "keyword"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Nhập tên sản phẩm..."
-                    },
-                    domProps: { value: _vm.keyword },
-                    on: {
-                      keyup: function($event) {
-                        if (!("button" in $event) && $event.keyCode !== 13) {
-                          return null
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.keyword,
+                            expression: "keyword"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Nhập tên sản phẩm..."
+                        },
+                        domProps: { value: _vm.keyword },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              $event.keyCode !== 13
+                            ) {
+                              return null
+                            }
+                            return _vm.search($event)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.keyword = $event.target.value
+                          }
                         }
-                        return _vm.search($event)
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.keyword = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "input-group-btn" }, [
-                    _vm.keyword.length > 0
-                      ? _c(
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "input-group-btn" }, [
+                        _vm.keyword.length > 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-defal btn-flat",
+                                on: {
+                                  click: function() {
+                                    _vm.keyword = ""
+                                    _vm.search()
+                                  }
+                                }
+                              },
+                              [_vm._v("X")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
                           "button",
                           {
-                            staticClass: "btn btn-defal btn-flat",
-                            on: {
-                              click: function() {
-                                _vm.keyword = ""
-                                _vm.search()
-                              }
-                            }
+                            staticClass: "btn btn-primary btn-flat",
+                            attrs: { type: "button" },
+                            on: { click: _vm.search }
                           },
-                          [_vm._v("X")]
+                          [_vm._v("Tìm kiếm")]
                         )
-                      : _vm._e(),
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _vm._m(1),
                     _vm._v(" "),
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-primary btn-flat",
+                        staticClass:
+                          "btn btn-flat btn-primary btn-sm pull-right",
                         attrs: { type: "button" },
-                        on: { click: _vm.search }
+                        on: {
+                          click: function($event) {
+                            _vm.save_close()
+                          }
+                        }
                       },
-                      [_vm._v("Tìm kiếm")]
+                      [
+                        _vm._v("Đưa sản phẩm đã chọn giỏ hàng "),
+                        _c("i", {
+                          staticClass: "fa fa-floppy-o",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
                     )
                   ])
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
@@ -6753,31 +6790,7 @@ var render = function() {
                   )
                 ])
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.save_close()
-                  }
-                }
-              },
-              [
-                _vm._v("Đưa sản phẩm đã chọn giỏ hàng "),
-                _c("i", {
-                  staticClass: "fa fa-floppy-o",
-                  attrs: { "aria-hidden": "true" }
-                })
-              ]
-            )
-          ])
+            : _vm._e()
         ])
       ])
     ])
@@ -6812,7 +6825,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-default pull-left",
+        staticClass: "btn btn-danger btn-flat btn-sm pull-right",
         attrs: { type: "button", "data-dismiss": "modal" }
       },
       [

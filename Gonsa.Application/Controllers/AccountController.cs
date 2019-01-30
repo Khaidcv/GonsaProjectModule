@@ -70,7 +70,7 @@ namespace Gonsa.Application.Controllers
                 var user = await _userManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
 
