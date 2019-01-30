@@ -37,7 +37,7 @@ namespace Gonsa.Application.Api
                 {
                     PrmtID = "00001",
                     PrmtNm = "CTKM 0001",
-                    DscnAmnt = 150000,
+                    DscnAmnt = 0,
                     DscnRate = 50
                 },
                 new ProductPromotion()
@@ -45,28 +45,7 @@ namespace Gonsa.Application.Api
                     PrmtID = "00002",
                     PrmtNm = "CTKM 0002",
                     DscnAmnt = 250000,
-                    DscnRate = 75
-                },
-                new ProductPromotion()
-                {
-                    PrmtID = "00003",
-                    PrmtNm = "CTKM 0003",
-                    DscnAmnt = 350000,
-                    DscnRate = 35
-                },
-                new ProductPromotion()
-                {
-                    PrmtID = "00004",
-                    PrmtNm = "CTKM 0004",
-                    DscnAmnt = 155000,
                     DscnRate = 0
-                },
-                new ProductPromotion()
-                {
-                    PrmtID = "0005",
-                    PrmtNm = "CTKM 0005",
-                    DscnAmnt = 440000,
-                    DscnRate = 10
                 }
             };
             return Ok(products);

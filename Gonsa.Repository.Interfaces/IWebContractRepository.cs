@@ -15,6 +15,7 @@ namespace Gonsa.Repository.Interfaces
         Task Insert(WebContractViewModel webContractViewModel, string ASM, string SUB, string TEAM, string VISA);
         Task Save(WebContractViewModel webContractViewModel, string ASM, string SUB, string TEAM, string VISA);
         Task<string> GetOID(string KeyId, string CmnpID);
+        Task<string> GetOID(string UserCode);
         Task Delete(string OID, string ASM, string SUB, string TEAM, string VISA);
         Task DeleteDetail(string OID, string ItemID, string BoxID, string BchCode, string StoreID, string PrmtID);
         Task<int> ApproveContract(Approve approve);

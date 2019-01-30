@@ -83,7 +83,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "beae4f04ee584a5f9ba2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ead0b86a4b83031ca32b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -12529,7 +12529,7 @@ module.exports = function (it) {
 
 var anObject = __webpack_require__(10);
 var IE8_DOM_DEFINE = __webpack_require__(111);
-var toPrimitive = __webpack_require__(109);
+var toPrimitive = __webpack_require__(110);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(16) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -15056,13 +15056,19 @@ exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
 /* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(130), __esModule: true };
+
+/***/ }),
+/* 109 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -15078,12 +15084,6 @@ module.exports = function (it, S) {
   throw TypeError("Can't convert object to primitive value");
 };
 
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(130), __esModule: true };
 
 /***/ }),
 /* 111 */
@@ -15550,7 +15550,7 @@ var Navigate = function Navigate() {
   return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 238));
 };
 
-var routes = exports.routes = [{ name: 'Home', path: '/', component: Dashboard }, { name: 'WebContract', path: '/web-contract', component: WebContract }, { name: 'NewWebContract', path: '/new-web-contract', component: FormWebContract }, { name: 'EditWebContract', path: '/web-contract/edit/:oid', component: FormWebContract }, { name: 'InProcess', path: '/in-process', component: InProcess }, { name: 'Navigate', path: '/navigate/:url', component: Navigate }, { name: 'NotFound', path: '/**', component: NotFound }];
+var routes = exports.routes = [{ name: 'Home', path: '/', component: Dashboard }, { name: 'WebContract', path: '/web-contract', component: WebContract }, { name: 'NewWebContract', path: '/new-web-contract', component: FormWebContract }, { name: 'EditWebContract', path: '/web-contract/edit', component: FormWebContract }, { name: 'InProcess', path: '/in-process', component: InProcess }, { name: 'Navigate', path: '/navigate/:url', component: Navigate }, { name: 'NotFound', path: '/**', component: NotFound }];
 
 /***/ }),
 /* 123 */
@@ -15657,7 +15657,7 @@ exports.default = function (obj, key, value) {
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(110);
+var _assign = __webpack_require__(108);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -16021,7 +16021,7 @@ module.exports = function () {
 
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(64);
-var gOPS = __webpack_require__(108);
+var gOPS = __webpack_require__(109);
 var pIE = __webpack_require__(107);
 var toObject = __webpack_require__(81);
 var IObject = __webpack_require__(74);

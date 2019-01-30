@@ -55,7 +55,7 @@ namespace Gonsa.Application.Api
         /// </summary>
         /// <param name="OID"></param>
         /// <returns></returns>
-        [HttpGet("{OID}")]
+        [HttpGet("get")]
         public async Task<ActionResult<IEnumerable<WebContract>>> get(string OID)
         {
             //ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
@@ -67,7 +67,7 @@ namespace Gonsa.Application.Api
         public async Task<ActionResult<IEnumerable<WebContract>>> getOID()
         {
             ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-            var result = await _webContractRes.GetOID("GDH001", user.CmpnID);
+            var result = await _webContractRes.GetOID(user.UserCode);
             return Ok(result);
         }
 

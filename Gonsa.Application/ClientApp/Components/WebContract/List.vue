@@ -49,7 +49,7 @@
                       <td :inner-html.prop="webcontract.currSignNumb | filterStatus"></td>
                       <td>{{webcontract.stepName}}</td>
                       <td width="150">
-                        <router-link :to="'/web-contract/edit/'+webcontract.oid" class="btn btn-xs btn-primary">Xem đơn hàng</router-link>
+                        <router-link :to="'/web-contract/edit?oid='+webcontract.oid" class="btn btn-xs btn-primary">Xem đơn hàng</router-link>
                       </td>
                     </tr>
                   </tbody>

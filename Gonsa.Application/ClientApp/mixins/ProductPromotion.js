@@ -7,16 +7,18 @@ export default {
   },
   methods: {
     onProductPromotionChange(productPromotion) {
-      
+      this.isDirty = true;
       var detail = this.web_contract_details[this.contract_detail_change_promotion_index];
 
       detail.prmtID = productPromotion.prmtID;
       detail.prmtListItem = productPromotion.prmtNm;
-      detail.dscnAmnt = productPromotion.dscnAmnt;
+
       detail.dscnRate = productPromotion.dscnRate;
+      detail.dscnAmnt = productPromotion.dscnAmnt; // gan vào truoc, rôi goi ham tinh tien giam gia, trogn do se tinh lai tien giam gia phu thuoc vao phan tram giam gia, neu co phan tram thi tinh theo tien hang, neu ko thi lay tu bang popup
 
       // gọi hàm tính tiền hàng bên mix web contract detail
       // Tính lại thành tiền hàng
+      this.calc_dscnAmnt(detail);
       this.calc_SmPdAmnt(detail);
       this.calc_payment_amount();
 

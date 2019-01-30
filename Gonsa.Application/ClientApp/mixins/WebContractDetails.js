@@ -27,6 +27,7 @@ export default {
       }
     },
     webContractDetail_Selected(list) {
+      this.isDirty = true;
       var error_items = [];
       for (var i = 0; i < list.length; i++) {
         var item = list[i];
@@ -77,7 +78,18 @@ export default {
 
 
     },
-
+    calc_dscnAmnt(detail) {
+      try {
+        // phan tram giam gia = 0. thi lay so tien. nguoc lai thi tinh so tien theo %.
+        if (detail.dscnRate == 0) {
+          detail.dscnAmnt = detail.dscnAmnt;
+        } else {
+          detail.dscnAmnt = (detail.dscnRate * detail.prdcAmnt) / 100;
+        }
+      } catch (e) {
+        alert(e);
+      }
+    },
     // tính tiền giảm thẻ.
     calc_DscnMbAm(detail) {
       var prdcAmnt = detail.prdcAmnt || 0;
@@ -110,6 +122,7 @@ export default {
 
     // storeq qqty change
     async store_quantity_change(detail) {
+      this.isDirty = true;
       await this.load_product_info(detail);
       // kiểm tra nhập nhỏ hơn 0 thì gán = 0
       if (detail.storeQtty) {
@@ -129,9 +142,9 @@ export default {
       } else {
         detail.itemQtty = 0;
       }
-
-
+      
       this.calc_product_amount(detail); // tiền hàng
+      this.calc_dscnAmnt(detail); // tinh tien giam gia
       this.calc_DscnMbAm(detail); // tiền giảm thẻ
       this.calc_SmPdAmnt(detail); // thành tiền hàng
       this.calc_payment_amount(); // Tiền trên đơn hàng
@@ -140,6 +153,7 @@ export default {
     // item qtty change.
     async item_quantity_change(detail) {
       // kiểm tra nhập nhỏ hơn 0 thì gán = 0
+      this.isDirty = true;
       await this.load_product_info(detail);
       if (detail.itemQtty) {
         if (detail.itemQtty < 0) {
@@ -150,13 +164,10 @@ export default {
       // Từ hộp quy ra đơn vị.
       // Tính ra hộp xong gọi hàm check hộp để tính.
       detail.storeQtty = detail.itemQtty * detail.itemPerBox;
-      // tính storequantity xong moi check storequantity
-      this.check_store_quantity(detail);
 
-      this.calc_product_amount(detail); // tiền hàng
-      this.calc_DscnMbAm(detail); // tiền giảm thẻ
-      this.calc_SmPdAmnt(detail); // thành tiền hàng
-      this.calc_payment_amount(); // Tiền trên đơn hàng
+      // kich hoat ham store quantity change. 
+      this.store_quantity_change(detail);
+
     },
 
     // tính tiền đơn hàng
@@ -185,12 +196,15 @@ export default {
 
     // on remove
     remove_webcontractdetails(detail) {
+      this.isDirty = true;
       var index = this.web_contract_details.indexOf(detail);
       this.web_contract_details.splice(index, 1);
       this.calc_payment_amount();
     },
 
+    // xoa promotion
     removeProductPromotion(index) {
+      this.isDirty = true;
       var detail = this.web_contract_details[index];
       detail.prmtID = "";
       detail.prmtListItem = "";

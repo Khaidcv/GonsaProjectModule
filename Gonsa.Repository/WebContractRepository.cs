@@ -345,6 +345,17 @@ namespace Gonsa.Repository
             }
         }
 
+        public async Task<string> GetOID(string UserCode)
+        {
+            using (IDbConnection conn = _gonSaConnection.GetConnection())
+            {
+                string sQuery = $"select '{UserCode}/'+ FORMAT( CURRENT_TIMESTAMP,'yyMMdd:hhmmssfff')";
+                conn.Open();
+                var rs = await conn.QueryAsync<string>(sQuery);
+                return rs.First();
+            }
+        }
+
         public async Task<WebContractViewModel> GetByOID(string OID)
         {
             using (IDbConnection conn = _gonSaConnection.GetConnection())

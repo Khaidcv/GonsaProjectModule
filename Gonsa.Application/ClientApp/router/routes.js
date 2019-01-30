@@ -17,7 +17,7 @@ export const routes = [
   { name: 'Home', path: '/', component: Dashboard },
   { name: 'WebContract', path: '/web-contract', component: WebContract },
   { name: 'NewWebContract', path: '/new-web-contract', component: FormWebContract },
-  { name: 'EditWebContract', path: '/web-contract/edit/:oid', component: FormWebContract },
+  { name: 'EditWebContract', path: '/web-contract/edit', component: FormWebContract },
   { name: 'InProcess', path: '/in-process', component: InProcess },
   { name: 'Navigate', path: '/navigate/:url', component: Navigate },
   { name: 'NotFound', path: '/**', component: NotFound }

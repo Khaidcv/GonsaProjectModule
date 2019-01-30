@@ -145,7 +145,6 @@
         </div>
       </div>
       <!-- Chọn khách hàng-->
-
       <!-- Đơn vị nhận hàng  -->
       <div class="box box-primary" v-if="step_active == 'step-delivery-customer'">
         <div class="box-header with-border">
@@ -220,7 +219,6 @@
         </div>
       </div>
       <!-- Đơn vị nhận hàng-->
-
       <!-- Giỏ hàng -->
       <div class="box box-primary" v-if="step_active == 'step-product'">
         <div class="box-header with-border">
@@ -331,7 +329,6 @@
         <!-- /.box-body -->
       </div>
       <!-- Giỏ hàng -->
-
       <!-- Review -->
       <div class="box box-primary box-review" v-if="step_active == 'step-review'">
         <div class="box-header with-border">
@@ -352,7 +349,7 @@
 
             <button @click="save_webContract" v-if="can_save" class="btn btn-sm btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu đơn hàng</button>
 
-            <button @click="post_webContract" v-if="can_post" class="btn btn-sm btn-primary">
+            <button @click="post_webContract(true)" v-if="can_post" class="btn btn-sm btn-primary">
               <i class="fa fa-check-circle-o" aria-hidden="true"></i> Post đơn hàng
             </button>
 
@@ -599,6 +596,7 @@
     data() {
       return {
         mode: 0,
+        isDirty: false,
         form_title: '',
         customer_ajax: {
           url: '/api/customer?PageSize=50',
@@ -623,6 +621,7 @@
         show_modal_customer_list: false,
         step_active: "step-customer",
         web_contract_details: [],
+        initWebContract: {}, // khai bao de kiem tra dirty
         webContract: {
           // thông tin đơn hàng.
           clnID: '',
@@ -914,15 +913,16 @@
           this.$store.state.show_loading = false;
           alert("Không thể lưu đơn hàng ! Vui lòng kiểm tra lại thông tin !");
           console.log(error);
+          return;
         });
 
         console.log(response);
         var status = response.data.status;
         if (status == 1) {
           alert(response.data.message);
-          window.location.href = "/web-contract/edit/" + this.webContract.oid;
+          window.location.href = "/web-contract/edit?oid=" + this.webContract.oid;
         } else {
-          alert("Lỗi, không thể lưu đơn hàng.");
+          alert("Lỗi, không thể lưu đơn hàng. " + response.data.message);
           console.log(response.data.message);
         }
         this.$store.state.show_loading = false;
@@ -940,6 +940,11 @@
         }
       },
       async post_webContract() {
+        if ((JSON.stringify(this.initWebContract) != JSON.stringify(this.webContract)) || (this.isDirty == true && this.mode == 1)) {
+          alert("Vui lòng lưu đơn hàng trước khi Post");
+          return;
+        }
+
         if (confirm("Bạn có chắc chắn muốn Post đơn hàng này không ?")) {
           let response = await this.$http.post("/api/webcontract/post?oid=" + this.webContract.oid).catch(function (err) {
             alert("Có lỗi, vui lòng kiểm tra thông tin !");
@@ -999,10 +1004,10 @@
     async mounted() {
       this.$validator.localize('en', dic.vn);
       this.$store.state.show_loading = true;
-      var oid = this.$route.params.oid;
+      var oid = this.$route.query.oid;
       if (oid) {
         this.mode = 1;
-        let webcontract_response = await this.$http.get("/api/webcontract/" + oid);
+        let webcontract_response = await this.$http.get("/api/webcontract/get?oid=" + oid);
         this.webContract = webcontract_response.data.webContract;
         this.web_contract_details = webcontract_response.data.webContractDetails;
 
@@ -1035,6 +1040,8 @@
         this.webContract.crt_Date = new Date();
         this.webContract.signNumb = -1;
       }
+
+      this.initWebContract = Object.assign({}, this.webContract);
       this.$store.state.show_loading = false;
     },
     filters: {
