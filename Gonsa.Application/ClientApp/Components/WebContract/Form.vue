@@ -365,8 +365,20 @@
               <h4><i class="fa fa-first-order"></i> <strong class="text-success">Thông tin đơn hàng</strong></h4>
               <table cellpadding="5" class="table">
                 <tbody>
+                  <tr class="hidden">
+                    <td><strong>ASM :</strong></td>
+                    <td>{{webContract.asm}}</td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><strong>TEAM :</strong></td>
+                    <td>{{webContract.team}}</td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><strong>SUB :</strong></td>
+                    <td>{{webContract.sub}}</td>
+                  </tr>
                   <tr>
-                    <td width="40%"><strong>Số kênh :</strong></td>
+                    <td><strong>Số kênh :</strong></td>
                     <td>{{webContract.clnID}}</td>
                   </tr>
                   <tr>
@@ -1029,6 +1041,9 @@
         const user = user_response.data;
 
         this.webContract.oid = (await this.get_oid()).data;
+        this.webContract.asm = user.asm;
+        this.webContract.team = user.team;
+        this.webContract.sub = user.sub;
         this.webContract.cmpnID = user.cmpnID;
         this.webContract.clnID = user.clnID;
         this.webContract.clnPath = user.clnPath;

@@ -58,7 +58,6 @@ namespace Gonsa.Application.Api
         [HttpGet("get")]
         public async Task<ActionResult<IEnumerable<WebContract>>> get(string OID)
         {
-            //ApplicationUser user = await _userManager.FindByNameAsync(HttpContext.User.FindFirst(ClaimTypes.Name).Value);
             var result = await _webContractRes.GetByOID(OID);
             return Ok(result);
         }

@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="clearfix"></div>
-            <br/>
+            <br />
             <div class="wrap-table">
               <table class="table-bordered table" style="width:1500px">
                 <thead>
@@ -41,7 +41,7 @@
                     <th>Giá đơn vị</th>
                     <th>SL được bán (hộp)</th>
                     <th>SL được bán (đơn vị)</th>
-                    <th>Số hợp đồng thầu</th>
+                    <th v-if="$store.state.user_info.clnType=='ETC'">Số hợp đồng thầu</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (hộp)</th>
                     <th v-if="$store.state.user_info.clnType=='ETC'">Sl tồn thầu (đơn vị)</th>
                     <th>Sl dụ trù (hộp)</th>
@@ -63,15 +63,13 @@
                     <td>{{product.itemPerBox}}</td>
                     <td>{{product.itemPrice | formatVnd}}</td>
                     <td>{{product.storePrice | formatVnd}}</td>
-                    <td>{{product.slOhItQt}}</td> <!-- Số lượng được bán hộp-->
-                    <td>{{product.slOhQtty}}</td> <!-- Số lượng được bán đơn vị-->
-                    <td>{{product.qc_XaBang}}</td> <!--Số hợp đồng thầu -->
-                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfItQt}}</td> <!-- Số lượng tồn thầu hộp-->
-                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfQtty}}</td> <!-- Số lượng tồn thầu đơn vị-->
-                    <td>
-                      {{product.rmPlItQt}}
-                    </td> <!-- Số lượng dụ trù hộp-->
-                    <td>{{product.rmPlQtty}}</td> <!-- Số lượng dụ trù đơn vị-->
+                    <td>{{product.slOhItQt_Format}}</td> <!-- Số lượng được bán hộp-->
+                    <td>{{product.slOhQtty_Format}}</td> <!-- Số lượng được bán đơn vị-->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.qc_XaBang}}</td> <!--Số hợp đồng thầu -->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfItQt_Format}}</td> <!-- Số lượng tồn thầu hộp-->
+                    <td v-if="$store.state.user_info.clnType=='ETC'">{{product.rmRfQtty_Format}}</td> <!-- Số lượng tồn thầu đơn vị-->
+                    <td>{{product.rmPlItQt_Format}}</td> <!-- Số lượng dụ trù hộp-->
+                    <td>{{product.rmPlQtty_Format}}</td> <!-- Số lượng dụ trù đơn vị-->
                     <td v-if="$store.state.user_info.clnType=='ETC'">{{product.bchCode}}</td>
                   </tr>
                 </tbody>

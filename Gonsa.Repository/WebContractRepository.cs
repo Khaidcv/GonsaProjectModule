@@ -59,6 +59,9 @@ namespace Gonsa.Repository
                 {
                     string sQuery = @"INSERT INTO
                                     dbo.webContracts(
+                                    ASM,
+                                    SUB,
+                                    TEAM,
                                     CmpnID,
                                     ClnID,
                                     ZoneID,
@@ -94,11 +97,15 @@ namespace Gonsa.Repository
                                     Crt_Date,
                                     ChgeUser,
                                     ChgeDate)
-            values (@CmpnID,@ClnID,@ZoneID,@RegionID,@CustomerID,@EntryID,@FactorID,@OID,@ODATE,@ClnPath,@MemberCardID,@MembType,@DscnMbRt,@PsCsName,@PsCsFReg,@PsCsTel,
+            values (@ASM,@SUB,@TEAM,@CmpnID,@ClnID,@ZoneID,@RegionID,@CustomerID,@EntryID,@FactorID,@OID,@ODATE,@ClnPath,@MemberCardID,@MembType,@DscnMbRt,@PsCsName,@PsCsFReg,@PsCsTel,
             @PsCsAddr,@PsCsInfo,@DeliverEm,@DlCsName,@DlCsAddr,@DlCsInfo,@SaleEmID,@SaleEmName,
             @DESCRIP,@PrdcAmnt,@DscnMbAm,@DscnAmnt,@Sum_Amnt,@SignNumb,@SignDate,@Crt_User,@Crt_Date,@ChgeUser,@ChgeDate)";
 
                     DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@ASM", webContract.ASM);
+                    parameters.Add("@SUB", webContract.SUB);
+                    parameters.Add("@TEAM", webContract.TEAM);
+
                     parameters.Add("@CmpnID", webContract.CmpnID);
                     parameters.Add("@ClnID", webContract.ClnID);
                     parameters.Add("@ZoneID", webContract.ZoneID);
@@ -278,7 +285,7 @@ namespace Gonsa.Repository
                     //}, transaction: dbTransaction, commandType: CommandType.Text);
                     foreach (var detail in details)
                     {
-                        await IncOnHandProductLine(insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);
+                        await IncOnHandProductLine(webContract.OID, insertedWebContract.ClnID, insertedWebContract.ZoneID, insertedWebContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);
                     }
 
                     await con.ExecuteAsync("DELETE FROM webContractDetails where OID= @OID", new
@@ -380,7 +387,7 @@ namespace Gonsa.Repository
 
                     foreach (var detail in details)
                     {
-                        await IncOnHandProductLine(webContract.ClnID, webContract.ZoneID, webContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);
+                        await IncOnHandProductLine(OID, webContract.ClnID, webContract.ZoneID, webContract.RegionID, ASM, SUB, TEAM, detail.ItemID, VISA, detail.ItemQtty, 0, detail.StoreQtty, 0, con, dbTransaction);
                     }
 
                     await con.ExecuteAsync("DELETE FROM webContractDetails where OID= @OID", new
@@ -458,9 +465,10 @@ namespace Gonsa.Repository
             await dbConnection.ExecuteAsync("wspProducts_DecOnhand", param: parameters, transaction: dbTransaction, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task IncOnHandProductLine(string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string TEAM, string ItemID, string VISA, decimal ItemQtty, decimal ItemQtty_Old, decimal StoreQtty, decimal StoreQtty_Old, IDbConnection dbConnection, IDbTransaction dbTransaction)
+        public async Task IncOnHandProductLine(string OID, string ClnID, string ZoneID, string RegionID, string ASM, string SUB, string TEAM, string ItemID, string VISA, decimal ItemQtty, decimal ItemQtty_Old, decimal StoreQtty, decimal StoreQtty_Old, IDbConnection dbConnection, IDbTransaction dbTransaction)
         {
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@OID", OID);
             parameters.Add("@ClnID", ClnID);
             parameters.Add("@ZoneID", ZoneID);
             parameters.Add("@RegionID", RegionID);

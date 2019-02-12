@@ -6,6 +6,10 @@ namespace Gonsa.Data
 {
     public class WebContract
     {
+        public string ASM { get; set; }
+        public string TEAM { get; set; }
+        public string SUB { get; set; }
+
         public string CmpnID { get; set; }
         public string ClnID { get; set; }
         public string ZoneID { get; set; }
