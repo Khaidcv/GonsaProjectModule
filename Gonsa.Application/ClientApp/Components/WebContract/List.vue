@@ -65,8 +65,8 @@
                       <a href="#" @click="loadPage(1)">1</a>
                     </li>
                   </template>
-                  <template v-if="start>=pagination.max">
-                    <li v-if="start==pagination.max">
+                  <template v-if="start>=3">
+                    <li v-if="start==3">
                       <a href="#" @click="loadPage(2)">2</a>
                     </li>
                     <li v-else>
